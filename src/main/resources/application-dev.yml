@@ -1,0 +1,28 @@
+server:
+  port: 0
+spring:
+  application:
+    name: statistics
+  datasource:
+    dynamic:
+      primary: qianlima #设置默认的数据源或者数据源组,默认值即为master
+      datasource:
+        qianlima:
+          username: root
+          password: qianlima
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://172.18.30.34:3306/qianlima?characterEncoding=UTF-8
+  data:
+    mongodb:
+      uri: mongodb://mongo.intra.qianlima.com:27018/qlmdb
+xxl:
+  job:
+    admin:
+      addresses: http://xxl-dev.intra.qianlima.com/xxl-job-admin-1.8.2
+    executor:
+      appname: ${spring.application.name}
+      ip:
+      port: 9990
+      logretentiondays: 1
+      logpath:
+    accessToken:

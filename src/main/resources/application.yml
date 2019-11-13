@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: 'qianlima-reptile-statistics-service'
+  profiles:
+    active: '@env@'
+  main:
+    web-application-type: servlet
+    undertow:
+      io-threads: 8 # Number of I/O threads to create for the worker.
+      worker-threads: 2000 # Number of worker threads.
+      buffer-size: 1024 # Size of each buffer, in bytes.
+      eager-filter-init: true  # Whether servlet filters should be initialized on startup.
+      direct-buffers: true # Whether to allocate buffers outside the Java heap.
+      # max-http-post-size: 0 # Maximum size, in bytes, of the HTTP post content.
+  jackson:
+    default-property-inclusion: non_null

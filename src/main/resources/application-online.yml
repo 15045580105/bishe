@@ -1,0 +1,28 @@
+server:
+  port: 0
+spring:
+  application:
+    name: statistics
+  datasource:
+    dynamic:
+      primary: qianlima #设置默认的数据源或者数据源组,默认值即为master
+      datasource:
+        qianlima:
+          username: mycatSpiderRw
+          password: rwhM711j6QEb
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://10.30.183.34:8066/qianlima?characterEncoding=UTF-8
+  data:
+    mongodb:
+      uri: mongodb://10.26.29.40:27018,10.30.162.200:27018/reptile_statistics
+xxl:
+  job:
+    admin:
+      addresses: http://10.30.110.103:8283/admin,http://10.29.91.236:8283/admin
+    executor:
+      appname: ${spring.application.name}
+      ip:
+      port: 9990
+      logretentiondays: 1
+      logpath:
+    accessToken:

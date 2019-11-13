@@ -1,0 +1,84 @@
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+
+    <!--properties-->
+    <property name="pattern"
+              value="[@project.artifactId@] [%date{yyyy-MM-dd HH:mm:ss.SSSZ, Asia/Shanghai}] [%logger] [%thread] [%level] %msg %n"/>
+    <property name="dir" value="/workspace/logs/service/qianlima-reptile-statistics-service"/>
+    <property name="history" value="3"/>
+
+    <!--appenders-->
+    <appender name="StdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="InfoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${dir}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${history}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="InfoAsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>12</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="InfoFileAppender"/>
+    </appender>
+
+    <appender name="WarnFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${dir}/warn.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>500MB</maxFileSize>
+            <fileNamePattern>${dir}/archive/warn-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+            <maxHistory>${history}</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="WarnAsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1024</queueSize>
+        <appender-ref ref="WarnFileAppender"/>
+    </appender>
+
+    <appender name="ErrorFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${dir}/error.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>500MB</maxFileSize>
+            <fileNamePattern>${dir}/archive/error-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+            <maxHistory>${history}</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="ErrorAsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1024</queueSize>
+        <appender-ref ref="ErrorFileAppender"/>
+    </appender>
+
+    <!--loggers-->
+    <root level="INFO">
+        <appender-ref ref="StdoutAppender"/>
+        <appender-ref ref="InfoAsyncAppender"/>
+        <appender-ref ref="WarnAsyncAppender"/>
+        <appender-ref ref="ErrorAsyncAppender"/>
+    </root>
+
+</configuration>

@@ -1,0 +1,7 @@
+.idea/
+target
+*_*.properties
+*.iml
+output
+conf.db
+*.DS_Store

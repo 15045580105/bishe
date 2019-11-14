@@ -8,10 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: qianlima-reptile-statistics-service
@@ -29,15 +26,20 @@ public class DataShowServiceImpl implements DataShowService {
     public Map<String, Object> dataShow(Map<String, Object> requestParams) {
         long startTime = MapUtils.getLong(requestParams,"startTime",0L);
         long endTime = MapUtils.getLong(requestParams,"endTime",0L);
-        if(startTime==0||endTime==0){
-            requestParams.clear();
-            requestParams.put("code",4);
-            requestParams.put("data",null);
-            requestParams.put("msg","startTime或endTime参数缺失");
-            return requestParams;
+        if(startTime==0){
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.DAY_OF_MONTH, 1);
+            c.set(Calendar.HOUR_OF_DAY, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.SECOND, 0);
+            c.set(Calendar.MILLISECOND, 0);
+            startTime=c.getTimeInMillis()/1000;
+        }
+        if(endTime==0){
+            endTime=(System.currentTimeMillis()/(1000*3600*24)*(1000*3600*24)-TimeZone.getDefault().getRawOffset())/1000;
         }
         Criteria criteria = new Criteria();
-        criteria.andOperator(Criteria.where("updateTime").gte(startTime),Criteria.where("updateTime").lte(endTime));
+        criteria.andOperator(Criteria.where("currentDayTime").gte(startTime),Criteria.where("currentDayTime").lte(endTime));
         Query query = new Query(criteria);
         List<Map> resultList = mongoTemplate.find(query,Map.class,"phpcmsContentStatistics");
         if(resultList==null||resultList.size()==0){
@@ -54,7 +56,7 @@ public class DataShowServiceImpl implements DataShowService {
         Map<String,Object> catchMap = new HashMap<>();
         Map<String,Object> publishMap = new HashMap<>();
         for(Map dataMap:resultList){
-            String timeStr = MapUtils.getString(dataMap,"updateTimeStr");
+            String timeStr = MapUtils.getString(dataMap,"currentDayStr");
             xData.add(timeStr);
             int catchCount = MapUtils.getIntValue(dataMap,"catchCount",0);
             catchData.add(catchCount);

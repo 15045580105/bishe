@@ -30,8 +30,6 @@ public class InitTask {
 
     private int DAY_SECONDS = 86400;
 
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     @Scheduled(fixedDelay = 86400*1000)
     public void initTaskStart(){
         //初始化需要把本月至今的数据量全部统计一下

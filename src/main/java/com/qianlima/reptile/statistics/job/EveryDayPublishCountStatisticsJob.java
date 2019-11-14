@@ -56,7 +56,7 @@ public class EveryDayPublishCountStatisticsJob extends IJobHandler {
         c.set(Calendar.MILLISECOND, 0);
         int startTime=Integer.valueOf(c.getTimeInMillis()/1000+"");
         int endTime = startTime+86400;
-        logger.info("startTime: "+startTime+",endTime: "+endTime);
+        logger.info("startTime: {},endTime: {}",startTime,endTime);
         statisticsServiceImpl.statistics(startTime,endTime);
     }
 }

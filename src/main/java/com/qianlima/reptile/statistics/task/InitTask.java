@@ -46,7 +46,7 @@ public class InitTask {
         long currentTime=(System.currentTimeMillis()/(1000*3600*24)*(1000*3600*24)-TimeZone.getDefault().getRawOffset())/1000;
         for(;startTime<currentTime;startTime=startTime+DAY_SECONDS){
             int endTime = startTime+DAY_SECONDS;
-            logger.info("startTime: "+startTime+",endTime: "+endTime);
+            logger.info("startTime:{},endTime:{}",startTime,endTime);
             statisticsService.statistics(startTime,endTime);
         }
     }

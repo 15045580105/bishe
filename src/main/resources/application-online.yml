@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8191
 spring:
   application:
     name: statistics
@@ -8,13 +8,13 @@ spring:
       primary: qianlima #设置默认的数据源或者数据源组,默认值即为master
       datasource:
         qianlima:
-          username: qlmReader
-          password: No1LOq3Y3XOt
+          username: tjReader
+          password: azTehcdNldWk
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://10.30.160.189:3309/qianlima?characterEncoding=UTF-8
+          url: jdbc:mysql://10.80.184.200:3309/qianlima?characterEncoding=UTF-8
   data:
     mongodb:
-      uri: mongodb://10.26.29.40:27018,10.30.162.200:27018/reptile_statistics
+      uri: mongodb://reptile:reptile@10.26.29.40:27018,10.30.162.200:27018/reptile_statistics
 xxl:
   job:
     admin:

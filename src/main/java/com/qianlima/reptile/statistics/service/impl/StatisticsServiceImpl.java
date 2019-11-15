@@ -41,7 +41,7 @@ public class StatisticsServiceImpl {
     public void statistics(int startTime,int endTime){
         int count =  qianlimaStatisticsService.everyDayPublishCount(startTime,endTime);
         int catCount = qianlimaStatisticsService.everyDayCatchCount(startTime,endTime);
-        logger.info("phpcmsContentCount:{},biddingRawCount:",count,catCount);
+        logger.info("phpcmsContentCount:{},biddingRawCount:{}",count,catCount);
         String currentDayStr = simpleDateFormat.format(new Date(startTime*1000L));
         //首先查询是否有当天数据
         Query query = new Query(Criteria.where("currentDayTime").is(startTime));

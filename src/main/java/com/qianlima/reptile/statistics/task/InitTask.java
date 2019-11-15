@@ -30,7 +30,7 @@ public class InitTask {
 
     private int DAY_SECONDS = 86400;
 
-    @Scheduled(fixedDelay = 86400*1000)
+    //@Scheduled(fixedDelay = 86400L*1000L*1000L)
     public void initTaskStart(){
         //初始化需要把本月至今的数据量全部统计一下
         Calendar c = Calendar.getInstance();

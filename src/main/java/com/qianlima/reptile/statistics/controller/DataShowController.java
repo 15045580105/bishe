@@ -27,4 +27,10 @@ public class DataShowController {
     public Map<String,Object> dataShow(@RequestParam Map<String,Object> requestParams){
         return dataShowService.dataShow(requestParams);
     }
+
+    @RequestMapping("/datadisplay")
+    @ResponseBody
+    public Map<String,Object> dataDisplay(@RequestParam Map<String,Object> requestParams){
+        return dataShowService.dataDisplay(requestParams);
+    }
 }

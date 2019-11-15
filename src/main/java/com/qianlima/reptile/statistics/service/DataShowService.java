@@ -10,4 +10,5 @@ import java.util.Map;
  **/
 public interface DataShowService {
     Map<String,Object> dataShow(Map<String,Object> requestParams);
+    Map<String,Object> dataDisplay(Map<String,Object> requestParams);
 }

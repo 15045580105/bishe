@@ -39,6 +39,9 @@ public class StatisticsServiceImpl {
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public void statistics(int startTime,int endTime){
+        int count =  qianlimaStatisticsService.everyDayPublishCount(startTime,endTime);
+        int catCount = qianlimaStatisticsService.everyDayCatchCount(startTime,endTime);
+        logger.info("phpcmsContentCount:{},biddingRawCount:{}",count,catCount);
         String currentDayStr = simpleDateFormat.format(new Date(startTime*1000L));
         //首先查询是否有当天数据
         Query query = new Query(Criteria.where("currentDayTime").is(startTime));
@@ -49,9 +52,6 @@ public class StatisticsServiceImpl {
             logger.error(e.getMessage());
         }
         if(mongoCount==0){
-            int count =  qianlimaStatisticsService.everyDayPublishCount(startTime,endTime);
-            int catCount = qianlimaStatisticsService.everyDayCatchCount(startTime,endTime);
-            logger.info("phpcmsContentCount:{},biddingRawCount:{}",count,catCount);
             Map<String,Object> mongoMap = new HashMap<>(20);
             mongoMap.put("catchCount",catCount);
             mongoMap.put("publishCount",count);
@@ -60,12 +60,12 @@ public class StatisticsServiceImpl {
             mongoMap.put("currentDayStr",currentDayStr);
             mongoTemplate.insert(mongoMap,MONGO_COLLECTION_NAME);
             logger.info("{} count is not exist,mongo inserted!",currentDayStr);
-        }/*else{
+        }else{
             Update update = new Update();
             update.set("updateTime",System.currentTimeMillis()).set("publishCount",count).set("catchCount",catCount);
             mongoTemplate.updateFirst(query,update,PhpcmsContentStatistics.class);
             logger.info("{}count is exist,mongo updated!",currentDayStr);
-        }*/
+        }
     }
 
 }

@@ -22,12 +22,6 @@ public class DataShowController {
     @Resource
     private DataShowService dataShowService;
 
-    @RequestMapping("/datashow")
-    @ResponseBody
-    public Map<String,Object> dataShow(@RequestParam Map<String,Object> requestParams){
-        return dataShowService.dataShow(requestParams);
-    }
-
     @RequestMapping("/datadisplay")
     @ResponseBody
     public Map<String,Object> dataDisplay(@RequestParam Map<String,Object> requestParams){

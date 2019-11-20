@@ -9,6 +9,5 @@ import java.util.Map;
  * @create: 2019-11-11 13:53
  **/
 public interface DataShowService {
-    Map<String,Object> dataShow(Map<String,Object> requestParams);
     Map<String,Object> dataDisplay(Map<String,Object> requestParams);
 }

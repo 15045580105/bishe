@@ -53,7 +53,7 @@ public class DataShowServiceImpl implements DataShowService {
         long startTime = 0;
         long endTime = 0;
         try{
-            startTime = simpleDateFormat.parse(startTimeStr).getTime();
+            startTime = simpleDateFormat.parse(startTimeStr).getTime()/1000;
         }catch (Exception e){
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_MONTH, 1);
@@ -64,7 +64,7 @@ public class DataShowServiceImpl implements DataShowService {
             startTime=c.getTimeInMillis()/1000;
         }
         try{
-            endTime = simpleDateFormat.parse(endTimeStr).getTime();
+            endTime = simpleDateFormat.parse(endTimeStr).getTime()/1000;
         }catch (Exception e){
             endTime=(System.currentTimeMillis()/(1000*3600*24)*(1000*3600*24)-TimeZone.getDefault().getRawOffset())/1000;
         }

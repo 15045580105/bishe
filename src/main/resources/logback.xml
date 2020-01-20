@@ -15,7 +15,7 @@
 
     <appender name="InfoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${dir}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${dir}/info.log</fileNamePattern>
             <maxHistory>${history}</maxHistory>
         </rollingPolicy>
         <encoder>

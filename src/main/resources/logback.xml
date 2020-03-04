@@ -14,13 +14,15 @@
     </appender>
 
     <appender name="InfoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${dir}/info.log</fileNamePattern>
-            <maxHistory>${history}</maxHistory>
-        </rollingPolicy>
+        <file>${dir}/info.log</file>
         <encoder>
             <pattern>${pattern}</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>500MB</maxFileSize>
+            <fileNamePattern>${dir}/archive/info-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+            <maxHistory>${history}</maxHistory>
+        </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>

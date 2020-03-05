@@ -14,7 +14,7 @@ spring:
           url: jdbc:mysql://172.18.30.34:3306/qianlima?characterEncoding=UTF-8
   data:
     mongodb:
-      uri: mongodb://mongo.intra.qianlima.com:27018/qlmdb
+      uri: mongodb://172.18.30.34:27017/qlmdb
 xxl:
   job:
     admin:

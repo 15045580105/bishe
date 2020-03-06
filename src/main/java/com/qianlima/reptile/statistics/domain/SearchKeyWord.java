@@ -5,12 +5,11 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
-@Document(collection = "DataStatistics")
+@Document(collection = "SearchKeyWord")
 @Data
-public class DataStatistics {
+public class SearchKeyWord {
 
     @Id
     private ObjectId id;
@@ -18,17 +17,15 @@ public class DataStatistics {
     /*
     统计类型   qianlima-bt  qianlima-qw
      */
-    private String type;
+    private String keyword;
 
     /**
      * 统计日期  2020-01-01、2020-01-02         2020-01-01 == querytime eq
      */
-    private String queryDate;
+    private Date updateTime;
+
     /**
-     * 统计参数
+     * 磐石账户
      */
-    private List<Map<String,Long>> countResult;
-
-
-
+    private String operator;
 }

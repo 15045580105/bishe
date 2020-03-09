@@ -12,6 +12,16 @@ spring:
           password: azTehcdNldWk
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://10.80.184.200:3309/qianlima?characterEncoding=UTF-8
+        modmonitor:
+          username: root
+          password: uRGtSxZUdUy8GnMB
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://121.40.46.25:3309/modmonitor?useUnicode=true&characterEncoding=utf8
+        octopus:
+          username: spiderWriter
+          password: tLovexLD2PUe
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
   data:
     mongodb:
       uri: mongodb://reptile:reptile@10.26.29.40:27018,10.30.162.200:27018/reptile_statistics

@@ -7,10 +7,7 @@ import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.service.DataShowService;
 import com.qianlima.reptile.statistics.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,7 +35,7 @@ public class DataShowController {
     }
 
 
-    @RequestMapping("/statistics")
+    @PostMapping("/fault_tmplt")
     @ResponseBody
     public Response dataDisplay(String startTime, String endTime){
         List<Map<String, String>> list = statisticalService.statistical(startTime, endTime);

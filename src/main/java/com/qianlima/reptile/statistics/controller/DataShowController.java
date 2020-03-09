@@ -5,6 +5,7 @@ package com.qianlima.reptile.statistics.controller;
 import com.alibaba.fastjson.JSON;
 import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.service.DataShowService;
+import com.qianlima.reptile.statistics.service.FirstKeyWordStatistics;
 import com.qianlima.reptile.statistics.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,8 @@ public class DataShowController {
     private DataShowService dataShowService;
     @Autowired
     private StatisticalService statisticalService;
+    @Autowired
+    private FirstKeyWordStatistics firstKeyWordStatistics;
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -41,6 +44,12 @@ public class DataShowController {
         List<Map<String, String>> list = statisticalService.statistical(startTime, endTime);
         String s = JSON.toJSONString(list);
         return Response.success(s);
+    }
+
+    @PostMapping("/firstKeyWord")
+    public Response firstKeyWordCount(String startTime, String endTime){
+        Response response = firstKeyWordStatistics.firstKeyWordStatistics(startTime, endTime);
+        return Response.success(response);
     }
 
 }

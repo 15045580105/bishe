@@ -42,8 +42,7 @@ public class DataShowController {
     @ResponseBody
     public Response dataDisplay(String startTime, String endTime){
         List<Map<String, String>> list = statisticalService.statistical(startTime, endTime);
-        String s = JSON.toJSONString(list);
-        return Response.success(s);
+        return Response.success(list);
     }
 
     @PostMapping("/firstKeyWord")

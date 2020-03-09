@@ -115,7 +115,7 @@ public class StatisticalServiceImpl implements StatisticalService {
         if(StringUtils.isNotBlank(map.get(3+""))){b = Integer.parseInt(map.get(3+""));}
         if(StringUtils.isNotBlank(map.get(4+""))){c = Integer.parseInt(map.get(4+""));}
         if(StringUtils.isNotBlank(map.get("total")) && !map.get("total").equals("0")){
-            int s = Integer.parseInt(map.get("total"));
+            double s = Integer.parseInt(map.get("total"));
             double f = (a+b+c)/s;
             return String.format("%.4f", f);
         }else{

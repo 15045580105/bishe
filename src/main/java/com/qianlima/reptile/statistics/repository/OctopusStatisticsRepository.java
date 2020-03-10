@@ -26,10 +26,7 @@ public class OctopusStatisticsRepository {
 
     public List<OctopusStatistics> queryInTime(String startTime, String endTime) {
 
-        Criteria criteria = Criteria.where("queryDate")
-                .andOperator(
-                        Criteria.where("createdDate").lte(endTime),
-                        Criteria.where("createdDate").gte(startTime));
+        Criteria criteria = Criteria.where("queryDate").gte(startTime).lte(endTime);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);

@@ -28,8 +28,8 @@ public class OctopusStatisticsRepository {
 
         Criteria criteria = Criteria.where("queryDate")
                 .andOperator(
-                        Criteria.where("createdDate").lte(DateUtils.StringToDate(endTime,DateUtils.FUZSDF)),
-                        Criteria.where("createdDate").gte(DateUtils.StringToDate(startTime,DateUtils.FUZSDF)));
+                        Criteria.where("createdDate").lte(endTime),
+                        Criteria.where("createdDate").gte(startTime));
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);
@@ -40,7 +40,7 @@ public class OctopusStatisticsRepository {
 
     public List<OctopusStatistics> queryByTime(String time) {
 
-        Criteria criteria = Criteria.where("queryDate").is(DateUtils.StringToDate(time, DateUtils.FUZSDF));
+        Criteria criteria = Criteria.where("queryDate").is(time);
 
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();

@@ -21,7 +21,7 @@ spring:
           username: spiderWriter
           password: tLovexLD2PUe
           driver-class-name: com.mysql.jdbc.Driver
-          jdbc-url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
   data:
     mongodb:
       uri: mongodb://172.18.30.34:27017/qlmdb

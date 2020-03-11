@@ -37,8 +37,20 @@ public class FirstKeyWordResult {
      * 千里马统计数
      */
     private Integer qlmCount;
+    /**
+     * 关键词id
+     */
+    private Integer keywordId;
+    /**
+     * 开始时间
+     */
+    private String startTime;
+    /**
+     * 结束时间
+     */
+    private String endTime;
 
-    public FirstKeyWordResult(Integer order, String firstKeyWord, Integer guoXinCount, Integer chainBiddingCount, Integer chainRecruitmentCount, Integer navigateCount, Integer qlmCount) {
+    public FirstKeyWordResult(Integer order, String firstKeyWord, Integer guoXinCount, Integer chainBiddingCount, Integer chainRecruitmentCount, Integer navigateCount, Integer qlmCount, Integer keywordId, String startTime, String endTime) {
         this.order = order;
         this.firstKeyWord = firstKeyWord;
         this.guoXinCount = guoXinCount;
@@ -46,5 +58,8 @@ public class FirstKeyWordResult {
         this.chainRecruitmentCount = chainRecruitmentCount;
         this.navigateCount = navigateCount;
         this.qlmCount = qlmCount;
+        this.keywordId = keywordId;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 }

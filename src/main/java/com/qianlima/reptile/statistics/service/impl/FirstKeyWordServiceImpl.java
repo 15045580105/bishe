@@ -5,7 +5,7 @@ import com.qianlima.reptile.statistics.entity.FirstKeyWordResult;
 import com.qianlima.reptile.statistics.entity.KeyWordTask;
 import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.mapper.FirstKeyWordMapper;
-import com.qianlima.reptile.statistics.service.FirstKeyWordStatistics;
+import com.qianlima.reptile.statistics.service.FirstKeyWordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,7 @@ import java.util.List;
  * @create: 2020-03-09 14:16:19
  **/
 @Service
-@Slf4j
-public class FirstKeyWordStatisticsImpl implements FirstKeyWordStatistics {
+public class FirstKeyWordServiceImpl implements FirstKeyWordService {
 
     @Autowired
     private FirstKeyWordMapper firstKeyWordMapper;
@@ -37,7 +36,8 @@ public class FirstKeyWordStatisticsImpl implements FirstKeyWordStatistics {
         if(null == ids || ids.size() == 0) {
             return Response.error(101,"关键词id为空！");
         }
-        ArrayList<FirstKeyWordResult> resultList = new ArrayList<>(35);
+        //避免list扩容
+        ArrayList<FirstKeyWordResult> resultList = new ArrayList<>(ids.size());
         for (Integer id: ids) {
             int countGuoXin = 0;
             int countZhaoBiao = 0;
@@ -63,7 +63,7 @@ public class FirstKeyWordStatisticsImpl implements FirstKeyWordStatistics {
                     countQLM = countQLM + countData;
                 }
             }
-            resultList.add(new FirstKeyWordResult(order, taskListUrls, countGuoXin, countZhaoBiao, countCaiZhao, countDaoHang, countQLM));
+            resultList.add(new FirstKeyWordResult(order, taskListUrls, countGuoXin, countZhaoBiao, countCaiZhao, countDaoHang, countQLM, id, startTime ,endTime));
             order ++;
 
         }

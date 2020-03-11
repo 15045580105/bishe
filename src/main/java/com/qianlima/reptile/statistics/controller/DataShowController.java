@@ -2,11 +2,10 @@ package com.qianlima.reptile.statistics.controller;
 
 
 
-import com.alibaba.fastjson.JSON;
+import com.qianlima.reptile.statistics.entity.KeyWordDataDetailReq;
 import com.qianlima.reptile.statistics.entity.Response;
-import com.qianlima.reptile.statistics.service.DataShowService;
-import com.qianlima.reptile.statistics.service.FirstKeyWordStatistics;
-import com.qianlima.reptile.statistics.service.StatisticalService;
+import com.qianlima.reptile.statistics.entity.SecondKeyWordReq;
+import com.qianlima.reptile.statistics.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,11 @@ public class DataShowController {
     @Autowired
     private StatisticalService statisticalService;
     @Autowired
-    private FirstKeyWordStatistics firstKeyWordStatistics;
+    private FirstKeyWordService FirstKeyWordService;
+    @Autowired
+    private SecondKeyWordService secondKeyWordService;
+    @Autowired
+    private KeyWordDataDetailService keyWordDataDetailService;
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -47,7 +50,19 @@ public class DataShowController {
 
     @PostMapping("/firstKeyWord")
     public Response firstKeyWordCount(String startTime, String endTime){
-        Response response = firstKeyWordStatistics.firstKeyWordStatistics(startTime, endTime);
+        Response response = FirstKeyWordService.firstKeyWordStatistics(startTime, endTime);
+        return Response.success(response);
+    }
+
+    @PostMapping("/secondKeyWord")
+    public Response secondKeyWordCount(SecondKeyWordReq secondKeyWordReq){
+        Response response = secondKeyWordService.secondKeyWordStatistics(secondKeyWordReq);
+        return Response.success(response);
+    }
+
+    @PostMapping("/keyWordDataDetail")
+    public Response KeyWordDataDetailCount(KeyWordDataDetailReq keyWordDataDetailReq){
+        Response response = keyWordDataDetailService.keyWordDataDetail(keyWordDataDetailReq);
         return Response.success(response);
     }
 

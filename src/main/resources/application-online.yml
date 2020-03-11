@@ -31,7 +31,7 @@ spring:
           username: root
           password: qianlima
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://114.215.123.193:3309/rawdatas?useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://114.215.123.193:3309/spiderplatform?useUnicode=true&characterEncoding=utf8
   data:
     mongodb:
       uri: mongodb://reptile:reptile@10.26.29.40:27018,10.30.162.200:27018/reptile_statistics

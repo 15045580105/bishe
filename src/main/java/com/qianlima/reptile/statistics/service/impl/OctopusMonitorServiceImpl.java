@@ -48,50 +48,39 @@ public class OctopusMonitorServiceImpl implements OctopusMonitorService {
         octopusStatisticsRepository.save(getOctopusStatistics());
     }
 
-    public OctopusStatistics getOctopusStatistics() {
-        OctopusStatistics octopusStatistics = new OctopusStatistics();
-
-        octopusStatistics.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
-
+    private OctopusStatistics getOctopusStatistics() {
+        OctopusStatistics octopus = new OctopusStatistics();
+        octopus.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
         if (BazhuayuTask.token.equals("")) {
             bazhuayuTask.getToken();
         }
         Map<Integer, String> taskGroupMap = bazhuayuTask.getAllTaskGroup();
         //获取所有任务
         List<Map<String, String>> taskList = bazhuayuTask.getTasks(taskGroupMap);
-        octopusStatistics.setTotal(taskList.size());
-
+        octopus.setTotal(taskList.size());
         //获取当天时间 start：18：00：00 end：23：59：59
-        long nowTime =System.currentTimeMillis();
-        long todayStartTime = nowTime - (nowTime + TimeZone.getDefault().getRawOffset())% (1000*3600*24) + 18*3600*1000L;
+        long nowTime = System.currentTimeMillis();
+        long todayStartTime = nowTime - (nowTime + TimeZone.getDefault().getRawOffset()) % (1000 * 3600 * 24) + 18 * 3600 * 1000L;
         long todayEndTime = todayStartTime + 21599000L;
-
-        List<OctopusLogInfo> logInfos = octopusMapper
-                .getLogInfos(todayStartTime,
-                        todayEndTime);
-
-
-//        填充数据
+        List<OctopusLogInfo> logInfos = octopusMapper.getLogInfos(todayStartTime, todayEndTime);
+        //填充数据
         for (OctopusLogInfo logInfo : logInfos) {
             if (logInfo.getStatus().equals("0")) {
-                octopusStatistics.setRecUnStartAmount(logInfo.getCount());
+                octopus.setRecUnStartAmount(logInfo.getCount());
             }
             if (logInfo.getStatus().equals("1")) {
-                octopusStatistics.setDayTimeAmount(logInfo.getCount());
+                octopus.setDayTimeAmount(logInfo.getCount());
             }
             if (logInfo.getStatus().equals("4")) {
-                octopusStatistics.setUnRecAmount(logInfo.getCount());
+                octopus.setUnRecAmount(logInfo.getCount());
             }
         }
-
-
-        octopusStatistics.setNightTimeAmount(octopusStatistics.getTotal()
-                - octopusStatistics.getRecUnStartAmount()
-                - octopusStatistics.getDayTimeAmount());
-        octopusStatistics.setUnAccessAmount(octopusStatistics.getTotal()
-                - octopusStatistics.getRecUnStartAmount()
-                - octopusStatistics.getDayTimeAmount()
-                - octopusStatistics.getUnRecAmount());
-        return octopusStatistics;
+        // 晚上执行量
+        long nightTimeAmount = octopus.getTotal() - octopus.getRecUnStartAmount() - octopus.getDayTimeAmount();
+        octopus.setNightTimeAmount(nightTimeAmount);
+        // 无法访问量
+        long unAccessAmount = octopus.getTotal() - octopus.getRecUnStartAmount() - octopus.getDayTimeAmount() - octopus.getUnRecAmount();
+        octopus.setUnAccessAmount(unAccessAmount);
+        return octopus;
     }
 }

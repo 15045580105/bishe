@@ -15,6 +15,7 @@ import javax.annotation.Resource;
  * @version 1.0
  * @ClassName: OctopusQueryJob
  * @date 2020/3/9 2:25 下午
+ * @desc 每日晚上10后点执行，统计当天数量，并存入数据库
  */
 @Component
 @JobHander(value = "OctopusQueryJobHandler")

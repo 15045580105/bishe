@@ -36,3 +36,7 @@ xxl:
       logretentiondays: 1
       logpath:
     accessToken:
+
+#是否开启 swagger-ui
+swagger:
+  enabled: true

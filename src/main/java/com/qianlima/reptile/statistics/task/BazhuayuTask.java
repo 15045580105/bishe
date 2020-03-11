@@ -2,25 +2,10 @@ package com.qianlima.reptile.statistics.task;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qianlima.reptile.statistics.utils.HrefSuffixConfig;
 import com.qianlima.reptile.statistics.utils.HttpClientUtils;
-import com.qianlima.reptile.statistics.utils.ThreadPoolSize;
-import com.qianlima.reptile.statistics.utils.TypeContent;
-import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @program: bazhuaya

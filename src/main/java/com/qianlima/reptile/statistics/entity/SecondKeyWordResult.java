@@ -29,12 +29,17 @@ public class SecondKeyWordResult {
      * 结束时间
      */
     private String endTime;
+    /**
+     * 结束时间
+     */
+    private String web;
 
-    public SecondKeyWordResult(Integer order, String keyWord, Integer count, String startTime, String endTime) {
+    public SecondKeyWordResult(Integer order, String keyWord, Integer count, String startTime, String endTime, String web) {
         this.order = order;
         this.keyWord = keyWord;
         this.count = count;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.web = web;
     }
 }

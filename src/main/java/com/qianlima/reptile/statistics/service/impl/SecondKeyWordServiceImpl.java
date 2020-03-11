@@ -36,7 +36,7 @@ public class SecondKeyWordServiceImpl implements SecondKeyWordService {
         int order = 1;
         for (String keyword : keywordArray) {
             Integer count = secondKeyWordMapper.countSecondKeyWord(secondKeyWordReq.getWeb(), keyword, secondKeyWordReq.getStartTime(), secondKeyWordReq.getEndTime());
-            SecondKeyWordResult secondKeyWordResult = new SecondKeyWordResult(order, keyword, count, secondKeyWordReq.getStartTime(), secondKeyWordReq.getEndTime());
+            SecondKeyWordResult secondKeyWordResult = new SecondKeyWordResult(order, keyword, count, secondKeyWordReq.getStartTime(), secondKeyWordReq.getEndTime(), secondKeyWordReq.getWeb());
             resultList.add(secondKeyWordResult);
             order++;
         }

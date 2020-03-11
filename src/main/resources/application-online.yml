@@ -36,3 +36,6 @@ xxl:
       logretentiondays: 1
       logpath:
     accessToken:
+
+swagger:
+  enabled: false

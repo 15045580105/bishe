@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.repository;
 
 import com.mongodb.BasicDBObject;
 import com.qianlima.reptile.statistics.domain.OctopusStatistics;
+import com.qianlima.reptile.statistics.utils.DateUtils;
 import org.bson.Document;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,15 +24,29 @@ public class OctopusStatisticsRepository {
         return mongoTemplate.save(dataStatistics);
     }
 
-    public List<OctopusStatistics> query(OctopusStatistics dataStatistics) {
-        Criteria criteria = Criteria.where("queryDate").in(dataStatistics.getQueryDate());
+    public List<OctopusStatistics> queryInTime(String startTime, String endTime) {
+
+        Criteria criteria = Criteria.where("queryDate").gte(startTime).lte(endTime);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
         query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
         return mongoTemplate.find(query, OctopusStatistics.class);
-
-
     }
+
+    public List<OctopusStatistics> queryByTime(String time) {
+
+        Criteria criteria = Criteria.where("queryDate").is(time);
+
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        fieldsObject.put("id", false);
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
+        return mongoTemplate.find(query, OctopusStatistics.class);
+    }
+
+
+
 }

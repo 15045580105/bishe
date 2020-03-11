@@ -6,6 +6,10 @@ import com.qianlima.reptile.statistics.entity.KeyWordDataDetailReq;
 import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.SecondKeyWordReq;
 import com.qianlima.reptile.statistics.service.*;
+import com.qianlima.reptile.statistics.service.DataShowService;
+import com.qianlima.reptile.statistics.service.FirstKeyWordStatistics;
+import com.qianlima.reptile.statistics.service.OctopusMonitorService;
+import com.qianlima.reptile.statistics.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +37,9 @@ public class DataShowController {
     private SecondKeyWordService secondKeyWordService;
     @Autowired
     private KeyWordDataDetailService keyWordDataDetailService;
+    @Autowired
+    private OctopusMonitorService octopusMonitorService;
+
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -41,6 +48,12 @@ public class DataShowController {
     }
 
 
+    /**
+     * 故障模板统计
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @PostMapping("/fault_tmplt")
     @ResponseBody
     public Response dataDisplay(String startTime, String endTime){
@@ -48,6 +61,12 @@ public class DataShowController {
         return Response.success(list);
     }
 
+    /**
+     * 第一级关键词检索
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @PostMapping("/firstKeyWord")
     public Response firstKeyWordCount(String startTime, String endTime){
         Response response = FirstKeyWordService.firstKeyWordStatistics(startTime, endTime);
@@ -66,4 +85,15 @@ public class DataShowController {
         return Response.success(response);
     }
 
+
+    /**
+     * 八爪鱼统计
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @PostMapping(path = "/octopus")
+    public Response getStatistics(String startTime, String endTime) {
+        return octopusMonitorService.getOctopusStatistics(startTime, endTime);
+    }
 }

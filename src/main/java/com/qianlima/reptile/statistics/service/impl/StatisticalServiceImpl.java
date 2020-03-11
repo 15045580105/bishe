@@ -83,12 +83,12 @@ public class StatisticalServiceImpl implements StatisticalService {
         for (int i = -2; i <7 ; i++) {
             int a = 0,b = 0,c = 0;
             int d = 0,e = 0,f = 0;
-            if(map.containsKey(i)){a = Integer.parseInt(map.get(i));}
-            if(map1.containsKey(i)){b = Integer.parseInt(map1.get(i));}
-            if(map2.containsKey(i)){c = Integer.parseInt(map2.get(i));}
-            if(map3.containsKey(i)){d = Integer.parseInt(map3.get(i));}
-            if(map4.containsKey(i)){e = Integer.parseInt(map4.get(i));}
-            if(map5.containsKey(i)){f = Integer.parseInt(map5.get(i));}
+            if(map.containsKey(i+"")){a = Integer.parseInt(map.get(i+""));}
+            if(map1.containsKey(i+"")){b = Integer.parseInt(map1.get(i+""));}
+            if(map2.containsKey(i+"")){c = Integer.parseInt(map2.get(i+""));}
+            if(map3.containsKey(i+"")){d = Integer.parseInt(map3.get(i+""));}
+            if(map4.containsKey(i+"")){e = Integer.parseInt(map4.get(i+""));}
+            if(map5.containsKey(i+"")){f = Integer.parseInt(map5.get(i+""));}
             map6.put(i+"",(a+b+c)+"");
             map7.put(i+"",(d+e+f)+"");
         }
@@ -110,13 +110,14 @@ public class StatisticalServiceImpl implements StatisticalService {
     }
 
     private String efficient(Map<String, String> map){
-        int a=0,b=0,c=0;
-        if(StringUtils.isNotBlank(map.get("1"))){a = Integer.parseInt(map.get("1"));}
-        if(StringUtils.isNotBlank(map.get("3"))){a = Integer.parseInt(map.get("3"));}
-        if(StringUtils.isNotBlank(map.get("4"))){a = Integer.parseInt(map.get("4"));}
+        double a=0,b=0,c=0;
+        if(StringUtils.isNotBlank(map.get(1+""))){a = Integer.parseInt(map.get(1+""));}
+        if(StringUtils.isNotBlank(map.get(3+""))){b = Integer.parseInt(map.get(3+""));}
+        if(StringUtils.isNotBlank(map.get(4+""))){c = Integer.parseInt(map.get(4+""));}
         if(StringUtils.isNotBlank(map.get("total")) && !map.get("total").equals("0")){
-            double f = (a+b+c)/Integer.parseInt(map.get("total"));
-            return String.format("%.2f", f);
+            double s = Integer.parseInt(map.get("total"));
+            double f = (a+b+c)/s;
+            return String.format("%.4f", f);
         }else{
             return "";
         }

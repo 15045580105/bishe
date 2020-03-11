@@ -7,7 +7,6 @@ import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.SecondKeyWordReq;
 import com.qianlima.reptile.statistics.service.*;
 import com.qianlima.reptile.statistics.service.DataShowService;
-import com.qianlima.reptile.statistics.service.FirstKeyWordStatistics;
 import com.qianlima.reptile.statistics.service.OctopusMonitorService;
 import com.qianlima.reptile.statistics.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,12 +72,22 @@ public class DataShowController {
         return Response.success(response);
     }
 
+    /**
+     * 第二级关键词检索
+     * @param secondKeyWordReq
+     * @return
+     */
     @PostMapping("/secondKeyWord")
     public Response secondKeyWordCount(SecondKeyWordReq secondKeyWordReq){
         Response response = secondKeyWordService.secondKeyWordStatistics(secondKeyWordReq);
         return Response.success(response);
     }
 
+    /**
+     * 关键词统计详情
+     * @param keyWordDataDetailReq
+     * @return
+     */
     @PostMapping("/keyWordDataDetail")
     public Response KeyWordDataDetailCount(KeyWordDataDetailReq keyWordDataDetailReq){
         Response response = keyWordDataDetailService.keyWordDataDetail(keyWordDataDetailReq);

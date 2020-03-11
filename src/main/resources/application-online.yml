@@ -22,6 +22,16 @@ spring:
           password: tLovexLD2PUe
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
+        spiderplatform:
+          username: root
+          password: qianlima
+          driver-class-name: com.mysql.jdbc.Driver
+          url: dbc:mysql://10.80.186.152:3309/spiderplatform?useUnicode=true&characterEncoding=gbk
+        rawdatas:
+          username: root
+          password: qianlima
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://114.215.123.193:3309/rawdatas?useUnicode=true&characterEncoding=utf8
   data:
     mongodb:
       uri: mongodb://reptile:reptile@10.26.29.40:27018,10.30.162.200:27018/reptile_statistics

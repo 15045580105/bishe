@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -27,14 +26,14 @@ public class KeyWordDataDetailServiceImpl implements KeyWordDataDetailService {
         if (null == keyWordDataDetailReq || StringUtils.isBlank(keyWordDataDetailReq.getWeb()) || StringUtils.isBlank(keyWordDataDetailReq.getStartTime()) || StringUtils.isBlank(keyWordDataDetailReq.getKeyword()) || StringUtils.isBlank(keyWordDataDetailReq.getEndTime())) {
             return Response.error(100, "参数不能为空！");
         }
-        try {
-            keyWordDataDetailReq.setStartTime(new String(keyWordDataDetailReq.getStartTime().getBytes("iso-8859-1"), "gbk"));
-            keyWordDataDetailReq.setEndTime(new String(keyWordDataDetailReq.getEndTime().getBytes("iso-8859-1"), "gbk"));
-            keyWordDataDetailReq.setKeyword(new String(keyWordDataDetailReq.getKeyword().getBytes("iso-8859-1"), "gbk"));
-            keyWordDataDetailReq.setWeb(new String(keyWordDataDetailReq.getWeb().getBytes("iso-8859-1"), "gbk"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            keyWordDataDetailReq.setStartTime(new String(keyWordDataDetailReq.getStartTime().getBytes("iso-8859-1"), "gbk"));
+//            keyWordDataDetailReq.setEndTime(new String(keyWordDataDetailReq.getEndTime().getBytes("iso-8859-1"), "gbk"));
+//            keyWordDataDetailReq.setKeyword(new String(keyWordDataDetailReq.getKeyword().getBytes("iso-8859-1"), "gbk"));
+//            keyWordDataDetailReq.setWeb(new String(keyWordDataDetailReq.getWeb().getBytes("iso-8859-1"), "gbk"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
         List<KeyWordData> keyWordDatas = keyWordDataDetailMapper.dataDetail(keyWordDataDetailReq);
         for (int i = 1; i <= keyWordDatas.size(); i++) {
             keyWordDatas.get(i -1).setOrder(i);

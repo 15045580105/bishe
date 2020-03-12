@@ -36,32 +36,41 @@ public class StatisticalServiceImpl implements StatisticalService {
         reportStartTime = reportStartTime + " 00:00:00";
         reportEndTime = reportEndTime + " 23:59:59";
         List<Map<String, String>> list = new ArrayList<>();
+        //招标故障模版服务器障
         List<Map<String, Object>> list1 = modmonitorMapper.selectService(reportStartTime,reportEndTime);
         Map<String, String> map = conversion(list1, "tenderService");
         list.add(map);
+        //招标故障模版解析故障
         List<Map<String, Object>> list2 = modmonitorMapper.selectParsing(reportStartTime,reportEndTime);
         Map<String, String> map1 = conversion(list2, "tenderParsing");
         list.add(map1);
+        //招标故障模版解析值故障
         List<Map<String, Object>> list3 = modmonitorMapper.selectValue(reportStartTime,reportEndTime);
         Map<String, String> map2 = conversion(list3, "tenderValue");
         list.add(map2);
+        //前期故障模版服务器障
         List<Map<String, Object>> list4 = modmonitorMapper.selectEarlyService(reportStartTime,reportEndTime);
         Map<String, String> map3 = conversion(list4, "earlyService");
         list.add(map3);
+        //前期故障模版解析故障
         List<Map<String, Object>> list5 = modmonitorMapper.selectEarlyParsing(reportStartTime,reportEndTime);
         Map<String, String> map4 = conversion(list5, "earlyParsing");
         list.add(map4);
+        //前期故障模版解析值故障
         List<Map<String, Object>> list6 = modmonitorMapper.selectEarlyValue(reportStartTime,reportEndTime);
         Map<String, String> map5 = conversion(list6, "earlyValue");
         list.add(map5);
+        //乱码数据
         List<Map<String, Object>> list7 = modmonitorMapper.selectMessyCode(DateUtil.date3TimeStamp(reportStartTime),DateUtil.date3TimeStamp(reportEndTime));
         Map<String, String> map6 = conversion(list7, "MessyCode");
         map6.put("efficient",efficient(map6));
         list.add(map6);
+        //八抓鱼
         List<Map<String, Object>> list8 = octopusMapper.selectStatusCode(DateUtil.date2TimeStamp(reportStartTime),DateUtil.date2TimeStamp(reportEndTime));
         Map<String, String> map7 = conversion(list8, "statusCode");
         map7.put("efficient",efficient(map7));
         list.add(map7);
+        //人工编辑
         List<Map<String, Object>> list9 = modmonitorMapper.selectHumanEditors(DateUtil.date2TimeStamp(reportStartTime),DateUtil.date2TimeStamp(reportEndTime));
         Map<String, String> map8 = conversion(list9, "humanEditors");
         map8.put("efficient",efficient(map8));

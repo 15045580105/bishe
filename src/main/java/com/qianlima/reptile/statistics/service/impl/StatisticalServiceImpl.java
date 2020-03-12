@@ -54,15 +54,15 @@ public class StatisticalServiceImpl implements StatisticalService {
         List<Map<String, Object>> list6 = modmonitorMapper.selectEarlyValue(reportStartTime,reportEndTime);
         Map<String, String> map5 = conversion(list6, "earlyValue");
         list.add(map5);
-        List<Map<String, Object>> list7 = modmonitorMapper.selectMessyCode(DateUtil.date2TimeStamp(reportStartTime),DateUtil.date2TimeStamp(reportEndTime));
+        List<Map<String, Object>> list7 = modmonitorMapper.selectMessyCode(DateUtil.date3TimeStamp(reportStartTime),DateUtil.date3TimeStamp(reportEndTime));
         Map<String, String> map6 = conversion(list7, "MessyCode");
         map6.put("efficient",efficient(map6));
         list.add(map6);
-        List<Map<String, Object>> list8 = octopusMapper.selectStatusCode(reportStartTime,reportEndTime);
+        List<Map<String, Object>> list8 = octopusMapper.selectStatusCode(DateUtil.date2TimeStamp(reportStartTime),DateUtil.date2TimeStamp(reportEndTime));
         Map<String, String> map7 = conversion(list8, "statusCode");
         map7.put("efficient",efficient(map7));
         list.add(map7);
-        List<Map<String, Object>> list9 = modmonitorMapper.selectHumanEditors(reportStartTime,reportEndTime);
+        List<Map<String, Object>> list9 = modmonitorMapper.selectHumanEditors(DateUtil.date2TimeStamp(reportStartTime),DateUtil.date2TimeStamp(reportEndTime));
         Map<String, String> map8 = conversion(list9, "humanEditors");
         map8.put("efficient",efficient(map8));
         list.add(map8);
@@ -114,8 +114,8 @@ public class StatisticalServiceImpl implements StatisticalService {
         if(StringUtils.isNotBlank(map.get(1+""))){a = Integer.parseInt(map.get(1+""));}
         if(StringUtils.isNotBlank(map.get(3+""))){b = Integer.parseInt(map.get(3+""));}
         if(StringUtils.isNotBlank(map.get(4+""))){c = Integer.parseInt(map.get(4+""));}
-        if(StringUtils.isNotBlank(map.get("total")) && !map.get("total").equals("0")){
-            double s = Integer.parseInt(map.get("total"));
+        if(StringUtils.isNotBlank(map.get("-1")) && !map.get("-1").equals("0")){
+            double s = Integer.parseInt(map.get("-1"));
             double f = (a+b+c)/s;
             return String.format("%.4f", f);
         }else{

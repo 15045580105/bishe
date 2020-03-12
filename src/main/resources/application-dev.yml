@@ -42,7 +42,7 @@ xxl:
     executor:
       appname: ${spring.application.name}
       ip:
-      port: 9990
+      port: 38085
       logretentiondays: 1
       logpath:
     accessToken:

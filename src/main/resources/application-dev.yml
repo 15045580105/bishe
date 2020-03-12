@@ -22,11 +22,11 @@ spring:
           password: tLovexLD2PUe
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
-        qianlima1:
+        spiderplatform:
           username: root
           password: qianlima
           driver-class-name: com.mysql.jdbc.Driver
-          url: dbc:mysql://172.18.30.34:3306/spiderplatform?useUnicode=true&characterEncoding=gbk
+          url: jdbc:mysql://172.18.30.34:3306/spiderplatform?useUnicode=true&characterEncoding=gbk
         rawdatas:
           username: root
           password: qianlima
@@ -42,7 +42,7 @@ xxl:
     executor:
       appname: ${spring.application.name}
       ip:
-      port: 9990
+      port: 9991
       logretentiondays: 1
       logpath:
     accessToken:

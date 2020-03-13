@@ -63,14 +63,24 @@ public class DateUtil {
      * @parameter * @param null
      * @since
      */
-    public static long date2TimeStamp(String date_str) {
+    public static String date2TimeStamp(String date_str) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return sdf.parse(date_str).getTime()/1000;
+            return String.valueOf(sdf.parse(date_str).getTime());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return "";
+    }
+
+    public static String date3TimeStamp(String date_str) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return String.valueOf(sdf.parse(date_str).getTime() / 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public static String getfromatString(String datestr) {

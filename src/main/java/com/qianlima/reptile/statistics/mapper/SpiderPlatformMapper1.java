@@ -24,7 +24,7 @@ public interface SpiderPlatformMapper1 {
     KeyWordTask selectKeyWordsTaskById(@Param("id") Integer id);
 
     @Select("select keywords from website_account_keywords where id = #{keywordId}")
-    String selectKeywordsById(Integer keywordId);
+    String selectKeywordsById(@Param("keywordId") Integer keywordId);
 
 
 

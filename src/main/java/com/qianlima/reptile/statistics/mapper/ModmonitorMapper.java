@@ -39,8 +39,8 @@ public interface ModmonitorMapper {
     @Select("select count(1) as count,state from artificial_editor_monitor  where verify_code <> 200 and verify_time >=#{startTime} and verify_time <#{endTime} group by state")
     List<Map<String, Object>> selectHumanEditors(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
-    @Select("select count(1) as count, state from modmonitor.messy_tmplt where create_time > 1579449600 and create_time<1579622399 group by state")
-    List<Map<String, Object>> selectMessyCode(@Param("startTime") long startTime, @Param("endTime") long endTime);
+    @Select("select count(1) as count, state from modmonitor.messy_tmplt where create_time > #{startTime} and create_time<#{endTime} group by state")
+    List<Map<String, Object>> selectMessyCode(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
     @Select("select  count(distinct(pot_name))   from  fail_tmplt  where  type = 1  and  create_time  >  #{startTime}  and  create_time  < #{endTime}   and  valid_state  <>  200")
     String selectPotTotal(@Param("startTime") String startTime, @Param("endTime") String endTime);

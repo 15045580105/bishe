@@ -45,9 +45,21 @@ public interface ModmonitorMapper {
     @Select("select  count(distinct(pot_name))   from  fail_tmplt  where  type = 1  and  create_time  >  #{startTime}  and  create_time  < #{endTime}   and  valid_state  <>  200")
     String selectPotTotal(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
+    /**
+     * 查询未处理POT量
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select("select  count(distinct(pot_name))  from  fail_tmplt  where  type = 1 and    create_time  >   #{startTime}  and  create_time  < #{endTime}   and  valid_state  <>  200  and  state  =  0")
     String selectPotUntreated(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
+    /**
+     * 已处理POT量
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select("select  count(distinct(pot_name))   from  fail_tmplt  where  type  =  1  and    create_time  >  #{startTime}   and  create_time  <  #{endTime}  and  valid_state  <>  200  and  state  >  0")
     String selectPotProcessed(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

@@ -13,13 +13,13 @@ spring:
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://172.18.30.34:3306/qianlima?characterEncoding=UTF-8
         modmonitor:
-          username: statistics
-          password: KF7lhEE3AIwM
+          username: root
+          password: uRGtSxZUdUy8GnMB
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://121.40.46.25:3309/modmonitor?useUnicode=true&characterEncoding=utf8
         octopus:
-          username: statistics
-          password: KF7lhEE3AIwM
+          username: spiderWriter
+          password: tLovexLD2PUe
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
         spiderplatform:

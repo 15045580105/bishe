@@ -146,6 +146,6 @@ public interface ModmonitorMapper {
      * @param endTime
      * @return
      */
-    @Select("select  count(distinct(pot_name))   from  fail_tmplt  where  type in (1,3,5)  and create_time  > #{startTime} and create_time <= #{endTime} and  valid_state  <>  200  and  state  >  0")
+    @Select("select  count(distinct(pot_name))   from  fail_tmplt  where  type in (1,3,5)  and create_time  > #{startTime} and create_time <= #{endTime} and  valid_state  <>  200  and  state  >  0  and operate_id is not null")
     String selectPotProcessed(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

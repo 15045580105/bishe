@@ -66,7 +66,7 @@ public class StatisticalServiceImpl implements StatisticalService {
 
     @Override
     public void statistical() {
-        String reportStartTime = "2020-03-13";
+        String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
                 //DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         String startTime = reportStartTime + " 00:00:00";
         String endTime = reportStartTime + " 23:59:59";
@@ -308,35 +308,22 @@ public class StatisticalServiceImpl implements StatisticalService {
             FaultTmpltStatistics faultTmpltStatistics = new FaultTmpltStatistics();
             Map<String, String> map = list.get(i);
             if (i == 0) {
-                faultTmpltStatistics.setType("biddingFault");
-                faultTmpltStatistics.setQueryDate(time);
-                faultTmpltStatistics.setTmpltTotal(StringUtils.isNotBlank(map.get("total")) ? Long.parseLong(map.get("total")) : 0);
-                faultTmpltStatistics.setUnHandleTmpltAmount(StringUtils.isNotBlank(map.get("0")) ? Long.parseLong(map.get("0")) : 0);
-                faultTmpltStatistics.setHandledTmpltAmount(StringUtils.isNotBlank(map.get("-1")) ? Long.parseLong(map.get("-1")) : 0);
                 faultTmpltStatistics.setUnHandlePotAmount(Long.parseLong(a));
                 faultTmpltStatistics.setHandledPotAmount(Long.parseLong(b));
                 faultTmpltStatistics.setPotTotal(Long.parseLong(c));
-                faultTmpltStatistics.setNeedObserAmount(StringUtils.isNotBlank(map.get("2")) ? Long.parseLong(map.get("2")) : 0);
-                faultTmpltStatistics.setNormalAmount(StringUtils.isNotBlank(map.get("6")) ? Long.parseLong(map.get("6")) : 0);
-                faultTmpltStatistics.setModifyAmount(StringUtils.isNotBlank(map.get("1")) ? Long.parseLong(map.get("1")) : 0);
-                faultTmpltStatistics.setAddAmount(StringUtils.isNotBlank(map.get("3")) ? Long.parseLong(map.get("3")) : 0);
-                faultTmpltStatistics.setManulAmount(StringUtils.isNotBlank(map.get("4")) ? Long.parseLong(map.get("4")) : 0);
-                faultTmpltStatistics.setInvalidAmount(StringUtils.isNotBlank(map.get("5")) ? Long.parseLong(map.get("5")) : 0);
-                faultTmpltStatistics.setEfficient(StringUtils.isNotBlank(map.get("efficient")) ? Double.parseDouble(map.get("efficient")) : 0);
-            } else {
-                faultTmpltStatistics.setType(map.get("totalName"));
-                faultTmpltStatistics.setQueryDate(time);
-                faultTmpltStatistics.setTmpltTotal(StringUtils.isNotBlank(map.get("total")) ? Long.parseLong(map.get("total")) : 0);
-                faultTmpltStatistics.setUnHandleTmpltAmount(StringUtils.isNotBlank(map.get("0")) ? Long.parseLong(map.get("0")) : 0);
-                faultTmpltStatistics.setHandledTmpltAmount(StringUtils.isNotBlank(map.get("-1")) ? Long.parseLong(map.get("-1")) : 0);
-                faultTmpltStatistics.setNeedObserAmount(StringUtils.isNotBlank(map.get("2")) ? Long.parseLong(map.get("2")) : 0);
-                faultTmpltStatistics.setNormalAmount(StringUtils.isNotBlank(map.get("6")) ? Long.parseLong(map.get("6")) : 0);
-                faultTmpltStatistics.setModifyAmount(StringUtils.isNotBlank(map.get("1")) ? Long.parseLong(map.get("1")) : 0);
-                faultTmpltStatistics.setAddAmount(StringUtils.isNotBlank(map.get("3")) ? Long.parseLong(map.get("3")) : 0);
-                faultTmpltStatistics.setManulAmount(StringUtils.isNotBlank(map.get("4")) ? Long.parseLong(map.get("4")) : 0);
-                faultTmpltStatistics.setInvalidAmount(StringUtils.isNotBlank(map.get("5")) ? Long.parseLong(map.get("5")) : 0);
-                faultTmpltStatistics.setEfficient(StringUtils.isNotBlank(map.get("efficient")) ? Double.parseDouble(map.get("efficient")) : 0);
             }
+            faultTmpltStatistics.setType(map.get("totalName"));
+            faultTmpltStatistics.setQueryDate(time);
+            faultTmpltStatistics.setTmpltTotal(StringUtils.isNotBlank(map.get("total")) ? Long.parseLong(map.get("total")) : 0);
+            faultTmpltStatistics.setUnHandleTmpltAmount(StringUtils.isNotBlank(map.get("0")) ? Long.parseLong(map.get("0")) : 0);
+            faultTmpltStatistics.setHandledTmpltAmount(StringUtils.isNotBlank(map.get("-1")) ? Long.parseLong(map.get("-1")) : 0);
+            faultTmpltStatistics.setNeedObserAmount(StringUtils.isNotBlank(map.get("2")) ? Long.parseLong(map.get("2")) : 0);
+            faultTmpltStatistics.setNormalAmount(StringUtils.isNotBlank(map.get("6")) ? Long.parseLong(map.get("6")) : 0);
+            faultTmpltStatistics.setModifyAmount(StringUtils.isNotBlank(map.get("1")) ? Long.parseLong(map.get("1")) : 0);
+            faultTmpltStatistics.setAddAmount(StringUtils.isNotBlank(map.get("3")) ? Long.parseLong(map.get("3")) : 0);
+            faultTmpltStatistics.setManulAmount(StringUtils.isNotBlank(map.get("4")) ? Long.parseLong(map.get("4")) : 0);
+            faultTmpltStatistics.setInvalidAmount(StringUtils.isNotBlank(map.get("5")) ? Long.parseLong(map.get("5")) : 0);
+            faultTmpltStatistics.setEfficient(StringUtils.isNotBlank(map.get("efficient")) ? Double.parseDouble(map.get("efficient")) : 0);
             tmpltStatisticsRepository.save(faultTmpltStatistics);
         }
     }

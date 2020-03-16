@@ -87,4 +87,8 @@ public class FaultTmpltStatistics {
      * 无效
      */
     private long invalidAmount;
+    /**
+     * 有效率
+     */
+    private double efficient;
 }

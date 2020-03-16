@@ -49,15 +49,15 @@ public class DataShowController {
 
     /**
      * 故障模板统计
-     * @param startTime
-     * @param endTime
+     * @param
+     * @param
      * @return
      */
-    @PostMapping("/fault_tmplt")
+    @PostMapping("/fault_tmplt_data")
     @ResponseBody
     public Response dataDisplay(String startTime, String endTime){
-        List<Map<String, String>> list = statisticalService.statistical(startTime, endTime);
-        return Response.success(list);
+        Map<String,List> map =  statisticalService.statisticalData(startTime, endTime);
+        return Response.success(map);
     }
 
     /**

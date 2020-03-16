@@ -22,8 +22,11 @@ import java.util.Map;
 @DS("octopus")
 public interface OctopusMapper {
 
-    @Select("select count(1) as count,a.state from octopus_monitor a,octopus_task b where a.verify_code <> 200 and a.task_id = b.task_id and a.verify_time >=#{startTime} and a.verify_time <#{endTime} group by state")
-    List<Map<String,Object>> selectStatusCode(@Param("startTime") String startTime, @Param("endTime") String endTime);
+    @Select("select count(1) as count,a.state from octopus_monitor a,octopus_task b where a.verify_code <> 200 and a.task_id = b.task_id and a.verify_time >=#{startTime} and a.verify_time <#{endTime} and operate_id is not null and state > 0 group by state")
+    List<Map<String,Object>> selectStatusCodeProcessed(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    @Select("select count(1) from octopus_monitor a,octopus_task b where a.verify_code <> 200 and a.task_id = b.task_id and a.verify_time >=#{startTime} and a.verify_time <#{endTime} and state = 0")
+    String selectStatusCodeUntreated(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
     @Select("select `status`,count(*) as count from octopus_task_log WHERE create_time > #{startTime} and create_time < #{endTime} GROUP BY `status`")
     List<OctopusLogInfo> getLogInfos(@Param("startTime") Long startTime, @Param("endTime") Long endTime);

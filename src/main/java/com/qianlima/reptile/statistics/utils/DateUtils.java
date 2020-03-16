@@ -181,7 +181,7 @@ public class DateUtils {
      * 比较两个时间的大小
      */
     public static int compareDate(String DATE1, String DATE2) {
-        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date dt1 = df.parse(DATE1);
             Date dt2 = df.parse(DATE2);

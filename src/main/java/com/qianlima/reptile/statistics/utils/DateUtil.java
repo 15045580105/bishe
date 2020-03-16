@@ -87,7 +87,7 @@ public class DateUtil {
         String dstr = "";
         if (datestr != null && !"".equals(datestr)) {
             try {
-                dstr = convertDateToString(new SimpleDateFormat(datePattern).parse(datestr));
+                dstr = convertDateToString(new SimpleDateFormat("yyyy-MM-dd").parse(datestr));
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.qianlima.reptile.statistics.service;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,5 +12,8 @@ import java.util.Map;
  */
 public interface StatisticalService {
 
-    List<Map<String, String>> statistical(String reportStartTime, String reportEndTime);
+    void statistical();
+
+    Map<String,List> statisticalData(String startTime,String endTime);
+
 }

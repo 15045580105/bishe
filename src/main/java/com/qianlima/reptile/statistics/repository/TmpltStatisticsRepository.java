@@ -24,15 +24,14 @@ public class TmpltStatisticsRepository {
         return mongoTemplate.save(faultTmpltStatistics);
     }
 
-    public List<OctopusStatistics> queryByTime(String startTime, String endTime, String type) {
-
+    public List<FaultTmpltStatistics> queryByTime(String startTime, String endTime) {
         Criteria criteria = Criteria.where("queryDate").gte(startTime).lte(endTime);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
         query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
-        return mongoTemplate.find(query, OctopusStatistics.class);
+        return mongoTemplate.find(query, FaultTmpltStatistics.class);
     }
 
 

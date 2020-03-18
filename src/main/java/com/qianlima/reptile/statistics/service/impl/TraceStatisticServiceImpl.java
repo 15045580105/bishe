@@ -72,7 +72,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 //                采集量bidding_raw
         TraceStatistic biddingStatistic = new TraceStatistic();
         biddingStatistic.setType(1);
-        biddingStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
+        biddingStatistic.setQueryDate(DateUtils.getIntFormatDateStr(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
 
         biddingStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 0));
         refreshCount();

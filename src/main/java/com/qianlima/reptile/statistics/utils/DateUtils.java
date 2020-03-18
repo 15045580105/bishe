@@ -69,6 +69,13 @@ public class DateUtils {
     }
 
 
+    public static String getIntFormatDateStr(Integer timestmp, SimpleDateFormat SDF){
+        if(timestmp == null){
+            return "";
+        }
+        return SDF.format(new Date(timestmp));
+    }
+
 
     /**
      * java.util.Date 返回 yyyy-MM-dd String 类型

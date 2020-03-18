@@ -24,16 +24,16 @@ public interface QianlimaMapper extends BaseMapper<Map> {
 
 
     @Select({
-            "<script>",
-            "select",
-            "COUNT(1)",
-            "from  phpcms_content",
-            "where status = 99 and tmplt in",
-            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>",
-            "#{id}",
-            "</foreach>",
-            "and  updatetime> #{startTime} and updatetime &lt; #{endTime}",
+            "<script>" +
+            "select " +
+            "COUNT(1) " +
+            "from  phpcms_content " +
+            "where status = 99 and tmplt in " +
+            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>"+
+            "#{id}" +
+            "</foreach>"+
+            "and  upatetime> #{startTime} and updatetime &lt; #{endTime}"+
             "</script>"
     })
-    List<Integer> selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
+    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
 }

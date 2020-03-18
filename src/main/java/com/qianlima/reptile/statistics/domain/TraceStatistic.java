@@ -52,26 +52,7 @@ public class TraceStatistic {
     /**
      * 查询日期
      */
-    private String queryData;
+    private String queryDate;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TraceStatistic)) return false;
-        TraceStatistic that = (TraceStatistic) o;
-        return Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getType(), that.getType()) &&
-                Objects.equals(getMainCrawlerCount(), that.getMainCrawlerCount()) &&
-                Objects.equals(getOctopusCount(), that.getOctopusCount()) &&
-                Objects.equals(getArtificialEditCount(), that.getArtificialEditCount()) &&
-                Objects.equals(getBridgePageCount(), that.getBridgePageCount()) &&
-                Objects.equals(getCompeteProductsCount(), that.getCompeteProductsCount()) &&
-                Objects.equals(getWeChatCount(), that.getWeChatCount()) &&
-                Objects.equals(getQueryData(), that.getQueryData());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getType(), getMainCrawlerCount(), getOctopusCount(), getArtificialEditCount(), getBridgePageCount(), getCompeteProductsCount(), getWeChatCount(), getQueryData());
-    }
 }

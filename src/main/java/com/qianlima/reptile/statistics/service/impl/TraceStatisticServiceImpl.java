@@ -43,7 +43,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     private int count = 0;
     @Override
-    public Response getTraceStatistic(String startTime, String endTime,Integer Type) {
+    public Response getTraceStatistic(String startTime, String endTime) {
         if (!startTime.equals(endTime)) {
             List<TraceStatistic> biddingStatistics = traceStatisticRepository.queryInTime(startTime, endTime, 1);
             TraceStatistic biddingStatistic = sumEachField(biddingStatistics,1);
@@ -69,10 +69,10 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     @Override
     public void saveStatistic() {
-        //        采集量bidding_raw
+//                采集量bidding_raw
         TraceStatistic biddingStatistic = new TraceStatistic();
         biddingStatistic.setType(1);
-        biddingStatistic.setQueryData(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
+        biddingStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
 
         biddingStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 0));
         refreshCount();
@@ -97,7 +97,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         //        发布量phpcms_content
         TraceStatistic phpStatistic = new TraceStatistic();
         phpStatistic.setType(0);
-        phpStatistic.setQueryData(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
+        phpStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
 
         phpStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 1));
         refreshCount();
@@ -196,41 +196,27 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         if (flag == 0) {
             if (ids != null && ids.size() != 0) {
                 if (ids.size() > 1000) {
-                    sumList(modmonitorMapper.selectBiddingCountsByIds(ids.subList(0, 500), startTime, endTime));
+                    count += modmonitorMapper.selectBiddingCountsByIds(ids.subList(0, 500), startTime, endTime);
                     getCount(ids.subList(500, ids.size()), startTime, endTime,0);
                 } else {
-                    sumList(modmonitorMapper.selectBiddingCountsByIds(ids,startTime,endTime));
+                    count += modmonitorMapper.selectBiddingCountsByIds(ids,startTime,endTime);
                 }
             }
         }
         if (flag == 1) {
             if (ids != null && ids.size() != 0) {
                 if (ids.size() > 1000) {
-                    sumList(qianlimaMapper.selectPhpcmsCountsByIds(ids.subList(0, 500), startTime, endTime));
+                    count+=qianlimaMapper.selectPhpcmsCountsByIds(ids.subList(0, 500), startTime, endTime);
                     getCount(ids.subList(500, ids.size()), startTime, endTime,1);
                 } else {
-                    sumList(qianlimaMapper.selectPhpcmsCountsByIds(ids,startTime,endTime));
+                    count+=qianlimaMapper.selectPhpcmsCountsByIds(ids,startTime,endTime);
                 }
             }
         }
 
     }
 
-    /**
-     * @Title sumList
-     * @Description 计算每个id对应count总和
-     * @Author liuchanglin
-     * @Date 2020/3/18 3:55 下午
-     * @Param [counts]
-     * @return void
-     **/
-    private void sumList(List<Integer> counts) {
 
-        for (Integer integer : counts) {
-//            System.out.println(count);
-            count += integer;
-        }
-    }
     /**
      * @Title refreshCount
      * @Description 重置变量 count 为 0
@@ -246,7 +232,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     private TraceStatistic sumEachField(List<TraceStatistic> list,Integer type) {
         TraceStatistic newTraceStatistic = new TraceStatistic();
-        newTraceStatistic.setQueryData(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
+        newTraceStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
         newTraceStatistic.setType(type);
         newTraceStatistic.setMainCrawlerCount(0);
         newTraceStatistic.setWeChatCount(0);

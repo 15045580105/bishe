@@ -5,7 +5,7 @@ import com.qianlima.reptile.statistics.entity.Response;
 
 public interface TraceStatisticService {
 
-    Response getTraceStatistic(String startTime, String endTime,Integer Type);
+    Response getTraceStatistic(String startTime, String endTime);
 
     void saveStatistic();
 

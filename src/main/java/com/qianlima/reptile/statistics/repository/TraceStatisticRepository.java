@@ -43,11 +43,7 @@ public class TraceStatisticRepository {
         return mongoTemplate.find(query, TraceStatistic.class);
     }
     public List<TraceStatistic> queryByTime(String time,Integer type) {
-
-        Criteria criteria = new Criteria().andOperator(
-                Criteria.where("queryDate").is(time),
-                Criteria.where("type").is(type)
-        );
+        Criteria criteria = Criteria.where("queryDate").is(time).and("type").is(type);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);

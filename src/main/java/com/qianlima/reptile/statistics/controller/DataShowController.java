@@ -122,7 +122,7 @@ public class DataShowController {
     }
 
     @PostMapping(path = "/collect/releas")
-    public void getTraceStatistics(String startTime, String endTime, Integer type) {
-         traceStatisticService.saveStatistic();
+    public Response getTraceStatistics(String startTime, String endTime) {
+        return traceStatisticService.getTraceStatistic(startTime,endTime);
     }
 }

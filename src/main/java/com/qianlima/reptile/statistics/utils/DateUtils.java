@@ -4,8 +4,11 @@ package com.qianlima.reptile.statistics.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @ClassName: DateUtils
@@ -71,6 +74,17 @@ public class DateUtils {
     }
 
 
+<<<<<<< HEAD
+=======
+    public static String getIntFormatDateStr(Integer timestmp, SimpleDateFormat SDF){
+        if(timestmp == null){
+            return "";
+        }
+        return SDF.format(new Date(timestmp));
+    }
+
+
+>>>>>>> f13657fdade96c566e6a6d04f427a7dd80391b90
     /**
      * java.util.Date 返回 yyyy-MM-dd String 类型
      *
@@ -236,6 +250,7 @@ public class DateUtils {
         return date;
     }
 
+<<<<<<< HEAD
     /**
      * @return a
      * @description 判断一个日期是否是本月最后一天
@@ -249,6 +264,21 @@ public class DateUtils {
         calendar.setTime(date);
         return calendar.get(Calendar.DAY_OF_MONTH) == calendar
                 .getActualMaximum(Calendar.DAY_OF_MONTH);
+=======
+    public static Integer getYesterTodayStartTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-1,0,0,0);
+        long tt = calendar.getTime().getTime()/1000;
+        return Math.toIntExact(tt);
+
+    }
+
+    public static Integer getYesterTodayEndTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-1,0,0,0);
+        long tt = calendar.getTime().getTime()/1000;
+        return Math.toIntExact(tt) + 86399;
+>>>>>>> f13657fdade96c566e6a6d04f427a7dd80391b90
     }
 
 }

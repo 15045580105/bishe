@@ -40,6 +40,8 @@ public class DataShowController {
     private OctopusMonitorService octopusMonitorService;
     @Autowired
     private CollectPublishTrendService collectPublishTrendService;
+    @Autowired
+    private TraceStatisticService traceStatisticService;
 
 
     @RequestMapping("/datadisplay")
@@ -119,4 +121,8 @@ public class DataShowController {
         return collectPublishTrendService.getYearTrend(startTime, endTime);
     }
 
+    @PostMapping(path = "/collect/releas")
+    public Response getTraceStatistics(String startTime, String endTime) {
+        return traceStatisticService.getTraceStatistic(startTime,endTime);
+    }
 }

@@ -38,6 +38,8 @@ public class DataShowController {
     private KeyWordDataDetailService keyWordDataDetailService;
     @Autowired
     private OctopusMonitorService octopusMonitorService;
+    @Autowired
+    private CollectPublishTrendService collectPublishTrendService;
 
 
     @RequestMapping("/datadisplay")
@@ -105,4 +107,16 @@ public class DataShowController {
     public Response getStatistics(String startTime, String endTime) {
         return octopusMonitorService.getOctopusStatistics(startTime, endTime);
     }
+
+    /**
+     * 集发布详情-年趋势
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @PostMapping(path = "/yearTrend")
+    public Response getYearTrend(String startTime, String endTime) {
+        return collectPublishTrendService.getYearTrend(startTime, endTime);
+    }
+
 }

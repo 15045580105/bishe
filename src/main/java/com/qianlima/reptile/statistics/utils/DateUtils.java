@@ -19,7 +19,18 @@ public class DateUtils {
 
     public static final SimpleDateFormat FUZSDF = new SimpleDateFormat("yyyy-MM-dd");
 
+<<<<<<< HEAD
     public static String getNowFormatDateStr() {
+=======
+    public static final DateTimeFormatter DTF =DateTimeFormatter.ofPattern("yyyy-MM");
+
+
+    public static YearMonth getLocalDate(String date) {
+        return YearMonth.parse(date, DTF);
+    }
+
+    public static String getNowFormatDateStr(){
+>>>>>>> 1a5ccfac969f9ff1ce3aa40620843759251b92f1
         return EXACTSDF.format(new Date());
     }
 

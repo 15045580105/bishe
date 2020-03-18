@@ -32,6 +32,11 @@ spring:
           password: qianlima
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://172.18.30.34:3306/spiderplatform?useUnicode=true&characterEncoding=utf8
+        rawdata:
+          username: root
+          password: qianlima
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://172.18.30.34:3306/rawdatas?useUnicode=true&characterEncoding=utf8
   data:
     mongodb:
       uri: mongodb://172.18.30.34:27017/qlmdb

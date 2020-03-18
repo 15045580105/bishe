@@ -15,6 +15,8 @@ import com.qianlima.reptile.statistics.service.StatisticalService;
 import com.qianlima.reptile.statistics.utils.DateUtil;
 import com.qianlima.reptile.statistics.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ import java.util.*;
  */
 @Service
 public class StatisticalServiceImpl implements StatisticalService {
+    private static final Logger logger = LoggerFactory.getLogger(StatisticalServiceImpl.class);
     @Autowired
     private ModmonitorMapper modmonitorMapper;
     @Autowired
@@ -70,49 +73,54 @@ public class StatisticalServiceImpl implements StatisticalService {
                 //DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         String startTime = reportStartTime + " 00:00:00";
         String endTime = reportStartTime + " 23:59:59";
-        List<Map<String, String>> list = new ArrayList<>();
-        //招标故障模版器障模版人工处理和未处理
-        List<FaultTmpltDo> list1 = modmonitorMapper.selectTenderProcessed(startTime, endTime);
-        List<FaultTmpltDo> list2 = modmonitorMapper.selectTenderUntreated(startTime, endTime);
-        String tenderUntreated = list2.size() + "";
-        Map<String, String> map = conversionTender(list1, tenderUntreated);
-        map.put("efficient", efficient(map));
-        list.add(map);
-        //前期故障模版服务器障
-        List<Map<String, Object>> list3 = modmonitorMapper.selectEarlyServiceProcessed(startTime, endTime);
-        String untreated = modmonitorMapper.selectEarlyServiceUntreated(startTime, endTime);
-        Map<String, String> map0 = conversion(list3, "earlyService", untreated);
-        list.add(map0);
-        //前期故障模版解析故障
-        List<Map<String, Object>> list4 = modmonitorMapper.selectEarlyParsingProcessed(startTime, endTime);
-        String untreated1 = modmonitorMapper.selectEarlyParsingUntreated(startTime, endTime);
-        Map<String, String> map1 = conversion(list4, "earlyParsing", untreated1);
-        list.add(map1);
-        //前期故障模版解析值故障
-        List<Map<String, Object>> list5 = modmonitorMapper.selectEarlyValueProcessed(startTime, endTime);
-        String untreated2 = modmonitorMapper.selectEarlyValueUntreated(startTime, endTime);
-        Map<String, String> map2 = conversion(list5, "earlyValue", untreated2);
-        list.add(map2);
-        //乱码数据
-        List<Map<String, Object>> list6 = modmonitorMapper.selectMessyCodeProcessed(DateUtil.date3TimeStamp(startTime), DateUtil.date3TimeStamp(endTime));
-        String untreated3 = modmonitorMapper.selectMessyCodeUntreated(DateUtil.date3TimeStamp(startTime), DateUtil.date3TimeStamp(endTime));
-        Map<String, String> map3 = conversion(list6, "biddingMessyCode", untreated3);
-        map3.put("efficient", efficient(map3));
-        list.add(map3);
-        //八抓鱼
-        List<Map<String, Object>> list7 = octopusMapper.selectStatusCodeProcessed(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
-        String untreated4 = octopusMapper.selectStatusCodeUntreated(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
-        Map<String, String> map4 = conversion(list7, "octopus", untreated4);
-        map4.put("efficient", efficient(map4));
-        list.add(map4);
-        //人工编辑
-        List<Map<String, Object>> list8 = modmonitorMapper.selectHumanEditorsProcessed(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
-        String untreated5 = modmonitorMapper.selectHumanEditorsUntreated(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
-        Map<String, String> map5 = conversion(list8, "manual", untreated5);
-        map5.put("efficient", efficient(map5));
-        list.add(map5);
-        List<Map<String, String>> list9 = mergeMap(list);
-        saveData(list9,startTime,endTime);
+        List<FaultTmpltStatistics> list0 = tmpltStatisticsRepository.queryByTime(startTime,endTime);
+        if(list0.size()>0){
+            logger.info("已经存在 {} 日的数据",reportStartTime);
+        }else {
+            List<Map<String, String>> list = new ArrayList<>();
+            //招标故障模版器障模版人工处理和未处理
+            List<FaultTmpltDo> list1 = modmonitorMapper.selectTenderProcessed(startTime, endTime);
+            List<FaultTmpltDo> list2 = modmonitorMapper.selectTenderUntreated(startTime, endTime);
+            String tenderUntreated = list2.size() + "";
+            Map<String, String> map = conversionTender(list1, tenderUntreated);
+            map.put("efficient", efficient(map));
+            list.add(map);
+            //前期故障模版服务器障
+            List<Map<String, Object>> list3 = modmonitorMapper.selectEarlyServiceProcessed(startTime, endTime);
+            String untreated = modmonitorMapper.selectEarlyServiceUntreated(startTime, endTime);
+            Map<String, String> map0 = conversion(list3, "earlyService", untreated);
+            list.add(map0);
+            //前期故障模版解析故障
+            List<Map<String, Object>> list4 = modmonitorMapper.selectEarlyParsingProcessed(startTime, endTime);
+            String untreated1 = modmonitorMapper.selectEarlyParsingUntreated(startTime, endTime);
+            Map<String, String> map1 = conversion(list4, "earlyParsing", untreated1);
+            list.add(map1);
+            //前期故障模版解析值故障
+            List<Map<String, Object>> list5 = modmonitorMapper.selectEarlyValueProcessed(startTime, endTime);
+            String untreated2 = modmonitorMapper.selectEarlyValueUntreated(startTime, endTime);
+            Map<String, String> map2 = conversion(list5, "earlyValue", untreated2);
+            list.add(map2);
+            //乱码数据
+            List<Map<String, Object>> list6 = modmonitorMapper.selectMessyCodeProcessed(DateUtil.date3TimeStamp(startTime), DateUtil.date3TimeStamp(endTime));
+            String untreated3 = modmonitorMapper.selectMessyCodeUntreated(DateUtil.date3TimeStamp(startTime), DateUtil.date3TimeStamp(endTime));
+            Map<String, String> map3 = conversion(list6, "biddingMessyCode", untreated3);
+            map3.put("efficient", efficient(map3));
+            list.add(map3);
+            //八抓鱼
+            List<Map<String, Object>> list7 = octopusMapper.selectStatusCodeProcessed(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
+            String untreated4 = octopusMapper.selectStatusCodeUntreated(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
+            Map<String, String> map4 = conversion(list7, "octopus", untreated4);
+            map4.put("efficient", efficient(map4));
+            list.add(map4);
+            //人工编辑
+            List<Map<String, Object>> list8 = modmonitorMapper.selectHumanEditorsProcessed(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
+            String untreated5 = modmonitorMapper.selectHumanEditorsUntreated(DateUtil.date2TimeStamp(startTime), DateUtil.date2TimeStamp(endTime));
+            Map<String, String> map5 = conversion(list8, "manual", untreated5);
+            map5.put("efficient", efficient(map5));
+            list.add(map5);
+            List<Map<String, String>> list9 = mergeMap(list);
+            saveData(list9, startTime, endTime);
+        }
     }
 
 

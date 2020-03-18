@@ -4,8 +4,11 @@ package com.qianlima.reptile.statistics.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @ClassName: DateUtils
@@ -222,6 +225,21 @@ public class DateUtils {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static Integer getYesterTodayStartTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-1,0,0,0);
+        long tt = calendar.getTime().getTime()/1000;
+        return Math.toIntExact(tt);
+
+    }
+
+    public static Integer getYesterTodayEndTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-1,0,0,0);
+        long tt = calendar.getTime().getTime()/1000;
+        return Math.toIntExact(tt) + 86399;
     }
 
 }

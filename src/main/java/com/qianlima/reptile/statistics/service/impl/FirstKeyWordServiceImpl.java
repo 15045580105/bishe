@@ -4,10 +4,13 @@ import com.qianlima.reptile.statistics.constant.StatisticsConstant;
 import com.qianlima.reptile.statistics.entity.FirstKeyWordResult;
 import com.qianlima.reptile.statistics.entity.KeyWordTask;
 import com.qianlima.reptile.statistics.entity.Response;
+import com.qianlima.reptile.statistics.job.EveryDayPublishCountStatisticsJob;
 import com.qianlima.reptile.statistics.mapper.SpiderPlatformMapper1;
 import com.qianlima.reptile.statistics.mapper.RawDatasMapper1;
 import com.qianlima.reptile.statistics.service.FirstKeyWordService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ import java.util.List;
  **/
 @Service
 public class FirstKeyWordServiceImpl implements FirstKeyWordService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EveryDayPublishCountStatisticsJob.class);
 
     @Autowired
     private SpiderPlatformMapper1 spiderPlatformMapper1;
@@ -59,7 +64,9 @@ public class FirstKeyWordServiceImpl implements FirstKeyWordService {
             }
             String taskListUrls = keyWordTask.getTaskListUrls();
             for (String web : StatisticsConstant.WEBS) {
+                long start = System.currentTimeMillis();
                 Integer countData = rawDatasMapper1.countUrl(web, taskListUrls, startTime, endTime);
+                logger.info("web = {},  taskListUrls = {},handletime={} ",web,taskListUrls,System.currentTimeMillis() - start);
                 if ("chinabidding".equals(web)) {
                     countGuoXin = countGuoXin + countData;
                 } else if ("zhaobiao".equals(web)) {

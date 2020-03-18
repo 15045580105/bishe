@@ -160,19 +160,15 @@ public interface ModmonitorMapper {
     List<String> selectCrawlconfigMainCraw(@Param("start") Integer start);
 
     @Select({
-            "<script>",
-            "select",
-            "COUNT(1)",
-            "from rawdatas.bidding_raw",
-            "where  ae_template in",
+            "<script>" +
+            "select COUNT(1) from rawdatas.bidding_raw where ae_template in ",
             "<foreach collection='ids' item='id' open='(' separator=',' close=')'>",
             "#{id}",
             "</foreach>",
-            "and intime > #{startTime} and intime &lt; #{endTime}",
+            " and intime > #{startTime} and intime &lt; #{endTime} "+
             "</script>"
     })
-    List<Integer> selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
-
+    Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
 
 
 }

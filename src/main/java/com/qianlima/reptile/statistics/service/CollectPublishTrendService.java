@@ -9,4 +9,6 @@ import com.qianlima.reptile.statistics.entity.Response;
  **/
 public interface CollectPublishTrendService {
     Response getYearTrend(String startTime, String endTime);
+
+    Response getMonthTrend(String date);
 }

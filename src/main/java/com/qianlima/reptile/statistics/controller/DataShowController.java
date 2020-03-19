@@ -121,6 +121,16 @@ public class DataShowController {
         return collectPublishTrendService.getYearTrend(startTime, endTime);
     }
 
+    /**
+     * 集发布详情-月趋势
+     * @param date
+     * @return
+     */
+    @PostMapping(path = "/monthTrend")
+    public Response getMonthTrend(String date) {
+        return collectPublishTrendService.getMonthTrend(date);
+    }
+
     @PostMapping(path = "/collect/releas")
     public Response getTraceStatistics(String startTime, String endTime) {
         return traceStatisticService.getTraceStatistic(startTime,endTime);

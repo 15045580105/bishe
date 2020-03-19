@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,4 +21,16 @@ public interface RawdatasMapper extends BaseMapper<Map> {
 
     @Select("select count(1) from rawdatas.`bidding_raw` where  intime between #{startUpdateTime} and #{endUpdateTime}")
     Integer select(@Param("startUpdateTime") int startUpdateTime, @Param("endUpdateTime") int endUpdateTime);
+
+    @Select({
+            "<script>" +
+                    "select COUNT(1) from rawdatas.bidding_raw where ae_template in ",
+            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>",
+            "#{id}",
+            "</foreach>",
+            " and intime > #{startTime} and intime &lt; #{endTime} "+
+                    "</script>"
+    })
+    Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
+
 }

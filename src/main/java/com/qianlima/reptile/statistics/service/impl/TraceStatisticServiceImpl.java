@@ -5,6 +5,7 @@ import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.TraceStatisticResponse;
 import com.qianlima.reptile.statistics.mapper.ModmonitorMapper;
 import com.qianlima.reptile.statistics.mapper.QianlimaMapper;
+import com.qianlima.reptile.statistics.mapper.RawdatasMapper;
 import com.qianlima.reptile.statistics.repository.TraceStatisticRepository;
 import com.qianlima.reptile.statistics.service.TraceStatisticService;
 import com.qianlima.reptile.statistics.utils.DateUtils;
@@ -26,6 +27,8 @@ import java.util.List;
 public class TraceStatisticServiceImpl implements TraceStatisticService {
     @Autowired
     private ModmonitorMapper modmonitorMapper;
+    @Autowired
+    private RawdatasMapper rawdatasMapper;
 
     @Autowired
     private QianlimaMapper qianlimaMapper;
@@ -196,10 +199,10 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         if (flag == 0) {
             if (ids != null && ids.size() != 0) {
                 if (ids.size() > 1000) {
-                    count += modmonitorMapper.selectBiddingCountsByIds(ids.subList(0, 500), startTime, endTime);
+                    count += rawdatasMapper.selectBiddingCountsByIds(ids.subList(0, 500), startTime, endTime);
                     getCount(ids.subList(500, ids.size()), startTime, endTime,0);
                 } else {
-                    count += modmonitorMapper.selectBiddingCountsByIds(ids,startTime,endTime);
+                    count += rawdatasMapper.selectBiddingCountsByIds(ids,startTime,endTime);
                 }
             }
         }

@@ -2,9 +2,12 @@ package com.qianlima.reptile.statistics.controller;
 
 
 
+import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
+import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
 import com.qianlima.reptile.statistics.entity.KeyWordDataDetailReq;
 import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.SecondKeyWordReq;
+import com.qianlima.reptile.statistics.mapper.RawdataMapper;
 import com.qianlima.reptile.statistics.service.*;
 import com.qianlima.reptile.statistics.service.DataShowService;
 import com.qianlima.reptile.statistics.service.OctopusMonitorService;
@@ -42,6 +45,10 @@ public class DataShowController {
     private CollectPublishTrendService collectPublishTrendService;
     @Autowired
     private TraceStatisticService traceStatisticService;
+    @Autowired
+    private TemplateAndPotStatistical templateAndPotStatistical;
+    @Autowired
+    private CollectAndReleaseService collectAndReleaseService;
 
 
     @RequestMapping("/datadisplay")
@@ -124,5 +131,29 @@ public class DataShowController {
     @PostMapping(path = "/collect/releas")
     public Response getTraceStatistics(String startTime, String endTime) {
         return traceStatisticService.getTraceStatistic(startTime,endTime);
+    }
+
+    @PostMapping(path = "/pot_tmplt/count")
+    public Response getPotAndPotCount(String startTime, String endTime) {
+        Map<String, TmpltAndPotStatistics> map = templateAndPotStatistical.selectTemplate(startTime,endTime);
+        return Response.success(map);
+    }
+
+    @PostMapping(path = "/collect_releas")
+    public Response getCollectReleas(String startTime, String endTime) {
+        Map<String,String> map = collectAndReleaseService.collectAndReleaseCount(startTime,endTime);
+        return Response.success(map);
+    }
+
+
+    @PostMapping(path = "/pot")
+    public void getpot() {
+        templateAndPotStatistical.template();
+    }
+
+
+    @PostMapping(path = "/collect")
+    public void getCollect() {
+        collectAndReleaseService.collectAndRelease();
     }
 }

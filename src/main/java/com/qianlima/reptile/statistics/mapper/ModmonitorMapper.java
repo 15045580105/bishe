@@ -2,7 +2,9 @@ package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -170,5 +172,12 @@ public interface ModmonitorMapper {
     })
     Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
 
+
+    @Select("select count(1) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
+    long selectFailTempltCount(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+
+    @Select("select tmplt from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
+    List<String> selectFailTemplt(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
 }

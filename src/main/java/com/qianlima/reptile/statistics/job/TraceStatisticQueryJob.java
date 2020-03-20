@@ -1,6 +1,8 @@
 package com.qianlima.reptile.statistics.job;
 
+import com.qianlima.reptile.statistics.repository.TraceStatisticRepository;
 import com.qianlima.reptile.statistics.service.TraceStatisticService;
+import com.qianlima.reptile.statistics.utils.DateUtils;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.JobHander;
@@ -24,6 +26,8 @@ public class TraceStatisticQueryJob extends IJobHandler {
 
     @Autowired
     private TraceStatisticService traceStatisticService;
+    @Autowired
+    private TraceStatisticRepository traceStatisticRepository;
 
     @Override
     public ReturnT<String> execute(String... strings) throws Exception {
@@ -32,6 +36,12 @@ public class TraceStatisticQueryJob extends IJobHandler {
             long start = System.currentTimeMillis();
             TraceStatisticQuery();
             logger.info("handle use time in ={}",System.currentTimeMillis() - start);
+            if ((traceStatisticRepository.queryByTime(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF), 1) == null
+                    || traceStatisticRepository.queryByTime(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF), 1).size() == 0)
+                    && (traceStatisticRepository.queryByTime(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF), 0) == null
+                    || traceStatisticRepository.queryByTime(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF), 0).size() == 0)) {
+                TraceStatisticQuery();
+            }
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

@@ -235,7 +235,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     private TraceStatistic sumEachField(List<TraceStatistic> list,Integer type) {
         TraceStatistic newTraceStatistic = new TraceStatistic();
-        newTraceStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(System.currentTimeMillis(), DateUtils.FUZSDF));
+        newTraceStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
         newTraceStatistic.setType(type);
         newTraceStatistic.setMainCrawlerCount(0);
         newTraceStatistic.setWeChatCount(0);

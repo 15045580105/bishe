@@ -46,14 +46,11 @@ public class DataShowController {
     @Autowired
     private TraceStatisticService traceStatisticService;
     @Autowired
-<<<<<<< HEAD
     private TemplateAndPotStatistical templateAndPotStatistical;
     @Autowired
     private CollectAndReleaseService collectAndReleaseService;
-
-=======
+    @Autowired
     private PublishRateService publishRateService;
->>>>>>> aed2717b11444b481916af37f0631173c98f5da5
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -147,7 +144,6 @@ public class DataShowController {
         return traceStatisticService.getTraceStatistic(startTime,endTime);
     }
 
-<<<<<<< HEAD
     @PostMapping(path = "/pot_tmplt/count")
     public Response getPotAndPotCount(String startTime, String endTime) {
         Map<String, TmpltAndPotStatistics> map = templateAndPotStatistical.selectTemplate(startTime,endTime);
@@ -170,7 +166,7 @@ public class DataShowController {
     @PostMapping(path = "/collect")
     public void getCollect() {
         collectAndReleaseService.collectAndRelease();
-=======
+    }
     /**
      * 每月发布率
      * @param startTime
@@ -180,6 +176,5 @@ public class DataShowController {
     @PostMapping(path = "/publish/rate")
     public Response queryPublishRate(String startTime, String endTime) {
         return publishRateService.queryPublishRate(startTime,endTime);
->>>>>>> aed2717b11444b481916af37f0631173c98f5da5
     }
 }

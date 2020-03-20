@@ -35,7 +35,6 @@ public interface QianlimaMapper extends BaseMapper<Map> {
             "and  updatetime> #{startTime} and updatetime &lt; #{endTime}"+
             "</script>"
     })
-<<<<<<< HEAD
     Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
 
     @Select("select count(1) from bidding_raw where intime >= #{startTime} and intime <= #{endTime}")
@@ -57,7 +56,6 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     long selectReleaseProject(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
 
-=======
+
     Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
->>>>>>> aed2717b11444b481916af37f0631173c98f5da5
 }

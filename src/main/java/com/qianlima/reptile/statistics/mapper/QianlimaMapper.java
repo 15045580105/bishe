@@ -32,8 +32,8 @@ public interface QianlimaMapper extends BaseMapper<Map> {
             "<foreach collection='ids' item='id' open='(' separator=',' close=')'>"+
             "#{id}" +
             "</foreach>"+
-            "and  upatetime> #{startTime} and updatetime &lt; #{endTime}"+
+            "and  updatetime> #{startTime} and updatetime &lt; #{endTime}"+
             "</script>"
     })
-    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
+    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 }

@@ -31,6 +31,6 @@ public interface RawdatasMapper extends BaseMapper<Map> {
             " and intime > #{startTime} and intime &lt; #{endTime} "+
                     "</script>"
     })
-    Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
+    Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
 }

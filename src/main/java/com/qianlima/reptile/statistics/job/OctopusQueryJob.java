@@ -29,7 +29,9 @@ public class OctopusQueryJob extends IJobHandler {
     public ReturnT<String> execute(String... strings) throws Exception {
         logger.info("OctopusQueryJobHandler excute.");
         try {
+            long start = System.currentTimeMillis();
             octopusQuery();
+            logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

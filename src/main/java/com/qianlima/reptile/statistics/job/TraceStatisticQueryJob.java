@@ -29,7 +29,9 @@ public class TraceStatisticQueryJob extends IJobHandler {
     public ReturnT<String> execute(String... strings) throws Exception {
         logger.info("TraceStatisticQueryJobHandler excute.");
         try {
+            long start = System.currentTimeMillis();
             TraceStatisticQuery();
+            logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

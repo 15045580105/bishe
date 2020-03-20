@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import com.qianlima.reptile.statistics.entity.TempltDo;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
@@ -18,17 +19,18 @@ import java.util.Map;
  * @Modified By :
  */
 @Component
-@DS("rawdata")
+@DS("modmonitor")
 public interface RawdataMapper {
 
     @Select("select domain from rawdatas.ae_pot limit #{page},#{count}")
-    List<String> selectPotByPage(@Param("page") String page, @Param("count") String count);
+    List<String> selectPotByPage(@Param("page") Integer page, @Param("count") Integer count);
 
     @Select("select count(domain) from rawdatas.ae_pot")
     long selectPotTotalCount();
 
-    @Select("select (id || '-' ||state) as tempstatus from rawdatas.crawlconfig")
-    Map<Object,Object> selectTemplt();
+
+    @Select("select id,state from rawdatas.crawlconfig")
+    List<TempltDo> selectTemplt();
 
     @Select("select count(1) from rawdatas.crawlconfig")
     long selectTempltTotal();

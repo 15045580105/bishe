@@ -32,7 +32,9 @@ public class PotAndTmpltStatisticsjob extends IJobHandler {
     public ReturnT<String> execute(String... strings) throws Exception {
         logger.info("PotAndTmpltStatisticsjobHandler excute.");
         try {
+            long start = System.currentTimeMillis();
             templateAndPotStatistical.template();
+            logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

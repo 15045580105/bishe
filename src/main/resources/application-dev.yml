@@ -14,9 +14,9 @@ spring:
           url: jdbc:mysql://172.18.30.34:3306/qianlima?characterEncoding=UTF-8
         modmonitor:
           username: root
-          password: uRGtSxZUdUy8GnMB
+          password: qianlima
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://121.40.46.25:3309/modmonitor?useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://172.18.30.34:3306/modmonitor?useUnicode=true&characterEncoding=utf8
         octopus:
           username: spiderWriter
           password: tLovexLD2PUe

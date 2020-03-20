@@ -25,7 +25,9 @@ public class TmpltStatisticsJob extends IJobHandler {
     public ReturnT<String> execute(String... strings) throws Exception {
         logger.info("tmpltStatisticsJobHandler excute.");
         try {
+            long start = System.currentTimeMillis();
             statisticalService.statistical();
+            logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

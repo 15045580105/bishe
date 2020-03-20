@@ -9,6 +9,7 @@ package com.qianlima.reptile.statistics.service.impl;
 
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import com.qianlima.reptile.statistics.entity.TempltDo;
 import com.qianlima.reptile.statistics.mapper.ModmonitorMapper;
 import com.qianlima.reptile.statistics.mapper.RawdataMapper;
 import com.qianlima.reptile.statistics.repository.PotAndTmpltRepository;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -40,11 +42,12 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         String startTime = reportStartTime + " 00:00:00";
         String endTime = reportStartTime + " 23:59:59";
-        Map<Object, Object> mapTmplt = rawdataMapper.selectTemplt();
+        List<TempltDo> templtList = rawdataMapper.selectTemplt();
+        Map<Integer, String> mapTmplt = convertToMap(templtList);
         List<String> list = modmonitorMapper.selectFailTemplt(startTime, endTime);
         TmpltAndPotStatistics tmpltAndPotStatistics = new TmpltAndPotStatistics();
         long potTotal = rawdataMapper.selectPotTotalCount();
-        long templtTotal = rawdataMapper.selectTempltTotal();
+        long templtTotal = templtList.size();
         long enableTemplt = rawdataMapper.selectEnableTemplt();
         long toEnableTemplt = rawdataMapper.selectToEnableTemplt();
         long unclassifiedTemplt = rawdataMapper.selectUnclassifiedTemplt();
@@ -53,7 +56,7 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         long k = potTotal / 500;
         int potEnable = 0, potAbandoned = 0, potNew = 0, potAbnormal = 0;
         for (int i = 0; i <= k; i++) {
-            List<String> list1 = rawdataMapper.selectPotByPage(i + "", "500");
+            List<String> list1 = rawdataMapper.selectPotByPage(i , 500);
             for (int j = 0; j < list1.size(); j++) {
                 List<String> list2 = rawdataMapper.selectTmpltByPot(list1.get(j));
                 Boolean x = null;
@@ -109,6 +112,9 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         potAndTmpltRepository.save(tmpltAndPotStatistics);
     }
 
+    public Map<Integer, String> convertToMap(List<TempltDo> templtDos) {
+        return templtDos.stream().collect(Collectors.toMap(TempltDo::getId, TempltDo::getState));
+    }
 
     private Map<String, String> buildMap(List<FaultTmpltDo> list) {
         Map<String, String> map = new HashMap<>();

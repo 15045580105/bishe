@@ -33,7 +33,9 @@ public class CollectAndReleasJob extends IJobHandler {
     public ReturnT<String> execute(String... strings) throws Exception {
         logger.info("collectAndReleasJobHandler excute.");
         try {
+            long start = System.currentTimeMillis();
             collectAndReleaseService.collectAndRelease();
+            logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

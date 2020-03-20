@@ -42,6 +42,19 @@ public class TraceStatisticRepository {
         query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
         return mongoTemplate.find(query, TraceStatistic.class);
     }
+
+    public List<TraceStatistic> queryInTime(String startTime, String endTime) {
+        Criteria criteria = new Criteria().andOperator(
+                Criteria.where("queryDate").gte(startTime).lte(endTime)
+        );
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        fieldsObject.put("id", false);
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
+        return mongoTemplate.find(query, TraceStatistic.class);
+    }
+
     public List<TraceStatistic> queryByTime(String time,Integer type) {
         Criteria criteria = Criteria.where("queryDate").is(time).and("type").is(type);
         Document document = criteria.getCriteriaObject();

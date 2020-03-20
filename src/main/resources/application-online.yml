@@ -31,7 +31,7 @@ spring:
           username: statistics
           password: KF7lhEE3AIwM
           driver-class-name: com.mysql.jdbc.Driver
-          url: dbc:mysql://10.80.186.152:3309/spiderplatform?useUnicode=true&characterEncoding=gbk
+          url: jdbc:mysql://10.80.186.152:3309/spiderplatform?useUnicode=true&characterEncoding=gbk
         rawdatas:
           username: statistics
           password: KF7lhEE3AIwM

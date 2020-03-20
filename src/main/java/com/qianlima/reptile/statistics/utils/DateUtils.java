@@ -6,6 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -69,14 +72,12 @@ public class DateUtils {
     }
 
 
-    public static String getIntFormatDateStr(Integer timestmp, SimpleDateFormat SDF){
+    public static String getFormatDateStrBitAdd(Long timestmp, SimpleDateFormat SDF){
         if(timestmp == null){
             return "";
         }
-        return SDF.format(new Date(timestmp));
+        return SDF.format(new Date(timestmp * 1000));
     }
-
-
     /**
      * java.util.Date 返回 yyyy-MM-dd String 类型
      * @param date
@@ -234,19 +235,19 @@ public class DateUtils {
         return date;
     }
 
-    public static Integer getYesterTodayStartTime() {
+    public static Long getYesterTodayStartTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-1,0,0,0);
         long tt = calendar.getTime().getTime()/1000;
-        return Math.toIntExact(tt);
+        return tt;
 
     }
 
-    public static Integer getYesterTodayEndTime() {
+    public static Long getYesterTodayEndTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-1,0,0,0);
         long tt = calendar.getTime().getTime()/1000;
-        return Math.toIntExact(tt) + 86399;
+        return tt + 86399;
     }
 
 

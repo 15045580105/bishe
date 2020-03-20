@@ -161,16 +161,6 @@ public interface ModmonitorMapper {
     @Select("SELECT id from rawdatas.crawlconfig where orgurl not like '%bridge/octopus_list%' and orgurl not like '%column/datalist_n.jspt%' and orgurl not like '%bridge/wechat_list%' and orgurl not like '%bridge/bidding_list%' and orgurl not like '%bridge/peer_list%' limit #{start},1000")
     List<String> selectCrawlconfigMainCraw(@Param("start") Integer start);
 
-    @Select({
-            "<script>" +
-            "select COUNT(1) from rawdatas.bidding_raw where ae_template in ",
-            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>",
-            "#{id}",
-            "</foreach>",
-            " and intime > #{startTime} and intime &lt; #{endTime} "+
-            "</script>"
-    })
-    Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
 
 
     @Select("select count(1) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")

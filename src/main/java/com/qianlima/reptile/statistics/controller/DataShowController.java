@@ -42,7 +42,8 @@ public class DataShowController {
     private CollectPublishTrendService collectPublishTrendService;
     @Autowired
     private TraceStatisticService traceStatisticService;
-
+    @Autowired
+    private PublishRateService publishRateService;
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -134,5 +135,16 @@ public class DataShowController {
     @PostMapping(path = "/collect/releas")
     public Response getTraceStatistics(String startTime, String endTime) {
         return traceStatisticService.getTraceStatistic(startTime,endTime);
+    }
+
+    /**
+     * 每月发布率
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @PostMapping(path = "/publish/rate")
+    public Response queryPublishRate(String startTime, String endTime) {
+        return publishRateService.queryPublishRate(startTime,endTime);
     }
 }

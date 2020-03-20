@@ -53,7 +53,7 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         long unclassifiedTemplt = rawdataMapper.selectUnclassifiedTemplt();
         long failTemplt = modmonitorMapper.selectFailTempltCount(startTime, endTime);
         long endOfTheMonth = 0;
-        long k = potTotal / 500;
+        long k = (potTotal / 500)+1;
         int potEnable = 0, potAbandoned = 0, potNew = 0, potAbnormal = 0;
         for (int i = 0; i <= k; i++) {
             List<String> list1 = rawdataMapper.selectPotByPage(i , 500);
@@ -64,18 +64,19 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
                     potNew++;
                 } else {
                     for (int l = 0; l < list2.size(); l++) {
-                        if (mapTmplt.get(list2.get(l)).equals("1")) {
+                        if ("1".equals(mapTmplt.get(Integer.parseInt(list2.get(l))))) {
                             x = true;
                             break;
                         }
-                        if (!mapTmplt.get(list2.get(l)).equals("0")) {
+                        if (!"0".equals(mapTmplt.get(Integer.parseInt(list2.get(l))))) {
                             x = false;
                         }
                     }
                 }
-                if (x) {
+                if (x != null && x) {
                     potEnable++;
-                } else {
+                }
+                if(x != null && !x){
                     potAbandoned++;
                 }
 

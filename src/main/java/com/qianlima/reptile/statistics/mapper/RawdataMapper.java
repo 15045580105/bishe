@@ -18,17 +18,11 @@ import java.util.List;
 @DS("modmonitor")
 public interface RawdataMapper {
 
-    @Select("select domain from rawdatas.ae_pot limit #{page},#{count}")
-    List<String> selectPotByPage(@Param("page") Integer page, @Param("count") Integer count);
-
     @Select("select domain from rawdatas.ae_pot")
     List<String> selectAllPot();
 
     @Select("select id,state,potName from rawdatas.crawlconfig")
     List<TempltDo> selectTemplt();
-
-    @Select("select count(1) from rawdatas.crawlconfig")
-    long selectTempltTotal();
 
     @Select("select count(1) from rawdatas.crawlconfig where state = 1")
     long selectEnableTemplt();
@@ -38,8 +32,5 @@ public interface RawdataMapper {
 
     @Select("select count(1) from rawdatas.crawlconfig where collect_strategy is null")
     long selectUnclassifiedTemplt();
-
-    @Select("select id from rawdatas.crawlconfig where potName = #{name}")
-    List<String> selectTmpltByPot(@Param("name") String name);
 
 }

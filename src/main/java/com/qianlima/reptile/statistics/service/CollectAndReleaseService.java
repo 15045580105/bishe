@@ -12,6 +12,6 @@ public interface CollectAndReleaseService {
 
     void collectAndRelease();
 
-    Map<String, String> collectAndReleaseCount(String startTime, String endTime);
+    Map<String, String> collectAndReleaseCount(String month);
 
 }

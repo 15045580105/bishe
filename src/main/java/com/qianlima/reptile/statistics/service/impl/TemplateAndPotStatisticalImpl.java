@@ -45,7 +45,8 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
 
     @Override
     public void template() {
-        String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
+        String today = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
+        String reportStartTime = DateUtils.getLastDay(today);
         //查询所有模板
         List<TempltDo> templtList = rawdataMapper.selectTemplt();
         Map<Integer, String> mapTmplt = convertToMap(templtList);
@@ -166,8 +167,8 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         String mon = null;
         Map<String, TmpltAndPotStatistics> map = new HashMap<>();
         String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
-        if (!DateUtils.getLocalDate(startTime).equals(DateUtils.getLocalDate(reportStartTime))) {
-            if (DateUtils.getLocalDate(endTime).equals(DateUtils.getLocalDate(reportStartTime))) {
+        if (!DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(startTime)).equals(DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(reportStartTime)))){
+            if (DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(endTime)).equals(DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(reportStartTime)))) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar c = Calendar.getInstance();
                 c.setTime(new Date());
@@ -177,12 +178,12 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
             } else {
                 mon = endTime;
             }
-            List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth(startTime, mon);
+            List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
             for (int i = 0; i < list.size(); i++) {
                 map.put(list.get(i).getQueryDate(), list.get(i));
             }
         }
-        List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((startTime + "01"), (endTime + "31"));
+        List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((startTime + "-01"), (endTime + "-31"));
         map.put(list1.get(0).getQueryDate(), list1.get(0));
         return map;
     }

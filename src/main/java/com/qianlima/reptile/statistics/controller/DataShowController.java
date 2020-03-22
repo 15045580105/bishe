@@ -151,8 +151,8 @@ public class DataShowController {
     }
 
     @PostMapping(path = "/collect_releas")
-    public Response getCollectReleas(String startTime, String endTime) {
-        Map<String,String> map = collectAndReleaseService.collectAndReleaseCount(startTime,endTime);
+    public Response getCollectReleas(String month) {
+        Map<String,String> map = collectAndReleaseService.collectAndReleaseCount(month);
         return Response.success(map);
     }
 

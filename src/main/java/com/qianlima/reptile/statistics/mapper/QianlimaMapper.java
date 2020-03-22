@@ -46,15 +46,14 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     @Select("select count(1) from bidding_raw where intime >= #{startTime} and intime <= #{endTime} and status = 50")
     long selectCollect50(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
-    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime}")
+    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and status = 99")
     long selecRelease(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
-    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and username != root")
+    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and username != 'root' and status = 99")
     long selectReleaseUser(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
-    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and catid = 101")
+    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and catid = 101 and status = 99")
     long selectReleaseProject(@Param("startTime") String startTime,@Param("endTime") String endTime);
-
 
 
     Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);

@@ -33,9 +33,10 @@ public class CollectAndReleaseServiceImpl implements CollectAndReleaseService {
 
     @Override
     public void collectAndRelease() {
-        String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
-        String startTime = reportStartTime + " 00:00:00";
-        String endTime = reportStartTime + " 23:59:59";
+        String today = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
+        String reportStartTime = DateUtils.getLastDay(today);
+        String startTime = DateUtil.date3TimeStamp((reportStartTime + DateUtils.dateStartStr));
+        String endTime = DateUtil.date3TimeStamp((reportStartTime + DateUtils.dateEndStr));
         CollectAndReleas collectAndReleas = new CollectAndReleas();
         long collect = qianlimaMapper.selectCollectCount(startTime, endTime);
         long collect34 = qianlimaMapper.selectCollect34(startTime, endTime);
@@ -60,8 +61,8 @@ public class CollectAndReleaseServiceImpl implements CollectAndReleaseService {
     }
 
     @Override
-    public Map<String, String> collectAndReleaseCount(String startTime, String endTime) {
-        List<CollectAndReleas> list = collectAndReleasRepository.queryByTime(startTime, endTime);
+    public Map<String, String> collectAndReleaseCount(String month) {
+        List<CollectAndReleas> list = collectAndReleasRepository.queryByTime((month + "-01"), (month + "-31"));
         CollectAndReleas collectAndReleas = new CollectAndReleas();
         Map<String, String> map = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
@@ -74,9 +75,9 @@ public class CollectAndReleaseServiceImpl implements CollectAndReleaseService {
             collectAndReleas.setReleasSystem(collectAndReleas.getReleasSystem() + list.get(i).getReleasSystem());
             collectAndReleas.setReleasProject(collectAndReleas.getReleasProject() + list.get(i).getReleasProject());
             collectAndReleas.setReleasTender(collectAndReleas.getReleasTender() + list.get(i).getReleasTender());
-            collectAndReleas.setQueryDate(DateUtils.getLocalDate(startTime).toString());
+            collectAndReleas.setQueryDate(month);
         }
-        map.put("queryDate", collectAndReleas.getQueryDate() + "");
+        map.put("queryDate", collectAndReleas.getQueryDate());
         map.put("collect", collectAndReleas.getCollect() + "");
         map.put("collect34", collectAndReleas.getCollect34() + "");
         map.put("collect50", collectAndReleas.getCollect50() + "");

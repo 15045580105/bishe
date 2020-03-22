@@ -338,13 +338,13 @@ public class DateUtil {
     }
 
     /**
-     * 把yyyy-MM-dd HH类型的字符创转换成日期类型
+     * 把yyyy-MM-dd类型的字符创转换成年月
      *
      * @param da
      * @return
      */
     public static Date getStringToDateFull(String da) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Date date = null;
         try {
             date = sdf.parse(da);

@@ -270,4 +270,31 @@ public class DateUtils {
         }
         return false;
     }
+
+
+    /**
+     * @return a
+     * @description 获取某一日期前一天
+     * @author gyx
+     * @date 2020-03-22 15:39
+    * @parameter * @param null
+     * @since
+     */
+    public static String getLastDay(String time){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        Date date=null;
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.setTime(date);
+        int day=calendar.get(Calendar.DATE);
+        //                      此处修改为+1则是获取后一天
+        calendar.set(Calendar.DATE,day-1);
+
+        String lastDay = sdf.format(calendar.getTime());
+        return lastDay;
+    }
 }

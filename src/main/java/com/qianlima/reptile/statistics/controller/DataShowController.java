@@ -156,20 +156,6 @@ public class DataShowController {
         return Response.success(map);
     }
 
-
-    @PostMapping(path = "/pot")
-    public void getpot() {
-        long l = System.currentTimeMillis();
-        System.out.println("start time = "+l);
-        templateAndPotStatistical.template();
-        System.out.println("handle time in = "+(System.currentTimeMillis() - l));
-    }
-
-
-    @PostMapping(path = "/collect")
-    public void getCollect() {
-        collectAndReleaseService.collectAndRelease();
-    }
     /**
      * 每月发布率
      * @param startTime

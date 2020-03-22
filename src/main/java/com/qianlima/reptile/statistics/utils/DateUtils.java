@@ -27,6 +27,9 @@ public class DateUtils {
 
     public static final DateTimeFormatter DTF =DateTimeFormatter.ofPattern("yyyy-MM");
 
+    public static final String dateStartStr = " 00:00:00";
+
+    public static final String dateEndStr = " 23:59:59";
 
     public static YearMonth getLocalDate(String date) {
         return YearMonth.parse(date, DTF);

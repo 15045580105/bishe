@@ -167,7 +167,7 @@ public interface ModmonitorMapper {
     long selectFailTempltCount(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
 
-    @Select("select tmplt from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
-    List<String> selectFailTemplt(@Param("startTime") String startTime, @Param("endTime") String endTime);
+    @Select("select DISTINCT(tmplt) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime}")
+    List<FaultTmpltDo> selectFailTemplt(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
 }

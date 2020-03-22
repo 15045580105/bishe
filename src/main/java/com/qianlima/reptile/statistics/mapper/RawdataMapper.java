@@ -1,16 +1,12 @@
 package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
 import com.qianlima.reptile.statistics.entity.TempltDo;
-import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author : gyx
@@ -25,11 +21,10 @@ public interface RawdataMapper {
     @Select("select domain from rawdatas.ae_pot limit #{page},#{count}")
     List<String> selectPotByPage(@Param("page") Integer page, @Param("count") Integer count);
 
-    @Select("select count(domain) from rawdatas.ae_pot")
-    long selectPotTotalCount();
+    @Select("select domain from rawdatas.ae_pot")
+    List<String> selectAllPot();
 
-
-    @Select("select id,state from rawdatas.crawlconfig")
+    @Select("select id,state,potName from rawdatas.crawlconfig")
     List<TempltDo> selectTemplt();
 
     @Select("select count(1) from rawdatas.crawlconfig")

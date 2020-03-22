@@ -17,11 +17,6 @@ spring:
           password: KF7lhEE3AIwM
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://121.40.46.25:3309/modmonitor?useUnicode=true&characterEncoding=utf8
-        rawdata:
-          username: root
-          password: uRGtSxZUdUy8GnMB
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://121.40.46.25:3309/rawdatas?useUnicode=true&characterEncoding=utf8
         octopus:
           username: statistics
           password: KF7lhEE3AIwM

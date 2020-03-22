@@ -159,7 +159,10 @@ public class DataShowController {
 
     @PostMapping(path = "/pot")
     public void getpot() {
+        long l = System.currentTimeMillis();
+        System.out.println("start time = "+l);
         templateAndPotStatistical.template();
+        System.out.println("handle time in = "+(System.currentTimeMillis() - l));
     }
 
 

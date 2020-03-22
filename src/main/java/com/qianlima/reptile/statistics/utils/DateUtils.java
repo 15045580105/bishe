@@ -297,4 +297,18 @@ public class DateUtils {
         String lastDay = sdf.format(calendar.getTime());
         return lastDay;
     }
+
+    /**
+     * @return a
+     * @description 修改日期格式
+     * @author gyx
+     * @date 2020-03-22 20:5
+     * @parameter * @param null
+     * @since
+     */
+    public static String getDateByYm(String dateStr) throws ParseException{
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+        String now = new SimpleDateFormat("yyyy-MM").format(date);
+        return now;
+    }
 }

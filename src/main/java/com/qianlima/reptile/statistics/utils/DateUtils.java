@@ -31,6 +31,10 @@ public class DateUtils {
 
     public static final String dateEndStr = " 23:59:59";
 
+    public static final String monthStart = "-01";
+
+    public static final String monthEnd = "-31";
+
     public static YearMonth getYearMonth(String date) {
         return YearMonth.parse(date, DTF);
     }

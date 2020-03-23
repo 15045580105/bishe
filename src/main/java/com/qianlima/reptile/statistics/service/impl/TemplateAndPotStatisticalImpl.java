@@ -7,16 +7,20 @@ package com.qianlima.reptile.statistics.service.impl;
  */
 
 
+import com.qianlima.reptile.statistics.constant.ResultCode;
 import com.qianlima.reptile.statistics.constant.TempStatus;
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.TempltDo;
 import com.qianlima.reptile.statistics.mapper.ModmonitorMapper;
 import com.qianlima.reptile.statistics.mapper.RawdataMapper;
 import com.qianlima.reptile.statistics.repository.PotAndTmpltRepository;
+import com.qianlima.reptile.statistics.service.BaseService;
 import com.qianlima.reptile.statistics.service.TemplateAndPotStatistical;
 import com.qianlima.reptile.statistics.utils.DateUtil;
 import com.qianlima.reptile.statistics.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +36,7 @@ import java.util.stream.Collectors;
  * @date 2020-03-19 00:00
  */
 @Service
-public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical {
+public class TemplateAndPotStatisticalImpl extends BaseService implements TemplateAndPotStatistical {
     private static final Logger logger = LoggerFactory.getLogger(TemplateAndPotStatisticalImpl.class);
 
 
@@ -66,7 +70,7 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         }
         // 将pot 与模板的关联关系保存到 potTempMap 中
         for (TempltDo t : templtList) {
-            if (potTempMap.containsKey(t.getPotName())){
+            if (potTempMap.containsKey(t.getPotName())) {
                 potTempMap.get(t.getPotName()).add(t.getId());
             }
         }
@@ -80,13 +84,13 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
             } else {
                 boolean enable = false;
                 int deleteNum = 0;
-                for (Integer tempId:tempList) {
+                for (Integer tempId : tempList) {
                     if (TempStatus.enable.equals(mapTmplt.get(tempId))) {
                         enable = true;
                         break;
                     }
                     if (!TempStatus.toEnable.equals(mapTmplt.get(tempId))) {
-                        deleteNum ++;
+                        deleteNum++;
                     }
                 }
                 // 有一个模板是 启用，则这个pot就是启用
@@ -94,7 +98,7 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
                     potEnable++;
                 } else {
                     // pot所有模板都是删除状态，则pot是废弃状态
-                    if(deleteNum == tempList.size() ){
+                    if (deleteNum == tempList.size()) {
                         potAbandoned++;
                     }
                 }
@@ -102,8 +106,8 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
             // 判断pot异常量
             int abnormalNum = 0;
             for (Integer tempId : tempList) {
-                if (abnormalTempMap !=null && abnormalTempMap.containsKey(tempId)) {
-                    abnormalNum ++;
+                if (abnormalTempMap != null && abnormalTempMap.containsKey(tempId)) {
+                    abnormalNum++;
                 }
             }
             // 如果pot下的每一个模板都是异常状态，则pot是异常状态
@@ -112,11 +116,11 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
             }
         }
         // 保存统计结果
-        save(reportStartTime,templtTotal,potTotal,potAbandoned,potAbnormal,potEnable,potNew);
-        logger.info("selectTmpltByPot use time = {}",System.currentTimeMillis() - start);
+        save(reportStartTime, templtTotal, potTotal, potAbandoned, potAbnormal, potEnable, potNew);
+        logger.info("selectTmpltByPot use time = {}", System.currentTimeMillis() - start);
     }
 
-    private void save(String reportStartTime,long templtTotal,long potTotal,long potAbandoned,long potAbnormal,long potEnable ,long potNew){
+    private void save(String reportStartTime, long templtTotal, long potTotal, long potAbandoned, long potAbnormal, long potEnable, long potNew) {
         TmpltAndPotStatistics tmpltAndPotStatistics = new TmpltAndPotStatistics();
         long endOfTheMonth = 0;
         if (DateUtils.isLastDayOfMonth(DateUtils.parseDateFromDateStr(reportStartTime))) {
@@ -135,7 +139,7 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         tmpltAndPotStatistics.setTemplatToEnable(toEnableTemplt);
         tmpltAndPotStatistics.setTemplateAbnormal(failTemplt);
         tmpltAndPotStatistics.setTemplateunClassified(unclassifiedTemplt);
-        tmpltAndPotStatistics.setTemplateDelete(templtTotal - enableTemplt - toEnableTemplt );
+        tmpltAndPotStatistics.setTemplateDelete(templtTotal - enableTemplt - toEnableTemplt);
         tmpltAndPotStatistics.setPotTotal(potTotal);
         tmpltAndPotStatistics.setTemplateTotal(templtTotal);
         tmpltAndPotStatistics.setPotAbandoned(potAbandoned);
@@ -154,86 +158,92 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
         return templtDos.stream().collect(Collectors.toMap(TempltDo::getId, TempltDo::getState));
     }
 
-    private Map<String, String> buildMap(List<FaultTmpltDo> list) {
-        Map<String, String> map = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
-            map.put(list.get(i).getTmplt(), list.get(i).getState());
+    @Override
+    public Response selectTemplate(String startTime, String endTime) {
+        // 校验参数
+        Response response = validateTime(startTime, endTime);
+        if (response.getResult() != ResultCode.SUCCESS.getCode()){
+            return response;
         }
-        return map;
+        // 新建一个treemap，按照日期排序，方便前台渲染
+        Map<String, TmpltAndPotStatistics> map = getTreeMap();
+        try {
+            //取月份上一个月
+            String queryEndDate = queryEndDate();
+            // 通过endOfTheMonth字段取出每个月最后一天的数据，endtime需要特殊处理
+            List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + DateUtils.monthStart), (queryEndDate + DateUtils.monthEnd));
+            // 单独查询 endtime 最后一天的数据
+            list.add(potAndTmpltRepository.queryByTime((endTime + DateUtils.monthStart), (endTime + DateUtils.monthEnd)));
+            for (TmpltAndPotStatistics tp : list) {
+                map.put(formatDateToMonth(tp.getQueryDate()), tp);
+            }
+            //检查返回结果的map，如果有月份没有数据，则补充
+            fillMonth(map,startTime,endTime);
+        } catch (Exception e) {
+            logger.info("selectTemplate has error e ={}",e);
+        }
+        return Response.success(map);
     }
 
-    @Override
-    public Map<String, TmpltAndPotStatistics> selectTemplate(String startTime, String endTime) {
-        String mon = null;
-        Map<String, TmpltAndPotStatistics> map = new HashMap<>();
-        //取年月
-        String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
+    /**
+     * 检查返回结果的map，如果有月份没有数据，则补充这月份的key
+     * @param map
+     * @param startTime
+     * @param endTime
+     */
+    private void fillMonth(Map<String, TmpltAndPotStatistics> map,String startTime, String endTime){
+        //取查询月份之间的所有月份
         try {
-            //取查询月份之间的所有月份
-            List<String> listMonth = DateUtils.getMonths(startTime,endTime);
-            //判断查询开始时间是否为当前月
-            if (!DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(startTime)).equals(DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(reportStartTime)))) {
-                //判断结束时间是否为当前月
-                if (DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(endTime)).equals(DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(reportStartTime)))) {
-                    //取月份上一个月
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(new Date());
-                    c.add(Calendar.MONTH, -1);
-                    Date m = c.getTime();
-                    mon = format.format(m);
-                    List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
-                    List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((endTime + "-01"), (endTime + "-31"));
-                    for (int i = 0; i < listMonth.size()-1; i++) {
-                        boolean exists = false;
-                        for (int j = 0; j <list.size() ; j++) {
-                            if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))) {
-                                map.put(listMonth.get(i), list.get(j));
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if(!exists) {
-                            map.put(listMonth.get(i), new TmpltAndPotStatistics());
-                        }
-                    }
-                    if(list.size() == 0){
-                        for (int i = 0; i < listMonth.size()-1; i++) {
-                            map.put(listMonth.get(i),new TmpltAndPotStatistics());
-                        }
-                    }
-                    map.put(DateUtils.getDateByYm(list1.get(0).getQueryDate()),list1.get(0));
-                } else {
-                    mon = endTime;
-                    List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
-                    for (int i = 0; i < listMonth.size(); i++) {
-                        boolean exists = false;
-                        for (int j = 0; j <list.size() ; j++) {
-                            if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))){
-                                map.put(listMonth.get(i),list.get(j));
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if(!exists) {
-                            map.put(listMonth.get(i), new TmpltAndPotStatistics());
-                        }
-                    }
-                    if(list.size() == 0){
-                        for (int i = 0; i < listMonth.size(); i++) {
-                            map.put(listMonth.get(i),new TmpltAndPotStatistics());
-                        }
+            List<String> listMonth = DateUtils.getMonths(startTime, endTime);
+            // 如果月份数量不同，则需要进行补充
+            if (map.keySet().size() != listMonth.size()){
+                for (String month : listMonth){
+                    // 如果 结果map里不包含某个月份，则给补充一个空数组
+                    if (!map.containsKey(month)){
+                        map.put(month, new TmpltAndPotStatistics(month));
                     }
                 }
-            }else {
-                //可能不回出现的情况保持代码健壮（输入查询时间有误）
-                List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((startTime + "-01"), (endTime + "-31"));
-                map.put(DateUtils.getDateByYm(list1.get(0).getQueryDate()), list1.get(0));
             }
         }catch (Exception e){
-            logger.info("日期格式转换错误");
+            logger.info("fillMonth has error e ={}",e);
         }
+    }
+
+    /**
+     *  获取endDate的前一个月份
+     * @return
+     */
+    private String queryEndDate() {
+        SimpleDateFormat format = new SimpleDateFormat(DateUtil.monthPattern);
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -1);
+        Date m = c.getTime();
+        return format.format(m);
+    }
+
+    private Map<String, TmpltAndPotStatistics> getTreeMap() {
+        Map<String, TmpltAndPotStatistics> map = new TreeMap<String, TmpltAndPotStatistics>(
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String firstDate, String secondDate) {
+                        // 降序排序
+                        Integer compare = Integer.parseInt(firstDate.replaceAll("-", "")) - Integer.parseInt(secondDate.replaceAll("-", ""));
+                        return compare;
+                    }
+                });
         return map;
     }
 
+    /**
+     * 截取日期 的 yyyy-mm
+     * @param date
+     * @return
+     */
+    private String formatDateToMonth(String date) {
+        if (StringUtils.isBlank(date)) {
+            return date;
+        }
+        return date.substring(0, 7);
+    }
 }

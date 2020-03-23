@@ -74,50 +74,24 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         TraceStatistic biddingStatistic = new TraceStatistic();
         biddingStatistic.setType(1);
         biddingStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
-
         biddingStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 0));
-        refreshCount();
-
         biddingStatistic.setOctopusCount(selectByPage(orgUrls.get("八爪鱼"), 0));
-        refreshCount();
-
         biddingStatistic.setBridgePageCount(selectByPage(orgUrls.get("桥接页面"), 0));
-        refreshCount();
-
         biddingStatistic.setCompeteProductsCount(selectByPage(orgUrls.get("竞品"), 0));
-        refreshCount();
-
         biddingStatistic.setArtificialEditCount(selectByPage(orgUrls.get("人工编辑"), 0));
-        refreshCount();
-
         biddingStatistic.setMainCrawlerCount(selectByPage("",2));
-        refreshCount();
-
         traceStatisticRepository.save(biddingStatistic);
-
         //        发布量phpcms_content
         TraceStatistic phpStatistic = new TraceStatistic();
         phpStatistic.setType(0);
         phpStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
-
         phpStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 1));
-        refreshCount();
-
         phpStatistic.setOctopusCount(selectByPage(orgUrls.get("八爪鱼"), 1));
-        refreshCount();
-
         phpStatistic.setBridgePageCount(selectByPage(orgUrls.get("桥接页面"), 1));
-        refreshCount();
-
         phpStatistic.setCompeteProductsCount(selectByPage(orgUrls.get("竞品"), 1));
-        refreshCount();
-
         phpStatistic.setArtificialEditCount(selectByPage(orgUrls.get("人工编辑"), 1));
-        refreshCount();
-
         phpStatistic.setMainCrawlerCount(selectByPage("",3));
         refreshCount();
-
         traceStatisticRepository.save(phpStatistic);
 
     }
@@ -136,6 +110,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
      * @return java.lang.Integer
      **/
     private Integer selectByPage(String orgUrl,int flag) {
+        refreshCount();
         if (flag == 0) {
             int limit = 0;
             List<String> list = modmonitorMapper.selectCrawlconfigByOrgUrl(orgUrl, limit);

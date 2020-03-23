@@ -37,7 +37,7 @@ public class NounCalibreServiceImpl implements NounCalibreService {
         NounCalibre nounCalibre = new NounCalibre();
         nounCalibre.setOperateTime(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.EXACTSDF));
         nounCalibre.setOperator(operator);
-        nounCalibre.setContent(operator);
+        nounCalibre.setContent(content);
         nounCalibre.setId(id);
 
         return Response.success(nounCalibreRepostory.update(nounCalibre).getModifiedCount());

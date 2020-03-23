@@ -26,16 +26,34 @@ public class StatisticsConstant {
      */
     public static final String[] DataSourceList = new String[]{"webcha", "competeProduct", "bridgePage", "manualEdit", "octopus","mainCrawler"};
 
+    /**
+     * 微信
+     */
     public static final String webcha = "webcha";
 
+    /**
+     * 竞品
+     */
     public static final String competeProduct = "competeProduct";
 
+    /**
+     * 桥接页面
+     */
     public static final String bridgePage = "bridgePage";
 
+    /**
+     * 人工编辑
+     */
     public static final String manualEdit = "manualEdit";
 
+    /**
+     * 八爪鱼
+     */
     public static final String octopus = "octopus";
 
+    /**
+     * 主爬
+     */
     public static final String mainCrawler = "mainCrawler";
 
     /**

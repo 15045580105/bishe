@@ -34,7 +34,7 @@ public class PotAndTmpltRepository {
     }
 
     public List<TmpltAndPotStatistics> queryByTimeAndMonth(String startTime, String endTime) {
-        Criteria criteria = Criteria.where("queryDate").gte(startTime).lte(endTime).and("endOfTheMonth").is("1");
+        Criteria criteria = Criteria.where("queryDate").gte(startTime).lte(endTime).and("endOfTheMonth").is(1);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);

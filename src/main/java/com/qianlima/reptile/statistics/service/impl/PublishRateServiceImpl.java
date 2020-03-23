@@ -21,7 +21,6 @@ public class PublishRateServiceImpl implements PublishRateService {
 
     @Override
     public Response queryPublishRate(String startDate, String endDate) {
-
         // 统计发布量
         List<TraceStatistic> publishList = traceStatisticRepository.queryInTime(startDate, endDate);
         Map<String, List<TraceStatistic>> publishMap = groupPublishList(publishList);

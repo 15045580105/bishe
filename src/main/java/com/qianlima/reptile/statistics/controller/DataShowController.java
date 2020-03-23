@@ -51,6 +51,9 @@ public class DataShowController {
     private CollectAndReleaseService collectAndReleaseService;
     @Autowired
     private PublishRateService publishRateService;
+    @Autowired
+    private NounCalibreService nounCalibreService;
+
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -165,5 +168,26 @@ public class DataShowController {
     @PostMapping(path = "/publish/rate")
     public Response queryPublishRate(String startTime, String endTime) {
         return publishRateService.queryPublishRate(startTime,endTime);
+    }
+
+
+    @PostMapping("/nouncalibre/add")
+    public Response addNounCalibre(String operator, String content) {
+        return nounCalibreService.addNounCalibre(operator, content);
+    }
+
+    @PutMapping("/nouncalibre/update")
+    public Response updateNounCalibre(String id, String operator, String content) {
+        return nounCalibreService.updateNounCalibre(id, operator, content);
+    }
+
+    @DeleteMapping("/nouncalibre/delete")
+    public Response deleteNounCalibre(String id) {
+        return nounCalibreService.deleteNounCalibre(id);
+    }
+
+    @GetMapping("/nouncalibre/query")
+    public Response queryNounCalibre() {
+        return nounCalibreService.queryNounCalibre();
     }
 }

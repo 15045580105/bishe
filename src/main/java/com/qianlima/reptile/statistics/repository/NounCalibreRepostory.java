@@ -44,4 +44,8 @@ public class NounCalibreRepostory {
         return mongoTemplate.remove(query, NounCalibre.class);
     }
 
+    public NounCalibre queryOne() {
+        return mongoTemplate.findOne(new Query(), NounCalibre.class);
+    }
+
 }

@@ -14,4 +14,6 @@ public interface NounCalibreService {
     Response updateNounCalibre(String id,String operator,String content);
 
     Response deleteNounCalibre(String id);
+
+    Response queryNounCalibre();
 }

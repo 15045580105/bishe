@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.service.impl;
 
 import com.qianlima.reptile.statistics.domain.NounCalibre;
 import com.qianlima.reptile.statistics.entity.Response;
+import com.qianlima.reptile.statistics.entity.ResultCode;
 import com.qianlima.reptile.statistics.repository.NounCalibreRepostory;
 import com.qianlima.reptile.statistics.service.NounCalibreService;
 import com.qianlima.reptile.statistics.utils.DateUtils;
@@ -21,6 +22,9 @@ public class NounCalibreServiceImpl implements NounCalibreService {
 
     @Override
     public Response addNounCalibre(String operator,String content) {
+        if (nounCalibreRepostory.queryOne() != null) {
+            return Response.error(ResultCode.DOC_NOT_BLANK.getCode(), ResultCode.DOC_NOT_BLANK.getMsg());
+        }
         NounCalibre nounCalibre = new NounCalibre();
         nounCalibre.setOperateTime(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.EXACTSDF));
         nounCalibre.setContent(content);
@@ -42,5 +46,13 @@ public class NounCalibreServiceImpl implements NounCalibreService {
     @Override
     public Response deleteNounCalibre(String id) {
         return Response.success(nounCalibreRepostory.delete(id).getDeletedCount());
+    }
+
+    public Response queryNounCalibre() {
+        if (nounCalibreRepostory.queryOne() != null) {
+            return Response.success(nounCalibreRepostory.queryOne());
+        } else {
+            return Response.error(ResultCode.DOC_IS_BLANK.getCode(), ResultCode.DOC_IS_BLANK.getMsg());
+        }
     }
 }

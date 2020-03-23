@@ -22,7 +22,13 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     @Select("select count(1) from phpcms_content where status = 99 and updatetime between #{startUpdateTime} and #{endUpdateTime}")
     Integer select(@Param("startUpdateTime") int startUpdateTime,@Param("endUpdateTime") int endUpdateTime);
 
-
+    /**
+     * in查询phpcme_content表中对应id数据条数
+     * @param ids
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select({
             "<script>" +
             "select " +
@@ -35,7 +41,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
             "and  updatetime> #{startTime} and updatetime &lt; #{endTime}"+
             "</script>"
     })
-    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Integer startTime, @Param("endTime") Integer endTime);
+    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
     @Select("select count(1) from bidding_raw where intime >= #{startTime} and intime <= #{endTime}")
     long selectCollectCount(@Param("startTime") String startTime,@Param("endTime") String endTime);
@@ -55,6 +61,4 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and catid = 101 and status = 99")
     long selectReleaseProject(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
-
-    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 }

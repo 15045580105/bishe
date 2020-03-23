@@ -22,6 +22,13 @@ public interface RawdatasMapper extends BaseMapper<Map> {
     @Select("select count(1) from rawdatas.`bidding_raw` where  intime between #{startUpdateTime} and #{endUpdateTime}")
     Integer select(@Param("startUpdateTime") int startUpdateTime, @Param("endUpdateTime") int endUpdateTime);
 
+    /**
+     * in查询bidding_raw表中对应id数据条数
+     * @param ids
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select({
             "<script>" +
                     "select COUNT(1) from rawdatas.bidding_raw where ae_template in ",

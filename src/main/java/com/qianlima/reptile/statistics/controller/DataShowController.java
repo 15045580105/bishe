@@ -123,8 +123,8 @@ public class DataShowController {
 
     /**
      * 集发布详情-年趋势
-     * @param startTime
-     * @param endTime
+     * @param startTime 开始日期
+     * @param endTime 结束日期
      * @return
      */
     @PostMapping(path = "/yearTrend")
@@ -134,7 +134,7 @@ public class DataShowController {
 
     /**
      * 集发布详情-月趋势
-     * @param date
+     * @param date 当月日期
      * @return
      */
     @PostMapping(path = "/monthTrend")

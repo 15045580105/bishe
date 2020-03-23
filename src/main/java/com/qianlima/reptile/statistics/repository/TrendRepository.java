@@ -24,6 +24,11 @@ public class TrendRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 通过日期年月查询
+     * @param date 年月
+     * @return
+     */
     public List<TrendDTO> queryByDate(String date){
         Pattern pattern = Pattern.compile("^" + date + ".*$");
         Criteria criteria = Criteria.where("currentDayStr").regex(pattern);

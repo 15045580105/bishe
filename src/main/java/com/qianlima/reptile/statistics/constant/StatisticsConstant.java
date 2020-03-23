@@ -37,4 +37,19 @@ public class StatisticsConstant {
     public static final String octopus = "octopus";
 
     public static final String mainCrawler = "mainCrawler";
+
+    /**
+     * 参数不能为空状态码
+     */
+    public static final Integer EORROR_PARAMETER_CANNOT_BE_EMPTY = 100;
+
+    /**
+     * 开始日期不能晚于结束日期状态码
+     */
+    public static final Integer EORROR_START_NO_LATER_THAN_END = 101;
+
+    /**
+     * 没有数据状态码
+     */
+    public static final Integer EORROR_NO_DATA = 102;
 }

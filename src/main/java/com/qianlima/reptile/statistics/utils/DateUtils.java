@@ -31,7 +31,7 @@ public class DateUtils {
 
     public static final String dateEndStr = " 23:59:59";
 
-    public static YearMonth getLocalDate(String date) {
+    public static YearMonth getYearMonth(String date) {
         return YearMonth.parse(date, DTF);
     }
 

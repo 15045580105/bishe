@@ -144,12 +144,28 @@ public class DataShowController {
         return traceStatisticService.getTraceStatistic(startTime,endTime);
     }
 
+    /**
+     * @return a
+     * @description 查询pot模版状态数量接口
+     * @author gyx
+     * @date 2020-03-23 18:53
+    * @parameter * @param null
+     * @since
+     */
     @PostMapping(path = "/pot_tmplt/count")
     public Response getPotAndPotCount(String startTime, String endTime) {
         Map<String, TmpltAndPotStatistics> map = templateAndPotStatistical.selectTemplate(startTime,endTime);
         return Response.success(map);
     }
 
+    /**
+     * @return a
+     * @description 查询发布量采集量统计接口
+     * @author gyx
+     * @date 2020-03-23 18:5
+     * @parameter * @param null
+     * @since
+     */
     @PostMapping(path = "/collect_releas")
     public Response getCollectReleas(String month) {
         Map<String,String> map = collectAndReleaseService.collectAndReleaseCount(month);

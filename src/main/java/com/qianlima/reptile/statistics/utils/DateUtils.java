@@ -9,9 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * @ClassName: DateUtils
@@ -310,5 +308,35 @@ public class DateUtils {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
         String now = new SimpleDateFormat("yyyy-MM").format(date);
         return now;
+    }
+
+
+
+    /**
+     * @param startMonth @example: "2016-01"
+     * @param endMonth @example: "2019-11"
+     * @return	两个时间之间的月份(含开始,结束)
+     * @throws ParseException
+     */
+    public static List<String> getMonths(String startMonth,String endMonth) throws ParseException{
+        LinkedList<String> months = new LinkedList<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar minCalender = Calendar.getInstance();
+        Calendar maxCalender = Calendar.getInstance();
+
+        // 设置开始月份
+        minCalender.setTime(sdf.parse(startMonth));
+        minCalender.set(minCalender.get(Calendar.YEAR), minCalender.get(Calendar.MONTH),1);
+
+        maxCalender.setTime(sdf.parse(endMonth));
+        // 设置日期,保证最后一个日期参数 大于 开始时间日历
+        maxCalender.set(maxCalender.get(Calendar.YEAR), maxCalender.get(Calendar.MONTH),2);
+
+        while (minCalender.before(maxCalender)) {
+            months.add(sdf.format( minCalender.getTime() ));
+            minCalender.add(Calendar.MONTH, 1);
+        }
+        return months;
     }
 }

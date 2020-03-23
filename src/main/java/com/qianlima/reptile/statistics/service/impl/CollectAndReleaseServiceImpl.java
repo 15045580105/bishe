@@ -33,19 +33,29 @@ public class CollectAndReleaseServiceImpl implements CollectAndReleaseService {
 
     @Override
     public void collectAndRelease() {
+        //取前一天
         String today = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         String reportStartTime = DateUtils.getLastDay(today);
         String startTime = DateUtil.date3TimeStamp((reportStartTime + DateUtils.dateStartStr));
         String endTime = DateUtil.date3TimeStamp((reportStartTime + DateUtils.dateEndStr));
         CollectAndReleas collectAndReleas = new CollectAndReleas();
+        //查询采集总量
         long collect = qianlimaMapper.selectCollectCount(startTime, endTime);
+        //查询采集34
         long collect34 = qianlimaMapper.selectCollect34(startTime, endTime);
+        //查询采集50
         long collect50 = qianlimaMapper.selectCollect50(startTime, endTime);
+        //非3450
         long collectResidue = collect - collect34 - collect50;
+        //查询发布总量
         long releas = qianlimaMapper.selecRelease(startTime, endTime);
+        //人工发布
         long releasUser = qianlimaMapper.selectReleaseUser(startTime, endTime);
+        //系统发布
         long releasSystem = releas - releasUser;
+        //项目发布
         long releasProject = qianlimaMapper.selectReleaseProject(startTime, endTime);
+        //招标发布
         long releasTender = releas - releasProject;
         collectAndReleas.setCollect(collect);
         collectAndReleas.setCollect34(collect34);
@@ -65,6 +75,7 @@ public class CollectAndReleaseServiceImpl implements CollectAndReleaseService {
         List<CollectAndReleas> list = collectAndReleasRepository.queryByTime((month + "-01"), (month + "-31"));
         CollectAndReleas collectAndReleas = new CollectAndReleas();
         Map<String, String> map = new HashMap<>();
+        //循环每天统计当月总量
         for (int i = 0; i < list.size(); i++) {
             collectAndReleas.setCollect(collectAndReleas.getCollect() + list.get(i).getCollect());
             collectAndReleas.setCollect34(collectAndReleas.getCollect34() + list.get(i).getCollect34());
@@ -98,6 +109,14 @@ public class CollectAndReleaseServiceImpl implements CollectAndReleaseService {
         return map;
     }
 
+    /**
+     * @return a
+     * @description 计算比例
+     * @author gyx
+     * @date 2020-03-23 18:5
+     * @parameter * @param null
+     * @since
+     */
     private String efficient(long total, long count) {
         double s = total;
         double c = count;

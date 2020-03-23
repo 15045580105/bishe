@@ -166,26 +166,62 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
     public Map<String, TmpltAndPotStatistics> selectTemplate(String startTime, String endTime) {
         String mon = null;
         Map<String, TmpltAndPotStatistics> map = new HashMap<>();
+        //取年月
         String reportStartTime = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         try {
+            //取查询月份之间的所有月份
+            List<String> listMonth = DateUtils.getMonths(startTime,endTime);
+            //判断查询开始时间是否为当前月
             if (!DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(startTime)).equals(DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(reportStartTime)))) {
+                //判断结束时间是否为当前月
                 if (DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(endTime)).equals(DateUtils.getFormatDateStr(DateUtil.getStringToDateFull(reportStartTime)))) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    //取月份上一个月
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
                     Calendar c = Calendar.getInstance();
                     c.setTime(new Date());
                     c.add(Calendar.MONTH, -1);
                     Date m = c.getTime();
                     mon = format.format(m);
+                    List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
+                    List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((endTime + "-01"), (endTime + "-31"));
+                    for (int i = 0; i < listMonth.size()-1; i++) {
+                        for (int j = 0; j <list.size() ; j++) {
+                            if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))){
+                                map.put(listMonth.get(i),list.get(j));
+                            }else{
+                                map.put(listMonth.get(i),new TmpltAndPotStatistics());
+                            }
+                        }
+                    }
+                    if(list.size() == 0){
+                        for (int i = 0; i < listMonth.size()-1; i++) {
+                            map.put(listMonth.get(i),new TmpltAndPotStatistics());
+                        }
+                    }
+                    map.put(DateUtils.getDateByYm(list1.get(0).getQueryDate()),list1.get(0));
                 } else {
                     mon = endTime;
+                    List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
+                    for (int i = 0; i < listMonth.size(); i++) {
+                        for (int j = 0; j <list.size() ; j++) {
+                            if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))){
+                                map.put(listMonth.get(i),list.get(j));
+                            }else{
+                                map.put(listMonth.get(i),new TmpltAndPotStatistics());
+                            }
+                        }
+                    }
+                    if(list.size() == 0){
+                        for (int i = 0; i < listMonth.size(); i++) {
+                            map.put(listMonth.get(i),new TmpltAndPotStatistics());
+                        }
+                    }
                 }
-                List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
-                for (int i = 0; i < list.size(); i++) {
-                    map.put(DateUtils.getDateByYm(list.get(i).getQueryDate()), list.get(i));
-                }
+            }else {
+                //可能不回出现的情况保持代码健壮（输入查询时间有误）
+                List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((startTime + "-01"), (endTime + "-31"));
+                map.put(DateUtils.getDateByYm(list1.get(0).getQueryDate()), list1.get(0));
             }
-            List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((startTime + "-01"), (endTime + "-31"));
-            map.put(DateUtils.getDateByYm(list1.get(0).getQueryDate()), list1.get(0));
         }catch (Exception e){
             logger.info("日期格式转换错误");
         }

@@ -13,8 +13,8 @@ import java.util.Map;
  * @Modified By :
  */
 public interface TemplateAndPotStatistical {
-
+    //定时查询模版和pot数
     void template();
-
+    //查询统计结果
     Map<String, TmpltAndPotStatistics> selectTemplate(String startTime,String endTime);
 }

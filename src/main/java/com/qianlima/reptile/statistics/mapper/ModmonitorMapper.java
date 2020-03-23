@@ -152,12 +152,18 @@ public interface ModmonitorMapper {
     String selectPotProcessed(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
     /**
-     * 查询crawlconfig表中各个分类下id列表
+     * 分页查询crawlconfig表中各个分类下id列表
      * @Param [dimOrgUrl]
      * @return java.util.List<java.lang.String>
      **/
     @Select("SELECT id from rawdatas.crawlconfig where orgurl LIKE CONCAT('%',#{dimOrgUrl},'%')  limit #{start},1000 ")
     List<String> selectCrawlconfigByOrgUrl(@Param("dimOrgUrl") String dimOrgUrl,@Param("start")Integer start);
+
+    /**
+     * 分页查询crawconfig表中主爬虫数据id列表
+     * @param start
+     * @return
+     */
     @Select("SELECT id from rawdatas.crawlconfig where orgurl not like '%bridge/octopus_list%' and orgurl not like '%column/datalist_n.jspt%' and orgurl not like '%bridge/wechat_list%' and orgurl not like '%bridge/bidding_list%' and orgurl not like '%bridge/peer_list%' limit #{start},1000")
     List<String> selectCrawlconfigMainCraw(@Param("start") Integer start);
 

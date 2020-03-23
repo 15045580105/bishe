@@ -20,7 +20,6 @@ import java.util.List;
  * @author liuchanglin
  * @version 1.0
  * @ClassName: TraceStatisticServiceImpl
- * @Description: TODO(这里用一句话描述这个类的作用)
  * @date 2020/3/18 11:54 上午
  */
 @Service
@@ -29,7 +28,6 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
     private ModmonitorMapper modmonitorMapper;
     @Autowired
     private RawdatasMapper rawdatasMapper;
-
     @Autowired
     private QianlimaMapper qianlimaMapper;
     @Autowired
@@ -127,7 +125,11 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
     /**
      * @Title selectByPage
      * @Description 分页查询orgUrl对应id list
-     *              flag 0-bidingraw 1-phpcms 2 主爬虫-bidingraw 3 主爬虫-phpcms
+     *              flag
+     *              0-bidingraw
+     *              1-phpcms
+     *              2-主爬虫-bidingraw
+     *              3-主爬虫-phpcms_content
      * @Author liuchanglin
      * @Date 2020/3/18 3:42 下午
      * @Param [orgUrl, flag]
@@ -232,7 +234,14 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         System.err.println(count);
         count = 0;
     }
-
+    /**
+     * @Title sumEachField
+     * @Description 发布量采集量按时间范围统计计算出个字段总和
+     * @Author liuchanglin
+     * @Date 2020/3/23 6:39 下午
+     * @Param [list, type]
+     * @return com.qianlima.reptile.statistics.domain.TraceStatistic
+     **/
     private TraceStatistic sumEachField(List<TraceStatistic> list,Integer type) {
         TraceStatistic newTraceStatistic = new TraceStatistic();
         newTraceStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));

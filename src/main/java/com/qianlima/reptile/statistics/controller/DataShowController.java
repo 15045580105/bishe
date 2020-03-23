@@ -142,6 +142,12 @@ public class DataShowController {
         return collectPublishTrendService.getMonthTrend(date);
     }
 
+    /**
+     * 发布量采集量统计功能
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @PostMapping(path = "/collect/releas")
     public Response getTraceStatistics(String startTime, String endTime) {
         return traceStatisticService.getTraceStatistic(startTime,endTime);
@@ -170,22 +176,43 @@ public class DataShowController {
         return publishRateService.queryPublishRate(startTime,endTime);
     }
 
-
+    /**
+     * 名词口径新增功能
+     * @param operator
+     * @param content
+     * @return
+     */
     @PostMapping("/nouncalibre/add")
     public Response addNounCalibre(String operator, String content) {
         return nounCalibreService.addNounCalibre(operator, content);
     }
 
+    /**
+     * 名词口径修改功能
+     * @param id
+     * @param operator
+     * @param content
+     * @return
+     */
     @PutMapping("/nouncalibre/update")
     public Response updateNounCalibre(String id, String operator, String content) {
         return nounCalibreService.updateNounCalibre(id, operator, content);
     }
 
+    /**
+     * 名词口径删除功能
+     * @param id
+     * @return
+     */
     @DeleteMapping("/nouncalibre/delete")
     public Response deleteNounCalibre(String id) {
         return nounCalibreService.deleteNounCalibre(id);
     }
 
+    /**
+     * 名词口径查询功能
+     * @return
+     */
     @GetMapping("/nouncalibre/query")
     public Response queryNounCalibre() {
         return nounCalibreService.queryNounCalibre();

@@ -185,12 +185,16 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
                     List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
                     List<TmpltAndPotStatistics> list1 = potAndTmpltRepository.queryByTime((endTime + "-01"), (endTime + "-31"));
                     for (int i = 0; i < listMonth.size()-1; i++) {
+                        boolean exists = false;
                         for (int j = 0; j <list.size() ; j++) {
-                            if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))){
-                                map.put(listMonth.get(i),list.get(j));
-                            }else{
-                                map.put(listMonth.get(i),new TmpltAndPotStatistics());
+                            if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))) {
+                                map.put(listMonth.get(i), list.get(j));
+                                exists = true;
+                                break;
                             }
+                        }
+                        if(!exists) {
+                            map.put(listMonth.get(i), new TmpltAndPotStatistics());
                         }
                     }
                     if(list.size() == 0){
@@ -203,12 +207,16 @@ public class TemplateAndPotStatisticalImpl implements TemplateAndPotStatistical 
                     mon = endTime;
                     List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + "-01"), (mon + "-31"));
                     for (int i = 0; i < listMonth.size(); i++) {
+                        boolean exists = false;
                         for (int j = 0; j <list.size() ; j++) {
                             if(listMonth.get(i).equals(DateUtils.getDateByYm(list.get(j).getQueryDate()))){
                                 map.put(listMonth.get(i),list.get(j));
-                            }else{
-                                map.put(listMonth.get(i),new TmpltAndPotStatistics());
+                                exists = true;
+                                break;
                             }
+                        }
+                        if(!exists) {
+                            map.put(listMonth.get(i), new TmpltAndPotStatistics());
                         }
                     }
                     if(list.size() == 0){

@@ -129,7 +129,7 @@ public class CollectPublishTrendServiceImpl implements CollectPublishTrendServic
             //每一天发布量同比
             String publishProportion = "-";
             for (TrendDTO pretrendDTO: pretrendDTOS) {
-                if (curtrendDTO.getCurrentDayStr().equals(DateUtils.getYearMonth(pretrendDTO.getCurrentDayStr()).plusYears(1).toString())) {
+                if (curtrendDTO.getCurrentDayStr().equals(DateUtils.getLocalDate(pretrendDTO.getCurrentDayStr()).plusYears(1).toString())) {
                     catchProportion = CalculateUtil(new BigDecimal(curtrendDTO.getCatchCount()), new BigDecimal(pretrendDTO.getCatchCount()));
                     publishProportion = CalculateUtil(new BigDecimal(curtrendDTO.getPublishCount()), new BigDecimal(pretrendDTO.getPublishCount()));
                     break;

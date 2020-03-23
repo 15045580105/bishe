@@ -25,12 +25,18 @@ public class DateUtils {
 
     public static final DateTimeFormatter DTF =DateTimeFormatter.ofPattern("yyyy-MM");
 
+    public static final DateTimeFormatter LDTF =DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     public static final String dateStartStr = " 00:00:00";
 
     public static final String dateEndStr = " 23:59:59";
 
     public static YearMonth getYearMonth(String date) {
         return YearMonth.parse(date, DTF);
+    }
+
+    public static LocalDate getLocalDate(String date) {
+        return LocalDate.parse(date, LDTF);
     }
 
     public static String getNowFormatDateStr(){

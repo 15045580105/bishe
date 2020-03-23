@@ -21,6 +21,7 @@ public class DateUtil {
 
     private static Log log = LogFactory.getLog(DateUtil.class);
     public static String datePattern = "yyyy-MM-dd"; //20040807 tufei
+    public static String monthPattern = "yyyy-MM";
     public static String timePattern = datePattern + " HH:mm:ss";
     public static SimpleDateFormat sdf = new SimpleDateFormat(timePattern);
     public static SimpleDateFormat sdf1 = new SimpleDateFormat(datePattern);

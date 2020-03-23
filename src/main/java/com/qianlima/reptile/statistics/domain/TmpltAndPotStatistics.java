@@ -74,4 +74,10 @@ public class TmpltAndPotStatistics {
      */
     private long endOfTheMonth;
 
+    public TmpltAndPotStatistics() {
+    }
+
+    public TmpltAndPotStatistics(String queryDate) {
+        this.queryDate = queryDate;
+    }
 }

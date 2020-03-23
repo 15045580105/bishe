@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.service;
 
 
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
+import com.qianlima.reptile.statistics.entity.Response;
 
 
 import java.util.Map;
@@ -16,5 +17,5 @@ public interface TemplateAndPotStatistical {
     //定时查询模版和pot数
     void template();
     //查询统计结果
-    Map<String, TmpltAndPotStatistics> selectTemplate(String startTime,String endTime);
+    Response selectTemplate(String startTime, String endTime);
 }

@@ -163,8 +163,8 @@ public class DataShowController {
      */
     @PostMapping(path = "/pot_tmplt/count")
     public Response getPotAndPotCount(String startTime, String endTime) {
-        Map<String, TmpltAndPotStatistics> map = templateAndPotStatistical.selectTemplate(startTime,endTime);
-        return Response.success(map);
+        Response response = templateAndPotStatistical.selectTemplate(startTime,endTime);
+        return response;
     }
 
     /**

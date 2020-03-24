@@ -21,10 +21,21 @@ import java.util.Map;
 @Component
 @DS("octopus")
 public interface OctopusMapper {
-
+    /**
+     * 查询数量和状态按状态分类
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select("select count(1) as count,a.state from octopus_monitor a,octopus_task b where a.verify_code <> 200 and a.task_id = b.task_id and a.verify_time >=#{startTime} and a.verify_time <#{endTime} and operate_id is not null and state > 0 group by state")
     List<Map<String,Object>> selectStatusCodeProcessed(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
+    /**
+     * 查询未处理状态数量
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select("select count(1) from octopus_monitor a,octopus_task b where a.verify_code <> 200 and a.task_id = b.task_id and a.verify_time >=#{startTime} and a.verify_time <#{endTime} and state = 0")
     String selectStatusCodeUntreated(@Param("startTime") String startTime, @Param("endTime") String endTime);
 

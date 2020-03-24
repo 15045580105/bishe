@@ -90,8 +90,8 @@ public class CollectPublishTrendServiceImpl implements CollectPublishTrendServic
         String percent =
                 b == null ? "-" :
                         b.compareTo(new BigDecimal(0)) == 0 ? "-":
-                                a == null ? "0.00%" :
-                                        a.multiply(new BigDecimal(100)).divide(b,2, BigDecimal.ROUND_HALF_UP) + "%";
+                                a == null ? "0.00" :
+                                        a.multiply(new BigDecimal(100)).divide(b,2, BigDecimal.ROUND_HALF_UP) + "";
         return percent;
     }
 

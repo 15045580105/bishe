@@ -13,7 +13,8 @@ public class MathUtil {
     public static Double divi(int a, int b) {
         double rate = 0.000;
         try {
-            rate = Double.parseDouble(df.format((float) a / b));
+            // * 100 的目的是小数转整数，例如： 0.75  *100 即转成 75，前台在 75后拼接%，即得 75%
+            rate = Double.parseDouble(df.format((float) a * 100 / b)) ;
         }catch (Exception e ){
             logger.error(" math divi has error, a={},b={}",e,a,b);
         }

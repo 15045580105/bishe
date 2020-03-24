@@ -168,7 +168,12 @@ public interface ModmonitorMapper {
     List<String> selectCrawlconfigMainCraw(@Param("start") Integer start);
 
 
-
+    /**
+     * 查询故障模版数量
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Select("select count(1) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
     long selectFailTempltCount(@Param("startTime") String startTime, @Param("endTime") String endTime);
 

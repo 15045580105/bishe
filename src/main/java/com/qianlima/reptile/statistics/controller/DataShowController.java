@@ -53,6 +53,8 @@ public class DataShowController {
     private PublishRateService publishRateService;
     @Autowired
     private NounCalibreService nounCalibreService;
+    @Autowired
+    private ReleaseHistoricalService releaseHistoricalService;
 
 
     @RequestMapping("/datadisplay")
@@ -232,5 +234,33 @@ public class DataShowController {
     @GetMapping("/nouncalibre/query")
     public Response queryNounCalibre() {
         return nounCalibreService.queryNounCalibre();
+    }
+
+    /**
+     * @description 历史数据倒入
+     * @author gyx
+     * @date 2020-03-24 23:54
+     * @return
+     * @parameter  * @param null
+     * @since
+     */
+    @PostMapping(path = "/historical/data")
+    public Response historicalData(String startTime,String endTime) {
+        releaseHistoricalService.historical(startTime,endTime);
+        return Response.success("");
+    }
+
+
+    /**
+     * @description 按月查询每天数据
+     * @author gyx
+     * @date 2020-03-25 00:35
+     * @return
+     * @parameter  * @param null
+     * @since
+     */
+    @PostMapping(path = "/template/month")
+    public Response templateMonth(String month) {
+        return templateAndPotStatistical.selectTemplateMonth(month);
     }
 }

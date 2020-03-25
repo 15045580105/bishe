@@ -1,6 +1,8 @@
 package com.qianlima.reptile.statistics.utils;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -348,5 +350,44 @@ public class DateUtils {
             minCalender.add(Calendar.MONTH, 1);
         }
         return months;
+    }
+
+    /**
+     * @return a
+     * @description 获取两个日期之间全部日期
+     * @author gyx
+     * @ate 2020-03-24 23:34
+     * @parameter * @param null
+     * @since
+     */
+    public static List<String> getDates(String startDate, String endDate){
+        List<String> list = new ArrayList<String>();
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //保存日期的集合 
+            Date date_start = sdf.parse(startDate);
+            Date date_end = sdf.parse(endDate);
+            Date date = date_start;
+            //用Calendar 进行日期比较判断
+            Calendar cd = Calendar.getInstance();
+            while (date.getTime() <= date_end.getTime()) {
+                list.add(sdf.format(date));
+                cd.setTime(date);
+                //增加一天 放入集合
+                cd.add(Calendar.DATE, 1);
+                date = cd.getTime();
+            }
+            //去掉符号[]
+            String strList = StringUtils.strip(list.toString(), "[]");
+
+            System.out.println(list);
+
+            System.out.println(strList);
+
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
 }

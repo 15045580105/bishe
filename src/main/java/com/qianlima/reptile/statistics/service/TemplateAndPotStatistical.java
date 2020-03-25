@@ -18,4 +18,6 @@ public interface TemplateAndPotStatistical {
     void template();
     //查询统计结果
     Response selectTemplate(String startTime, String endTime);
+    //统计查询结果按天查一个月
+    Response selectTemplateMonth(String month);
 }

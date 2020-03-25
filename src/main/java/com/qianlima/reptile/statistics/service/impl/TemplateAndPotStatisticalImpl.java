@@ -210,6 +210,32 @@ public class TemplateAndPotStatisticalImpl extends BaseService implements Templa
     }
 
     /**
+     * @return a
+     * @description 检查map没有补0
+     * @author gyx
+     * @date 2020-03-25 00:2
+     * @parameter * @param null
+     * @since
+     */
+    private void fillMonthDay(Map<String, TmpltAndPotStatistics> map,String startTime, String endTime){
+        //取查询月份之间的所有月份
+        try {
+            List<String> listDays = DateUtils.getDates(startTime, endTime);
+            // 如果月份数量不同，则需要进行补充
+            if (map.keySet().size() != listDays.size()){
+                for (String day : listDays){
+                    // 如果 结果map里不包含某个月份，则给补充一个空数组
+                    if (!map.containsKey(day)){
+                        map.put(day, new TmpltAndPotStatistics(day));
+                    }
+                }
+            }
+        }catch (Exception e){
+            logger.info("fillDay has error e ={}",e);
+        }
+    }
+
+    /**
      *  获取endDate的前一个月份
      * @return
      */
@@ -245,5 +271,20 @@ public class TemplateAndPotStatisticalImpl extends BaseService implements Templa
             return date;
         }
         return date.substring(0, 7);
+    }
+
+
+    @Override
+    public Response selectTemplateMonth(String month){
+        if(!StringUtils.isNotBlank(month)){
+            return Response.error(1,"参数错误");
+        }
+        Map<String, TmpltAndPotStatistics> map = getTreeMap();
+        List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeMonth((month + DateUtils.monthStart), (month + DateUtils.monthEnd));
+        for (TmpltAndPotStatistics tp : list) {
+            map.put(tp.getQueryDate(), tp);
+        }
+        fillMonthDay(map,(month + DateUtils.monthStart), (month + DateUtils.monthEnd));
+        return Response.success(map);
     }
 }

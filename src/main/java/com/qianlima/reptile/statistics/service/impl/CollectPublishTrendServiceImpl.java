@@ -166,8 +166,8 @@ public class CollectPublishTrendServiceImpl implements CollectPublishTrendServic
         LocalDate startLocalDate = DateUtils.getLocalDate(startDate);
         LocalDate endLocalDate = DateUtils.getLocalDate(startDate);
         for (LocalDate start = startLocalDate ; start.isBefore(endLocalDate.plusDays(1)) ; start = start.plusDays(1)) {
-            int startTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + "00:00:00") / 1000).toString());
-            int endTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + "23:59:59") / 1000).toString());
+            int startTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + " 00:00:00") / 1000).toString());
+            int endTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + " 23:59:59") / 1000).toString());
             //发布量
             int count =  qianlimaStatisticsService.everyDayPublishCount(startTime, endTime);
             //采集量

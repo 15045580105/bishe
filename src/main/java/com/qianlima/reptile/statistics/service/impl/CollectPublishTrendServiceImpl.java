@@ -163,34 +163,34 @@ public class CollectPublishTrendServiceImpl implements CollectPublishTrendServic
      */
     @Override
     public Response runHistoryData (String startDate, String endDate) {
-            LocalDate startLocalDate = DateUtils.getLocalDate(startDate);
-            LocalDate endLocalDate = DateUtils.getLocalDate(startDate);
-        for (LocalDate start = startLocalDate; start.isBefore(endLocalDate.plusDays(1)) ; start = start.plusDays(1)) {
-            int startTime = Integer.parseInt(DateUtils.convertTimeToLong(start.toString() + "00:00:00").toString());
-            int endTime = Integer.parseInt(DateUtils.convertTimeToLong(start.toString() + "23:59:59").toString());
+        LocalDate startLocalDate = DateUtils.getLocalDate(startDate);
+        LocalDate endLocalDate = DateUtils.getLocalDate(startDate);
+        for (LocalDate start = startLocalDate ; start.isBefore(endLocalDate.plusDays(1)) ; start = start.plusDays(1)) {
+            int startTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + "00:00:00") / 1000).toString());
+            int endTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + "23:59:59") / 1000).toString());
             //发布量
-            int count =  qianlimaStatisticsService.everyDayPublishCount(startTime,endTime);
+            int count =  qianlimaStatisticsService.everyDayPublishCount(startTime, endTime);
             //采集量
-            int catCount = qianlimaStatisticsService.everyDayCatchCount(startTime,endTime);
+            int catCount = qianlimaStatisticsService.everyDayCatchCount(startTime, endTime);
             log.info("phpcmsContentCount:{},biddingRawCount:{}",count,catCount);
             //首先查询是否有当天数据
             String currentDayStr = start.toString();
             Query query = new Query(Criteria.where("currentDayStr").is(currentDayStr));
             long mongoCount = 0;
             try{
-                mongoCount = mongoTemplate.count(query,String.class,MONGO_COLLECTION_NAME);
+                mongoCount = mongoTemplate.count(query, String.class, MONGO_COLLECTION_NAME);
             }catch (Exception e){
                 log.error(e.getMessage());
             }
             if(mongoCount == 0){
                 Map<String,Object> mongoMap = new HashMap<>(8);
-                mongoMap.put("catchCount",catCount);
-                mongoMap.put("publishCount",count);
-                mongoMap.put("updateTime",System.currentTimeMillis());
-                mongoMap.put("currentDayTime",startTime);
-                mongoMap.put("currentDayStr",currentDayStr);
-                mongoTemplate.insert(mongoMap,MONGO_COLLECTION_NAME);
-                log.info("{} count is not exist,mongo inserted!",currentDayStr);
+                mongoMap.put("catchCount", catCount);
+                mongoMap.put("publishCount", count);
+                mongoMap.put("updateTime", System.currentTimeMillis());
+                mongoMap.put("currentDayTime", startTime);
+                mongoMap.put("currentDayStr", currentDayStr);
+                mongoTemplate.insert(mongoMap, MONGO_COLLECTION_NAME);
+                log.info("{} count is not exist,mongo inserted!", currentDayStr);
             }
         }
             return Response.success("SUCCESS");

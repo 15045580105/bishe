@@ -52,7 +52,6 @@ public class PublishRateServiceImpl extends BaseService implements PublishRateSe
                     manualEditPublish += t.getArtificialEditCount();
                     octopusPublish += t.getOctopusCount();
                     mainCrawlerPublish += t.getMainCrawlerCount();
-                    webchaPublish += t.getWeChatCount();
                 } else {
                     // 如果是采集数据
                     competeProductCollect += t.getCompeteProductsCount();
@@ -60,7 +59,6 @@ public class PublishRateServiceImpl extends BaseService implements PublishRateSe
                     manualEditCollect += t.getArtificialEditCount();
                     octopusCollect += t.getOctopusCount();
                     mainCrawlerCollect += t.getMainCrawlerCount();
-                    webchaCollect += t.getWeChatCount();
                 }
             }
             sourceMap.get(StatisticsConstant.competeProduct).add(new PublishRateDto(month, competeProductPublish, competeProductCollect, MathUtil.divi(competeProductPublish, competeProductCollect)));

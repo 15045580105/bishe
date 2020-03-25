@@ -164,7 +164,7 @@ public interface ModmonitorMapper {
      * @param start
      * @return
      */
-    @Select("SELECT id from rawdatas.crawlconfig where orgurl not like '%bridge/octopus_list%' and orgurl not like '%column/datalist_n.jspt%' and orgurl not like '%bridge/wechat_list%' and orgurl not like '%bridge/bidding_list%' and orgurl not like '%bridge/peer_list%' limit #{start},1000")
+    @Select("SELECT id from rawdatas.crawlconfig where orgurl not like '%bridge/octopus_list%' and orgurl not like '%column/datalist_n.jspt%' and orgurl not like '%bridge/bidding_list%' and orgurl not like '%bridge/peer_list%' limit #{start},1000")
     List<String> selectCrawlconfigMainCraw(@Param("start") Integer start);
 
 

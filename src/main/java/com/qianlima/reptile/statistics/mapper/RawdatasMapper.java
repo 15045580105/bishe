@@ -40,4 +40,7 @@ public interface RawdatasMapper extends BaseMapper<Map> {
     })
     Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
+
+    @Select("select ae_template from rawdatas.bidding_raw where intime between #{startTime} and #{endTime} limit #{limit} , 1000 ")
+    List<String> selectTemplateIdInTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime,@Param("limit")Integer limit);
 }

@@ -48,11 +48,12 @@ public class TraceStatistic {
     /**
      * 微信
      */
-    private Integer weChatCount;
+//    private Integer weChatCount;
     /**
      * 查询日期
      */
     private String queryDate;
 
+    private Integer totalCount;
 
 }

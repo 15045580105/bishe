@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author liuchanglin
@@ -35,7 +36,6 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     private static HashMap<String, String> orgUrls = new HashMap<>();
     static {
-        orgUrls.put("微信", "bridge/wechat_list");
         orgUrls.put("八爪鱼", "bridge/octopus_list");
         orgUrls.put("桥接页面", "bridge/bidding_list");
         orgUrls.put("竞品", "bridge/peer_list");
@@ -46,10 +46,13 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
     @Override
     public Response getTraceStatistic(String startTime, String endTime) {
         if (!startTime.equals(endTime)) {
+            Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(startTime,endTime);
             List<TraceStatistic> biddingStatistics = traceStatisticRepository.queryInTime(startTime, endTime, 1);
             TraceStatistic biddingStatistic = sumEachField(biddingStatistics,1);
+            biddingStatistic.setTotalCount(map.get("采集量"));
             List<TraceStatistic>  phpStatistics = traceStatisticRepository.queryInTime(startTime, endTime, 0);
             TraceStatistic phpStatistic = sumEachField(phpStatistics,0);
+            phpStatistic.setTotalCount(map.get("发布量"));
             TraceStatisticResponse traceStatisticResponse = new TraceStatisticResponse();
             traceStatisticResponse.setCollectCount(biddingStatistic);
             traceStatisticResponse.setReleaseCount(phpStatistic);
@@ -57,8 +60,11 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
             return Response.success(traceStatisticResponse);
         }
         if (startTime.equals(endTime)) {
+            Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountByTime(startTime);
             TraceStatistic biddingStatistic = traceStatisticRepository.queryByTime(startTime, 1).get(0);
+            biddingStatistic.setTotalCount(map.get("采集量"));
             TraceStatistic phpStatistic = traceStatisticRepository.queryByTime(startTime, 0).get(0);
+            phpStatistic.setTotalCount(map.get("发布量"));
             TraceStatisticResponse traceStatisticResponse = new TraceStatisticResponse();
             traceStatisticResponse.setCollectCount(biddingStatistic);
             traceStatisticResponse.setReleaseCount(phpStatistic);
@@ -74,7 +80,6 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         TraceStatistic biddingStatistic = new TraceStatistic();
         biddingStatistic.setType(1);
         biddingStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
-        biddingStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 0));
         biddingStatistic.setOctopusCount(selectByPage(orgUrls.get("八爪鱼"), 0));
         biddingStatistic.setBridgePageCount(selectByPage(orgUrls.get("桥接页面"), 0));
         biddingStatistic.setCompeteProductsCount(selectByPage(orgUrls.get("竞品"), 0));
@@ -85,7 +90,6 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         TraceStatistic phpStatistic = new TraceStatistic();
         phpStatistic.setType(0);
         phpStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
-        phpStatistic.setWeChatCount(selectByPage(orgUrls.get("微信"), 1));
         phpStatistic.setOctopusCount(selectByPage(orgUrls.get("八爪鱼"), 1));
         phpStatistic.setBridgePageCount(selectByPage(orgUrls.get("桥接页面"), 1));
         phpStatistic.setCompeteProductsCount(selectByPage(orgUrls.get("竞品"), 1));
@@ -222,14 +226,12 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         newTraceStatistic.setQueryDate(DateUtils.getFormatDateStr(System.currentTimeMillis(), DateUtils.FUZSDF));
         newTraceStatistic.setType(type);
         newTraceStatistic.setMainCrawlerCount(0);
-        newTraceStatistic.setWeChatCount(0);
         newTraceStatistic.setArtificialEditCount(0);
         newTraceStatistic.setBridgePageCount(0);
         newTraceStatistic.setCompeteProductsCount(0);
         newTraceStatistic.setOctopusCount(0);
         for (TraceStatistic traceStatistic : list) {
             newTraceStatistic.setMainCrawlerCount(newTraceStatistic.getMainCrawlerCount() + traceStatistic.getMainCrawlerCount());
-            newTraceStatistic.setWeChatCount(newTraceStatistic.getWeChatCount() + traceStatistic.getWeChatCount());
             newTraceStatistic.setArtificialEditCount(newTraceStatistic.getArtificialEditCount() + traceStatistic.getArtificialEditCount());
             newTraceStatistic.setBridgePageCount(newTraceStatistic.getBridgePageCount() + traceStatistic.getBridgePageCount());
             newTraceStatistic.setCompeteProductsCount(newTraceStatistic.getCompeteProductsCount() + traceStatistic.getCompeteProductsCount());

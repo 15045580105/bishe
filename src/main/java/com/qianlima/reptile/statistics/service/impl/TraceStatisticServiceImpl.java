@@ -9,6 +9,7 @@ import com.qianlima.reptile.statistics.mapper.RawdatasMapper;
 import com.qianlima.reptile.statistics.repository.TraceStatisticRepository;
 import com.qianlima.reptile.statistics.service.TraceStatisticService;
 import com.qianlima.reptile.statistics.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,12 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
     @Autowired
     private TraceStatisticRepository traceStatisticRepository;
 
+    Map<String, String> octopusList = new HashMap<>();
+    Map<String, String> brigeList = new HashMap<>();
+    Map<String, String> peerList = new HashMap<>();
+    Map<String, String> editList = new HashMap<>();
+    Map<String, String> mainList = new HashMap<>();
+
     private static HashMap<String, String> orgUrls = new HashMap<>();
     static {
         orgUrls.put("八爪鱼", "bridge/octopus_list");
@@ -42,7 +49,6 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         orgUrls.put("人工编辑", "column/datalist_n.jsp");
     }
 
-    private int count = 0;
     @Override
     public Response getTraceStatistic(String startTime, String endTime) {
         if (!startTime.equals(endTime)) {
@@ -74,49 +80,89 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         return null;
     }
 
-    @Override
-    public void saveStatistic() {
-//                采集量bidding_raw
-        TraceStatistic biddingStatistic = new TraceStatistic();
-        biddingStatistic.setType(1);
-        biddingStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
-        biddingStatistic.setOctopusCount(selectByPage(orgUrls.get("八爪鱼"), 0));
-        biddingStatistic.setBridgePageCount(selectByPage(orgUrls.get("桥接页面"), 0));
-        biddingStatistic.setCompeteProductsCount(selectByPage(orgUrls.get("竞品"), 0));
-        biddingStatistic.setArtificialEditCount(selectByPage(orgUrls.get("人工编辑"), 0));
-        biddingStatistic.setMainCrawlerCount(selectByPage("",2));
-        traceStatisticRepository.save(biddingStatistic);
-        //        发布量phpcms_content
-        TraceStatistic phpStatistic = new TraceStatistic();
-        phpStatistic.setType(0);
-        phpStatistic.setQueryDate(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF));
-        phpStatistic.setOctopusCount(selectByPage(orgUrls.get("八爪鱼"), 1));
-        phpStatistic.setBridgePageCount(selectByPage(orgUrls.get("桥接页面"), 1));
-        phpStatistic.setCompeteProductsCount(selectByPage(orgUrls.get("竞品"), 1));
-        phpStatistic.setArtificialEditCount(selectByPage(orgUrls.get("人工编辑"), 1));
-        phpStatistic.setMainCrawlerCount(selectByPage("",3));
-        refreshCount();
-        traceStatisticRepository.save(phpStatistic);
 
+    @Override
+    public void saveStatistic(Long startTime, Long endTime) {
+        LoadDatas();
+
+        System.err.println(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
+
+        Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF)
+                , DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
+        System.err.println("map select complete");
+        TraceStatistic biddingCount = getDailyBiddingCount(startTime, endTime);
+        biddingCount.setTotalCount(map.get("采集量"));
+        TraceStatistic phpCount = getDailyPhpCount(startTime, endTime);
+        phpCount.setTotalCount(map.get("发布量"));
+        System.err.println("采集量" + biddingCount.toString());
+        System.err.println("发布量" + phpCount.toString());
+
+        traceStatisticRepository.save(biddingCount);
+        traceStatisticRepository.save(phpCount);
+    }
+
+    @Override
+    public void runData(Long startTime, Long endTime) {
+        Long currentStartTime = startTime;
+        Long currentEndTime = currentStartTime + 86399L;
+        while (currentEndTime <= endTime) {
+            saveStatistic(currentStartTime,currentEndTime);
+            currentStartTime += 86400;
+            currentEndTime += 86400;
+        }
     }
 
     /**
+     * @Title LoadDatas
+     * @Description 载入分类数据
+     * @Author liuchanglin
+     * @Date 2020/3/25 7:46 下午
+     * @Param []
+     * @return void
+     **/
+    private void LoadDatas() {
+        System.err.println("load orgin datas");
+        octopusList = convertToMap(selectByPageTypes(orgUrls.get("八爪鱼"), 0));
+        System.err.println("octopusList complete");
+        brigeList = convertToMap(selectByPageTypes(orgUrls.get("桥接页面"), 0));
+        System.err.println("brigeList complete");
+        peerList = convertToMap(selectByPageTypes(orgUrls.get("竞品"), 0));
+        System.err.println("peerList complete");
+        editList = convertToMap(selectByPageTypes(orgUrls.get("人工编辑"), 0));
+        System.err.println("editList complete");
+        mainList = convertToMap(selectByPageTypes("", 1));
+        System.err.println("mainList complete");
+    }
+    /**
+     * @Title convertToMap
+     * @Description List转map(key)
+     * @Author liuchanglin
+     * @Date 2020/3/25 7:46 下午
+     * @Param [templt]
+     * @return java.util.Map<java.lang.String,java.lang.String>
+     **/
+    public Map<String, String> convertToMap(List<String> templt) {
+        Map<String, String>  teamMap = new HashMap<>();
+        for (String t : templt){
+            teamMap.put(t,null);
+        }
+        return teamMap;
+    }
+    /**
+     * @return java.lang.Integer
      * @Title selectByPage
-     * @Description 分页查询orgUrl对应id list
-     *              flag
-     *              0-bidingraw
-     *              1-phpcms
-     *              2-主爬虫-bidingraw
-     *              3-主爬虫-phpcms_content
+     * @Description 查询orgUrl对应id list
+     * flag
+     * 0-分类
+     * 1-主爬虫
      * @Author liuchanglin
      * @Date 2020/3/18 3:42 下午
      * @Param [orgUrl, flag]
-     * @return java.lang.Integer
      **/
-    private Integer selectByPage(String orgUrl,int flag) {
-        refreshCount();
+    private List<String> selectByPageTypes(String orgUrl, int flag) {
         if (flag == 0) {
             int limit = 0;
+
             List<String> list = modmonitorMapper.selectCrawlconfigByOrgUrl(orgUrl, limit);
             List<String> ids = new ArrayList<>();
             while (list != null && list.size() != 0) {
@@ -124,22 +170,10 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
                 limit += 1000;
                 list = modmonitorMapper.selectCrawlconfigByOrgUrl(orgUrl, limit);
             }
-            getCount(ids, DateUtils.getYesterTodayStartTime(), DateUtils.getYesterTodayEndTime(),0);
-            return count;
+            return ids;
         }
+
         if (flag == 1) {
-                int limit = 0;
-                List<String> list = modmonitorMapper.selectCrawlconfigByOrgUrl(orgUrl, limit);
-                List<String> ids = new ArrayList<>();
-                while (list != null && list.size() != 0) {
-                    ids.addAll(list);
-                    limit += 1000;
-                    list = modmonitorMapper.selectCrawlconfigByOrgUrl(orgUrl, limit);
-                }
-                getCount(ids, DateUtils.getYesterTodayStartTime(), DateUtils.getYesterTodayEndTime(),1);
-                return count;
-            }
-        if (flag == 2) {
             int limit = 0;
             List<String> list = modmonitorMapper.selectCrawlconfigMainCraw(limit);
             List<String> ids = new ArrayList<>();
@@ -148,70 +182,116 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
                 limit += 1000;
                 list = modmonitorMapper.selectCrawlconfigMainCraw(limit);
             }
-            getCount(ids, DateUtils.getYesterTodayStartTime(), DateUtils.getYesterTodayEndTime(),0);
-            return count;
-        }
-        if (flag == 3) {
-            int limit = 0;
-            List<String> list = modmonitorMapper.selectCrawlconfigMainCraw(limit);
-            List<String> ids = new ArrayList<>();
-            while (list != null && list.size() != 0) {
-                ids.addAll(list);
-                limit += 1000;
-                list = modmonitorMapper.selectCrawlconfigMainCraw(limit);
-            }
-            getCount(ids, DateUtils.getYesterTodayStartTime(), DateUtils.getYesterTodayEndTime(),1);
-            return count;
+            return ids;
         }
         return null;
     }
-
-
     /**
-     * @Title getCount
-     * @Description 递归对id进行in查询 每次查500
-     *              flag 0-bidding_raw 1-phpcms_content
+     * @Title selectByPageCounts
+     * @Description 查询每日模版id
      * @Author liuchanglin
-     * @Date 2020/3/18 3:44 下午
-     * @Param [ids, startTime, endTime, flag]
-     * @return void
+     * @Date 2020/3/25 7:47 下午
+     * @Param [flag, startTime, endTime]
+     * @return java.util.List<java.lang.String>
      **/
-    private void getCount(List<String> ids,Long startTime,Long endTime,Integer flag) {
+    private List<String> selectByPageCounts(int flag, Long startTime, Long endTime) {
         if (flag == 0) {
-            if (ids != null && ids.size() != 0) {
-                if (ids.size() > 1000) {
-                    count += rawdatasMapper.selectBiddingCountsByIds(ids.subList(0, 500), startTime, endTime);
-                    getCount(ids.subList(500, ids.size()), startTime, endTime,0);
-                } else {
-                    count += rawdatasMapper.selectBiddingCountsByIds(ids,startTime,endTime);
-                }
-            }
+            List<String> list = qianlimaMapper.selectTmpltIdInTime(startTime, endTime);
+            return list;
         }
         if (flag == 1) {
-            if (ids != null && ids.size() != 0) {
-                if (ids.size() > 1000) {
-                    count+=qianlimaMapper.selectPhpcmsCountsByIds(ids.subList(0, 500), startTime, endTime);
-                    getCount(ids.subList(500, ids.size()), startTime, endTime,1);
-                } else {
-                    count+=qianlimaMapper.selectPhpcmsCountsByIds(ids,startTime,endTime);
+            List<String> list = rawdatasMapper.selectTemplateIdInTime(startTime, endTime);
+            return list;
+        }
+        return null;
+    }
+    /**
+     * @Title getDailyPhpCount
+     * @Description 对比查询 （发布量）
+     * @Author liuchanglin
+     * @Date 2020/3/25 7:47 下午
+     * @Param [startTime, endTime]
+     * @return com.qianlima.reptile.statistics.domain.TraceStatistic
+     **/
+    private TraceStatistic getDailyPhpCount(Long startTime, Long endTime) {
+        System.err.println("get daily phpCount");
+        TraceStatistic traceStatisticPhp = new TraceStatistic();
+        traceStatisticPhp.setQueryDate(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
+        traceStatisticPhp.setType(0);
+        List<String> templatePHPIDs = selectByPageCounts(0, startTime, endTime);
+        int octopus = 0;
+        int brige = 0;
+        int edit = 0;
+        int main = 0;
+        int peer = 0;
+        if (templatePHPIDs != null && templatePHPIDs.size() != 0) {
+            System.err.println("cycle phpCount");
+            for (String templateBiddingID : templatePHPIDs) {
+                if (StringUtils.isNotBlank(templateBiddingID)) {
+                    if (octopusList.containsKey(templateBiddingID)) {
+                        octopus++;
+                    } else if (brigeList.containsKey(templateBiddingID)) {
+                        brige++;
+                    } else if (editList.containsKey(templateBiddingID)) {
+                        edit++;
+                    } else if (mainList.containsKey(templateBiddingID)) {
+                        main++;
+                    } else if (peerList.containsKey(templateBiddingID)) {
+                        peer++;
+                    }
                 }
             }
+            traceStatisticPhp.setOctopusCount(octopus);
+            traceStatisticPhp.setBridgePageCount(brige);
+            traceStatisticPhp.setCompeteProductsCount(peer);
+            traceStatisticPhp.setArtificialEditCount(edit);
+            traceStatisticPhp.setMainCrawlerCount(main);
         }
-
+        return traceStatisticPhp;
     }
-
-
     /**
-     * @Title refreshCount
-     * @Description 重置变量 count 为 0
+     * @Title getDailyBiddingCount
+     * @Description 对比查询（采集量）
      * @Author liuchanglin
-     * @Date 2020/3/18 3:56 下午
-     * @Param []
-     * @return void
+     * @Date 2020/3/25 7:48 下午
+     * @Param [startTime, endTime]
+     * @return com.qianlima.reptile.statistics.domain.TraceStatistic
      **/
-    private void refreshCount() {
-        System.err.println(count);
-        count = 0;
+    private TraceStatistic getDailyBiddingCount(Long startTime, Long endTime) {
+        System.err.println("geting dailyBidding count");
+        TraceStatistic traceStatisticBidding = new TraceStatistic();
+        traceStatisticBidding.setQueryDate(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
+        traceStatisticBidding.setType(1);
+        List<String> templateBiddingIDs = selectByPageCounts(1, startTime, endTime);
+        int octopus = 0;
+        int brige = 0;
+        int edit = 0;
+        int main = 0;
+        int peer = 0;
+        if (templateBiddingIDs != null && templateBiddingIDs.size() != 0) {
+            System.err.println("cycle biddingCount");
+            for (String templateBiddingID : templateBiddingIDs) {
+                if (StringUtils.isNotBlank(templateBiddingID)) {
+                    if (octopusList.containsKey(templateBiddingID)) {
+                        octopus++;
+                    } else if (brigeList.containsKey(templateBiddingID)) {
+                        brige++;
+                    } else if (editList.containsKey(templateBiddingID)) {
+                        edit++;
+                    } else if (mainList.containsKey(templateBiddingID)) {
+                        main++;
+                    } else if (peerList.containsKey(templateBiddingID)) {
+                        peer++;
+                    }
+                }
+            }
+            traceStatisticBidding.setOctopusCount(octopus);
+            traceStatisticBidding.setBridgePageCount(brige);
+            traceStatisticBidding.setCompeteProductsCount(peer);
+            traceStatisticBidding.setArtificialEditCount(edit);
+            traceStatisticBidding.setMainCrawlerCount(main);
+        }
+        return traceStatisticBidding;
     }
     /**
      * @Title sumEachField

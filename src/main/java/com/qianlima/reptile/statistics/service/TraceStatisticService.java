@@ -16,6 +16,13 @@ public interface TraceStatisticService {
     /**
      * 发布量采集量数据查询保存入mongo
      */
-    void saveStatistic();
+    void saveStatistic(Long startTime,Long endTime);
+
+    /**
+     * 跑数据
+     * @param startTime
+     * @param endTime
+     */
+    void runData(Long startTime,Long endTime);
 
 }

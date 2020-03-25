@@ -12,6 +12,7 @@ import com.qianlima.reptile.statistics.service.*;
 import com.qianlima.reptile.statistics.service.DataShowService;
 import com.qianlima.reptile.statistics.service.OctopusMonitorService;
 import com.qianlima.reptile.statistics.service.StatisticalService;
+import com.qianlima.reptile.statistics.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +56,6 @@ public class DataShowController {
     private NounCalibreService nounCalibreService;
     @Autowired
     private ReleaseHistoricalService releaseHistoricalService;
-
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -262,5 +262,16 @@ public class DataShowController {
     @PostMapping(path = "/template/month")
     public Response templateMonth(String month) {
         return templateAndPotStatistical.selectTemplateMonth(month);
+    }
+
+    /**
+     * 跑数据
+     * @param startTime yyyy-MM-dd
+     * @param endTime
+     */
+    @PostMapping(path = "/collect/releas/rundata")
+    public void runData(String startTime , String endTime) {
+        traceStatisticService.runData(DateUtils.str2TimeStamp(startTime,DateUtils.FUZSDF),
+                DateUtils.str2TimeStamp(endTime,DateUtils.FUZSDF));
     }
 }

@@ -33,14 +33,14 @@ public class TraceStatisticQueryJob extends IJobHandler {
     private TraceStatisticRepository traceStatisticRepository;
 
     @Override
-    public ReturnT<String> execute(String... strings) throws Exception {
+    public ReturnT<String> execute(String... strings)  {
         logger.info("TraceStatisticQueryJobHandler excute.");
         try {
             long start = System.currentTimeMillis();
             logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             List<TraceStatistic> list = traceStatisticRepository.queryByTime(DateUtils.getFormatDateStrBitAdd(DateUtils.getYesterTodayEndTime(), DateUtils.FUZSDF), 1);
             if (list == null || list.size() == 0) {
-                TraceStatisticQuery();
+                TraceStatisticQuery(DateUtils.getYesterTodayStartTime(),DateUtils.getYesterTodayEndTime());
             }
             return ReturnT.SUCCESS;
         } catch (Exception e) {
@@ -50,8 +50,8 @@ public class TraceStatisticQueryJob extends IJobHandler {
         }
     }
 
-    public void TraceStatisticQuery() {
-        traceStatisticService.saveStatistic();
+    public void TraceStatisticQuery(Long startTime,Long endTime) {
+        traceStatisticService.saveStatistic(startTime, endTime);
 
     }
 

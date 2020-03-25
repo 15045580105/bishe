@@ -43,8 +43,8 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     })
     Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
-    @Select("select tmplt from phpcms_content where status = 99 and updatetime > #{startTime} and updatetime < #{endTime}  limit #{limit} , 1000")
-    List<String> selectTmpltIdInTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime,@Param("limit")Integer limit);
+    @Select("select tmplt from phpcms_content where status = 99 and updatetime > #{startTime} and updatetime < #{endTime}")
+    List<String> selectTmpltIdInTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
     /**
      * 查询采集总量
      * @param startTime

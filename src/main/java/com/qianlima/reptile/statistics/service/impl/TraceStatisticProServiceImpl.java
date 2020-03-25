@@ -26,6 +26,7 @@ import java.util.Map;
 @Service
 public class TraceStatisticProServiceImpl implements TraceStatisticProService {
     private static HashMap<String, String> orgUrls = new HashMap<>();
+
     static {
 //        orgUrls.put("微信", "bridge/wechat_list");
         orgUrls.put("八爪鱼", "bridge/octopus_list");
@@ -43,11 +44,13 @@ public class TraceStatisticProServiceImpl implements TraceStatisticProService {
     @Autowired
     private TraceStatisticRepository traceStatisticRepository;
 
-    List<String> octopusList = new ArrayList<>();
-    List<String> brigeList = new ArrayList<>();
-    List<String> peerList = new ArrayList<>();
-    List<String> editList = new ArrayList<>();
-    List<String> mainList = new ArrayList<>();
+    Map<String, String> octopusList = new HashMap<>();
+
+    Map<String, String> brigeList = new HashMap<>();
+    Map<String, String> peerList = new HashMap<>();
+    Map<String, String> editList = new HashMap<>();
+    Map<String, String> mainList = new HashMap<>();
+
 
     @Override
     public Response getTraceStatistic(String startTime, String endTime) {
@@ -57,15 +60,15 @@ public class TraceStatisticProServiceImpl implements TraceStatisticProService {
 
     private void LoadDatas() {
         System.err.println("load orgin datas");
-        octopusList = selectByPageTypes(orgUrls.get("八爪鱼"), 0);
+        octopusList = convertToMap(selectByPageTypes(orgUrls.get("八爪鱼"), 0));
         System.err.println("octopusList complete");
-        brigeList = selectByPageTypes(orgUrls.get("桥接页面"), 0);
+        brigeList = convertToMap(selectByPageTypes(orgUrls.get("桥接页面"), 0));
         System.err.println("brigeList complete");
-        peerList = selectByPageTypes(orgUrls.get("竞品"), 0);
+        peerList = convertToMap(selectByPageTypes(orgUrls.get("竞品"), 0));
         System.err.println("peerList complete");
-        editList = selectByPageTypes(orgUrls.get("人工编辑"), 0);
+        editList = convertToMap(selectByPageTypes(orgUrls.get("人工编辑"), 0));
         System.err.println("editList complete");
-        mainList = selectByPageTypes("", 1);
+        mainList = convertToMap(selectByPageTypes("", 1));
         System.err.println("mainList complete");
     }
 
@@ -78,17 +81,17 @@ public class TraceStatisticProServiceImpl implements TraceStatisticProService {
 
         while (endTime <= 1585065599) {
 
-            System.err.println(DateUtils.getFormatDateStrBitAdd(startTime,DateUtils.FUZSDF));
+            System.err.println(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
 
-            Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(DateUtils.getFormatDateStrBitAdd(startTime,DateUtils.FUZSDF)
-                                                                                        ,DateUtils.getFormatDateStrBitAdd(endTime,DateUtils.FUZSDF));
+            Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF)
+                    , DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
             System.err.println("map select complete");
             TraceStatistic biddingCount = getDailyBiddingCount(startTime, endTime);
             biddingCount.setTotalCount(map.get("采集量"));
             TraceStatistic phpCount = getDailyPhpCount(startTime, endTime);
             phpCount.setTotalCount(map.get("发布量"));
-            System.err.println("采集量"+biddingCount.toString());
-            System.err.println("发布量"+phpCount.toString());
+            System.err.println("采集量" + biddingCount.toString());
+            System.err.println("发布量" + phpCount.toString());
             startTime += 86400;
             endTime += 86400;
 
@@ -101,21 +104,29 @@ public class TraceStatisticProServiceImpl implements TraceStatisticProService {
     }
 
 
+    public Map<String, String> convertToMap(List<String> templt) {
+        Map<String, String>  teamMap = new HashMap<>();
+        for (String t : templt){
+            teamMap.put(t,null);
+        }
+        return teamMap;
+    }
+
+
     /**
+     * @return java.lang.Integer
      * @Title selectByPage
      * @Description 分页查询orgUrl对应id list
-     *              flag
-     *              0-分类
-     *              1-主爬虫
+     * flag
+     * 0-分类
+     * 1-主爬虫
      * @Author liuchanglin
      * @Date 2020/3/18 3:42 下午
      * @Param [orgUrl, flag]
-     * @return java.lang.Integer
      **/
-    private List<String> selectByPageTypes(String orgUrl,int flag) {
+    private List<String> selectByPageTypes(String orgUrl, int flag) {
         if (flag == 0) {
             int limit = 0;
-
 
             List<String> list = modmonitorMapper.selectCrawlconfigByOrgUrl(orgUrl, limit);
             List<String> ids = new ArrayList<>();
@@ -143,97 +154,54 @@ public class TraceStatisticProServiceImpl implements TraceStatisticProService {
 
     private List<String> selectByPageCounts(int flag, Long startTime, Long endTime) {
         if (flag == 0) {
-            int limit = 0;
-            List<String> list = qianlimaMapper.selectTmpltIdInTime(startTime, endTime,limit);
-            List<String> ids = new ArrayList<>();
-            while (list != null && list.size() != 0) {
-                ids.addAll(list);
-                limit += 1000;
-                list = qianlimaMapper.selectTmpltIdInTime(startTime, endTime,limit);
-            }
-            return ids;
+            List<String> list = qianlimaMapper.selectTmpltIdInTime(startTime, endTime);
+            return list;
         }
         if (flag == 1) {
-            int limit = 0;
-            List<String> list =  rawdatasMapper.selectTemplateIdInTime(startTime, endTime,limit);
-            List<String> ids = new ArrayList<>();
-            while (list != null && list.size() != 0) {
-                ids.addAll(list);
-                limit += 1000;
-                list =  rawdatasMapper.selectTemplateIdInTime(startTime, endTime,limit);
-            }
-            return ids;
+            List<String> list = rawdatasMapper.selectTemplateIdInTime(startTime, endTime);
+            return list;
         }
         return null;
     }
 
 
-    private TraceStatistic getDailyPhpCount( Long startTime, Long endTime) {
+    private TraceStatistic getDailyPhpCount(Long startTime, Long endTime) {
         System.err.println("get daily phpCount");
         TraceStatistic traceStatisticPhp = new TraceStatistic();
         traceStatisticPhp.setQueryDate(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
         traceStatisticPhp.setType(0);
 //        TraceStatistic traceStatisticBid = new TraceStatistic();
-        List<String> templatePHPIDs = selectByPageCounts(0,startTime,endTime);
+        List<String> templatePHPIDs = selectByPageCounts(0, startTime, endTime);
 //        List<String> templateBiddingIDs = rawdatasMapper.selectTemplateIdInTime(startTime, endTime);
-        int count = 0;
+        int octopus = 0;
+        int brige = 0;
+        int edit = 0;
+        int main = 0;
+        int peer = 0;
         if (templatePHPIDs != null && templatePHPIDs.size() != 0) {
             System.err.println("cycle 1");
-            for (String s : octopusList) {
-                for (String templatePHPID : templatePHPIDs) {
-                    if (StringUtils.isNotBlank(templatePHPID) && templatePHPID.equals(s)) {
-                        count++;
+            for (String templateBiddingID : templatePHPIDs) {
+                if (StringUtils.isNotBlank(templateBiddingID)) {
+                    if (octopusList.containsKey(templateBiddingID)) {
+                        octopus++;
+                    } else if (brigeList.containsKey(templateBiddingID)) {
+                        brige++;
+                    } else if (editList.containsKey(templateBiddingID)) {
+                        edit++;
+                    } else if (mainList.containsKey(templateBiddingID)) {
+                        main++;
+                    } else if (peerList.containsKey(templateBiddingID)) {
+                        peer++;
                     }
                 }
             }
-            traceStatisticPhp.setOctopusCount(count);
-            count = 0;
-            System.err.println("cycle 2");
-            for (String s : brigeList) {
-                for (String templatePHPID : templatePHPIDs) {
-                    if (StringUtils.isNotBlank(templatePHPID) && templatePHPID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticPhp.setBridgePageCount(count);
-            count = 0;
+            traceStatisticPhp.setOctopusCount(octopus);
+            traceStatisticPhp.setBridgePageCount(brige);
             System.err.println("cycle 3");
-
-            for (String s : peerList) {
-                for (String templatePHPID : templatePHPIDs) {
-                    if (StringUtils.isNotBlank(templatePHPID) &&templatePHPID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticPhp.setCompeteProductsCount(count);
-            count = 0;
-            System.err.println("cycle 4");
-
-            for (String s : editList) {
-
-                for (String templatePHPID : templatePHPIDs) {
-                    if (StringUtils.isNotBlank(templatePHPID) && templatePHPID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticPhp.setArtificialEditCount(count);
-            count = 0;
+            traceStatisticPhp.setCompeteProductsCount(peer);
+            traceStatisticPhp.setArtificialEditCount(edit);
             System.err.println("cycle 5");
-
-            for (String s : mainList) {
-
-                for (String templatePHPID : templatePHPIDs) {
-                    if (StringUtils.isNotBlank(templatePHPID) && templatePHPID.equals(s)) {
-
-                        count++;
-                    }
-                }
-            }
-            traceStatisticPhp.setMainCrawlerCount(count);
-
+            traceStatisticPhp.setMainCrawlerCount(main);
         }
         return traceStatisticPhp;
     }
@@ -243,69 +211,36 @@ public class TraceStatisticProServiceImpl implements TraceStatisticProService {
         TraceStatistic traceStatisticBidding = new TraceStatistic();
         traceStatisticBidding.setQueryDate(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
         traceStatisticBidding.setType(1);
-//        TraceStatistic traceStatisticBid = new TraceStatistic();
-        List<String> templateBiddingIDs = selectByPageCounts(1,startTime,endTime);
-//        List<String> templateBiddingIDs = rawdatasMapper.selectTemplateIdInTime(startTime, endTime);
-        int count = 0;
+        List<String> templateBiddingIDs = selectByPageCounts(1, startTime, endTime);
+        int octopus = 0;
+        int brige = 0;
+        int edit = 0;
+        int main = 0;
+        int peer = 0;
         if (templateBiddingIDs != null && templateBiddingIDs.size() != 0) {
             System.err.println("cycle 1");
-
-            for (String s : octopusList) {
-                for (String templateBiddingID : templateBiddingIDs) {
-                    if (StringUtils.isNotBlank(templateBiddingID) && templateBiddingID.equals(s)) {
-                        count++;
+            for (String templateBiddingID : templateBiddingIDs) {
+                if (StringUtils.isNotBlank(templateBiddingID)) {
+                    if (octopusList.containsKey(templateBiddingID)) {
+                        octopus++;
+                    } else if (brigeList.containsKey(templateBiddingID)) {
+                        brige++;
+                    } else if (editList.containsKey(templateBiddingID)) {
+                        edit++;
+                    } else if (mainList.containsKey(templateBiddingID)) {
+                        main++;
+                    } else if (peerList.containsKey(templateBiddingID)) {
+                        peer++;
                     }
                 }
             }
-            traceStatisticBidding.setOctopusCount(count);
-            count = 0;
-            System.err.println("cycle 2");
-            for (String s : brigeList) {
-
-                for (String templateBiddingID : templateBiddingIDs) {
-                    if (StringUtils.isNotBlank(templateBiddingID) && templateBiddingID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticBidding.setBridgePageCount(count);
-            count = 0;
+            traceStatisticBidding.setOctopusCount(octopus);
+            traceStatisticBidding.setBridgePageCount(brige);
             System.err.println("cycle 3");
-
-            for (String s : peerList) {
-
-                for (String templateBiddingID : templateBiddingIDs) {
-                    if (StringUtils.isNotBlank(templateBiddingID) && templateBiddingID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticBidding.setCompeteProductsCount(count);
-            count = 0;
-            System.err.println("cycle 4");
-
-            for (String s : editList) {
-
-                for (String templateBiddingID : templateBiddingIDs) {
-                    if (StringUtils.isNotBlank(templateBiddingID) && templateBiddingID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticBidding.setArtificialEditCount(count);
-            count = 0;
+            traceStatisticBidding.setCompeteProductsCount(peer);
+            traceStatisticBidding.setArtificialEditCount(edit);
             System.err.println("cycle 5");
-
-            for (String s : mainList) {
-
-                for (String templateBiddingID : templateBiddingIDs) {
-                    if (StringUtils.isNotBlank(templateBiddingID) && templateBiddingID.equals(s)) {
-                        count++;
-                    }
-                }
-            }
-            traceStatisticBidding.setMainCrawlerCount(count);
-
+            traceStatisticBidding.setMainCrawlerCount(main);
         }
         return traceStatisticBidding;
     }

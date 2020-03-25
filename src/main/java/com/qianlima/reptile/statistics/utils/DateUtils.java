@@ -1,16 +1,16 @@
 package com.qianlima.reptile.statistics.utils;
 
 
+import com.baomidou.mybatisplus.core.toolkit.Assert;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.YearMonth;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -29,6 +29,8 @@ public class DateUtils {
 
     public static final DateTimeFormatter LDTF =DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    public static final DateTimeFormatter LTDTF =DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public static final String dateStartStr = " 00:00:00";
 
     public static final String dateEndStr = " 23:59:59";
@@ -43,6 +45,25 @@ public class DateUtils {
 
     public static LocalDate getLocalDate(String date) {
         return LocalDate.parse(date, LDTF);
+    }
+
+    public static LocalDateTime getLocalDateTime(String time) {
+        return LocalDateTime.parse(time, LTDTF);
+    }
+
+    public static LocalDate getLocalDate(long timestamp){
+        return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDate();
+    }
+    public static long getTimeStamp(LocalDate localDate){
+        return localDate.atStartOfDay(ZoneOffset.ofHours(8)).toInstant().toEpochMilli();
+    }
+    /**
+     * 将字符串转日期成Long类型的时间戳，格式为：yyyy-MM-dd HH:mm:ss
+     */
+    public static Long convertTimeToLong(String time) {
+        Assert.notNull(time, "time is null");
+        LocalDateTime parse = getLocalDateTime(time);
+        return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     public static String getNowFormatDateStr(){

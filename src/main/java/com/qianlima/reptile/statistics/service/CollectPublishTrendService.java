@@ -22,4 +22,12 @@ public interface CollectPublishTrendService {
      * @return
      */
     Response getMonthTrend(String date);
+
+    /**
+     * 历史数据
+     * @param startDate 开始时间
+     * @param endDate 结束时间
+     * @return
+     */
+    Response runHistoryData (String startDate, String endDate);
 }

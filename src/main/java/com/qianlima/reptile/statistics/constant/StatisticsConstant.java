@@ -70,4 +70,9 @@ public class StatisticsConstant {
      * 没有数据状态码
      */
     public static final Integer EORROR_NO_DATA = 102;
+
+    /**
+     * 发布采集mongo表名
+     */
+    public static final String MONGO_COLLECTION_NAME = "phpcmsContentStatistics";
 }

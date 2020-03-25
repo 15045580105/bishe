@@ -23,27 +23,12 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     Integer select(@Param("startUpdateTime") int startUpdateTime,@Param("endUpdateTime") int endUpdateTime);
 
     /**
-     * in查询phpcme_content表中对应id数据条数
-     * @param ids
+     * 查询模版单日模版id
      * @param startTime
      * @param endTime
      * @return
      */
-    @Select({
-            "<script>" +
-            "select " +
-            "COUNT(1) " +
-            "from  phpcms_content " +
-            "where status = 99 and tmplt in " +
-            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>"+
-            "#{id}" +
-            "</foreach>"+
-            "and  updatetime> #{startTime} and updatetime &lt; #{endTime}"+
-            "</script>"
-    })
-    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
-
-    @Select("select tmplt from phpcms_content where status = 99 and updatetime > #{startTime} and updatetime < #{endTime}")
+    @Select("select tmplt from phpcms_content where status = 99 and updatetime between #{startTime} and #{endTime}")
     List<String> selectTmpltIdInTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
     /**
      * 查询采集总量

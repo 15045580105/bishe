@@ -414,17 +414,14 @@ public class DateUtils {
 
 
     public static Long str2TimeStamp(String time,SimpleDateFormat format) {
-//        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String time ="2018-09-29 16:39:00";
         Date date = null;
         try {
             date = format.parse(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //日期转时间戳（毫秒）
+        //日期转时间戳（秒）
         return date.getTime() / 1000;
-//        System.out.print("Format To times:"+time);
     }
 
 }

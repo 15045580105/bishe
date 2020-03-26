@@ -273,4 +273,16 @@ public class DataShowController {
         traceStatisticService.runData(DateUtils.str2TimeStamp(startTime,DateUtils.FUZSDF),
                 DateUtils.str2TimeStamp(endTime,DateUtils.FUZSDF));
     }
+
+    /**
+     * 跑历史数据
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @PostMapping(path = "/runHistory")
+    public Response runHistoryData(String startDate, String endDate) {
+        return collectPublishTrendService.runHistoryData(startDate,endDate);
+    }
+
 }

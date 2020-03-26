@@ -23,24 +23,11 @@ public interface RawdatasMapper extends BaseMapper<Map> {
     Integer select(@Param("startUpdateTime") int startUpdateTime, @Param("endUpdateTime") int endUpdateTime);
 
     /**
-     * in查询bidding_raw表中对应id数据条数
-     * @param ids
+     * 查询采集量单日模版id
      * @param startTime
      * @param endTime
      * @return
      */
-    @Select({
-            "<script>" +
-                    "select COUNT(1) from rawdatas.bidding_raw where ae_template in ",
-            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>",
-            "#{id}",
-            "</foreach>",
-            " and intime > #{startTime} and intime &lt; #{endTime} "+
-                    "</script>"
-    })
-    Integer selectBiddingCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
-
-
     @Select("select ae_template from rawdatas.bidding_raw where intime between #{startTime} and #{endTime}")
     List<String> selectTemplateIdInTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
 }

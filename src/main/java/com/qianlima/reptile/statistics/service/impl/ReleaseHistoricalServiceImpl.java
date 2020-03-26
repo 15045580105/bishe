@@ -32,10 +32,9 @@ public class ReleaseHistoricalServiceImpl implements ReleaseHistoricalService {
 
 
     @Override
-    public void historical(String start,String end){
-        List<String> list  = DateUtils.getDates(start,end);
-        List<CollectAndReleas> list1 = new ArrayList<>();
-        for (int i = 0; i <list.size() ; i++) {
+    public void historical(String start,String end) {
+        List<String> list = DateUtils.getDates(start, end);
+        for (int i = 0; i < list.size(); i++) {
             String reportStartTime = list.get(i);
             String startTime = DateUtil.date3TimeStamp((reportStartTime + DateUtils.dateStartStr));
             String endTime = DateUtil.date3TimeStamp((reportStartTime + DateUtils.dateEndStr));
@@ -68,10 +67,7 @@ public class ReleaseHistoricalServiceImpl implements ReleaseHistoricalService {
             collectAndReleas.setReleasProject(releasProject);
             collectAndReleas.setReleasTender(releasTender);
             collectAndReleas.setQueryDate(reportStartTime);
-            list1.add(collectAndReleas);
-        }
-        for (int i = 0; i <list1.size() ; i++) {
-            collectAndReleasRepository.save(list1.get(i));
+            collectAndReleasRepository.save(collectAndReleas);
         }
     }
 }

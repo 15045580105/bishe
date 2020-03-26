@@ -1,33 +1,48 @@
 package com.qianlima.reptile.statistics.service.impl;
 
 import com.qianlima.reptile.statistics.constant.StatisticsConstant;
+import com.qianlima.reptile.statistics.entity.PhpcmsContentStatistics;
 import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.TrendDTO;
 import com.qianlima.reptile.statistics.entity.TrendResultDTO;
 import com.qianlima.reptile.statistics.repository.TrendRepository;
 import com.qianlima.reptile.statistics.service.CollectPublishTrendService;
+import com.qianlima.reptile.statistics.service.QianlimaStatisticsService;
 import com.qianlima.reptile.statistics.utils.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import static com.qianlima.reptile.statistics.constant.StatisticsConstant.MONGO_COLLECTION_NAME;
 
 /**
  * @description: 采集量发布量趋势
  * @author: sx
  * @create: 2020-03-18 09:45:32
  **/
+@Slf4j
 @Service
 public class CollectPublishTrendServiceImpl implements CollectPublishTrendService {
 
     @Autowired
     private TrendRepository trendRepository;
+
+    @Autowired
+    private QianlimaStatisticsService qianlimaStatisticsService;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     /**
      * 集发布详情-年趋势
@@ -138,5 +153,46 @@ public class CollectPublishTrendServiceImpl implements CollectPublishTrendServic
             resultList.add(new TrendResultDTO(curtrendDTO, catchProportion, publishProportion));
         }
         return Response.success(resultList);
+    }
+
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @Override
+    public Response runHistoryData (String startDate, String endDate) {
+        LocalDate startLocalDate = DateUtils.getLocalDate(startDate);
+        LocalDate endLocalDate = DateUtils.getLocalDate(endDate);
+        for (LocalDate start = startLocalDate ; start.isBefore(endLocalDate.plusDays(1)) ; start = start.plusDays(1)) {
+            int startTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + " 00:00:00") / 1000).toString());
+            int endTime = Integer.parseInt(Long.valueOf(DateUtils.convertTimeToLong(start.toString() + " 23:59:59") / 1000).toString());
+            //发布量
+            int count =  qianlimaStatisticsService.everyDayPublishCount(startTime, endTime);
+            //采集量
+            int catCount = qianlimaStatisticsService.everyDayCatchCount(startTime, endTime);
+            log.info("phpcmsContentCount:{},biddingRawCount:{}",count,catCount);
+            //首先查询是否有当天数据
+            String currentDayStr = start.toString();
+            Query query = new Query(Criteria.where("currentDayStr").is(currentDayStr));
+            long mongoCount = 0;
+            try{
+                mongoCount = mongoTemplate.count(query, String.class, MONGO_COLLECTION_NAME);
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
+            if(mongoCount == 0){
+                Map<String,Object> mongoMap = new HashMap<>(8);
+                mongoMap.put("catchCount", catCount);
+                mongoMap.put("publishCount", count);
+                mongoMap.put("updateTime", System.currentTimeMillis());
+                mongoMap.put("currentDayTime", startTime);
+                mongoMap.put("currentDayStr", currentDayStr);
+                mongoTemplate.insert(mongoMap, MONGO_COLLECTION_NAME);
+                log.info("{} count is not exist,mongo inserted!", currentDayStr);
+            }
+        }
+            return Response.success("SUCCESS");
     }
 }

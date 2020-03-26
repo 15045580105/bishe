@@ -241,12 +241,12 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
                     }
                 }
             }
-            traceStatisticPhp.setOctopusCount(octopus);
-            traceStatisticPhp.setBridgePageCount(brige);
-            traceStatisticPhp.setCompeteProductsCount(peer);
-            traceStatisticPhp.setArtificialEditCount(edit);
-            traceStatisticPhp.setMainCrawlerCount(main);
         }
+        traceStatisticPhp.setOctopusCount(octopus);
+        traceStatisticPhp.setBridgePageCount(brige);
+        traceStatisticPhp.setCompeteProductsCount(peer);
+        traceStatisticPhp.setArtificialEditCount(edit);
+        traceStatisticPhp.setMainCrawlerCount(main);
         return traceStatisticPhp;
     }
     /**
@@ -285,12 +285,12 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
                     }
                 }
             }
-            traceStatisticBidding.setOctopusCount(octopus);
-            traceStatisticBidding.setBridgePageCount(brige);
-            traceStatisticBidding.setCompeteProductsCount(peer);
-            traceStatisticBidding.setArtificialEditCount(edit);
-            traceStatisticBidding.setMainCrawlerCount(main);
         }
+        traceStatisticBidding.setOctopusCount(octopus);
+        traceStatisticBidding.setBridgePageCount(brige);
+        traceStatisticBidding.setCompeteProductsCount(peer);
+        traceStatisticBidding.setArtificialEditCount(edit);
+        traceStatisticBidding.setMainCrawlerCount(main);
         return traceStatisticBidding;
     }
     /**

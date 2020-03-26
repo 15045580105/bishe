@@ -12,6 +12,8 @@ import com.qianlima.reptile.statistics.repository.CollectAndReleasRepository;
 import com.qianlima.reptile.statistics.service.ReleaseHistoricalService;
 import com.qianlima.reptile.statistics.utils.DateUtil;
 import com.qianlima.reptile.statistics.utils.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ import java.util.List;
  */
 @Service
 public class ReleaseHistoricalServiceImpl implements ReleaseHistoricalService {
+    private static final Logger logger = LoggerFactory.getLogger(TemplateAndPotStatisticalImpl.class);
     @Autowired
     private QianlimaMapper qianlimaMapper;
     @Autowired
@@ -68,6 +71,7 @@ public class ReleaseHistoricalServiceImpl implements ReleaseHistoricalService {
             collectAndReleas.setReleasTender(releasTender);
             collectAndReleas.setQueryDate(reportStartTime);
             collectAndReleasRepository.save(collectAndReleas);
+            logger.info("查询到{}日数据", reportStartTime);
         }
     }
 }

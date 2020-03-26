@@ -1,6 +1,12 @@
 package com.qianlima.reptile.statistics.job;
+/**
+ * @Author : gyx
+ * @Description :
+ * @Date : Created in 10:05 2020-03-20
+ * @Modified By :
+ */
 
-import com.qianlima.reptile.statistics.service.StatisticalService;
+import com.qianlima.reptile.statistics.service.CollectAndReleaseService;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.JobHander;
@@ -11,22 +17,24 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- *
+ * @author gyx
+ * @date 2020-03-20 10:05
  */
 @Component
-@JobHander(value = "tmpltStatisticsJobHandler")
-public class TmpltStatisticsJob extends IJobHandler {
+@JobHander(value = "collectAndReleasJobHandler")
+public class CollectAndReleasJob extends IJobHandler {
+
     private static final Logger logger = LoggerFactory.getLogger(InitPublishCountStatisticsJob.class);
 
     @Resource
-    private StatisticalService statisticalService;
+    private CollectAndReleaseService collectAndReleaseService;
 
     @Override
     public ReturnT<String> execute(String... strings) throws Exception {
-        logger.info("tmpltStatisticsJobHandler excute.");
+        logger.info("collectAndReleasJobHandler excute.");
         try {
             long start = System.currentTimeMillis();
-            statisticalService.statistical();
+            collectAndReleaseService.collectAndRelease();
             logger.info("handle use time in ={}",System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
@@ -35,6 +43,4 @@ public class TmpltStatisticsJob extends IJobHandler {
             return ReturnT.FAIL;
         }
     }
-
-
 }

@@ -31,6 +31,14 @@ public class Response<T> implements Serializable {
         return response;
     }
 
+    public static <T> Response<T> success(T data, String msg){
+        Response<T> response = new Response<>();
+        response.setResult(0);
+        response.setData(data);
+        response.setMsg(msg);
+        return response;
+    }
+
     public static <T> Response<T> error(int result, String msg){
         Response<T> response = new Response<>();
         response.setResult(result);

@@ -2,7 +2,9 @@ package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -148,4 +150,41 @@ public interface ModmonitorMapper {
      */
     @Select("select  count(distinct(pot_name))   from  fail_tmplt  where  type in (1,3,5)  and create_time  > #{startTime} and create_time <= #{endTime} and  valid_state  <>  200  and  state  >  0  and operate_id is not null")
     String selectPotProcessed(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    /**
+     * 分页查询crawlconfig表中各个分类下id列表
+     * @Param [dimOrgUrl]
+     * @return java.util.List<java.lang.String>
+     **/
+    @Select("SELECT id from rawdatas.crawlconfig where orgurl LIKE CONCAT('%',#{dimOrgUrl},'%')  limit #{start},1000 ")
+    List<String> selectCrawlconfigByOrgUrl(@Param("dimOrgUrl") String dimOrgUrl,@Param("start")Integer start);
+
+    /**
+     * 分页查询crawconfig表中主爬虫数据id列表
+     * @param start
+     * @return
+     */
+    @Select("SELECT id from rawdatas.crawlconfig where orgurl not like '%bridge/octopus_list%' and orgurl not like '%column/datalist_n.jspt%' and orgurl not like '%bridge/bidding_list%' and orgurl not like '%bridge/peer_list%' limit #{start},1000")
+    List<String> selectCrawlconfigMainCraw(@Param("start") Integer start);
+
+
+    /**
+     * 查询故障模版数量
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Select("select count(1) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
+    long selectFailTempltCount(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+
+    /**
+     * 查询故障模板 ，去重
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Select("select DISTINCT(tmplt) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime}")
+    List<FaultTmpltDo> selectFailTemplt(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
 }

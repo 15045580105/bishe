@@ -7,7 +7,9 @@ package com.qianlima.reptile.statistics.entity;
 public enum ResultCode {
     //系统
     SUCCESS(0, "成功"),
-    PARAM_NOT_BLANK(400, "参数不能为空")
+    PARAM_NOT_BLANK(400, "参数不能为空"),
+    DOC_NOT_BLANK(600,"已存在数据"),
+    DOC_IS_BLANK(601,"无数据")
     ;
     private int code;
     private String msg;

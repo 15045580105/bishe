@@ -83,8 +83,6 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     @Override
     public void saveStatistic(Long startTime, Long endTime) {
-        LoadDatas();
-
         System.err.println(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
 
         Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF)
@@ -103,6 +101,7 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
 
     @Override
     public void runData(Long startTime, Long endTime) {
+        LoadDatas();
         Long currentStartTime = startTime;
         Long currentEndTime = currentStartTime + 86399L;
         while (currentEndTime <= endTime) {
@@ -120,10 +119,9 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
      * @Param []
      * @return void
      **/
-    private void LoadDatas() {
+    public void LoadDatas() {
         System.err.println("load orgin datas");
         octopusList = convertToMap(selectByPageTypes(orgUrls.get("八爪鱼"), 0));
-        System.err.println("octopusList complete");
         brigeList = convertToMap(selectByPageTypes(orgUrls.get("桥接页面"), 0));
         System.err.println("brigeList complete");
         peerList = convertToMap(selectByPageTypes(orgUrls.get("竞品"), 0));

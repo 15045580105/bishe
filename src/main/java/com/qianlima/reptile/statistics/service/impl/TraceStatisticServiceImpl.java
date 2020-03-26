@@ -105,12 +105,31 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
     public void runData(Long startTime, Long endTime) {
         Long currentStartTime = startTime;
         Long currentEndTime = currentStartTime + 86399L;
+        LoadDatas();
         while (currentEndTime <= endTime) {
-            saveStatistic(currentStartTime,currentEndTime);
+            run(currentStartTime,currentEndTime);
             currentStartTime += 86400;
             currentEndTime += 86400;
         }
     }
+
+    public void run(Long startTime, Long endTime) {
+        System.err.println(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
+
+        Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF)
+                , DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
+        System.err.println("map select complete");
+        TraceStatistic biddingCount = getDailyBiddingCount(startTime, endTime);
+        biddingCount.setTotalCount(map.get("采集量"));
+        TraceStatistic phpCount = getDailyPhpCount(startTime, endTime);
+        phpCount.setTotalCount(map.get("发布量"));
+        System.err.println("采集量" + biddingCount.toString());
+        System.err.println("发布量" + phpCount.toString());
+
+        traceStatisticRepository.save(biddingCount);
+        traceStatisticRepository.save(phpCount);
+    }
+
 
     /**
      * @Title LoadDatas

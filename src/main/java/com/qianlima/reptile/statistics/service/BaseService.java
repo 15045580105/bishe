@@ -14,6 +14,14 @@ public class BaseService {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
+    protected Response validateTime(String queryDate){
+        if (StringUtils.isBlank(queryDate) ){
+            return Response.error(ResultCode.PARAM_NOT_BLANK.getCode(), ResultCode.PARAM_NOT_BLANK.getMsg());
+        }
+        return Response.success(null);
+    }
+
+
     protected Response validateTime(String startTime, String endTime){
         if (StringUtils.isBlank(startTime) || StringUtils.isBlank(endTime)){
             return Response.error(ResultCode.PARAM_NOT_BLANK.getCode(), ResultCode.PARAM_NOT_BLANK.getMsg());

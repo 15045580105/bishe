@@ -185,13 +185,12 @@ public class DataShowController {
 
     /**
      * 每月发布率
-     * @param startTime
-     * @param endTime
+     * @param queryMonth
      * @return
      */
     @PostMapping(path = "/publish/rate")
-    public Response queryPublishRate(String startTime, String endTime) {
-        return publishRateService.queryPublishRate(startTime,endTime);
+    public Response queryPublishRate(String queryMonth) {
+        return publishRateService.queryMonthPublishRate(queryMonth);
     }
 
     /**

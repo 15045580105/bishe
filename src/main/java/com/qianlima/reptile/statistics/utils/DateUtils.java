@@ -387,31 +387,28 @@ public class DateUtils {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             //保存日期的集合 
             Date date_start = sdf.parse(startDate);
-            Date date_end = sdf.parse(endDate);
             Date date = date_start;
             //用Calendar 进行日期比较判断
+            SimpleDateFormat sdfMonth = new SimpleDateFormat("yyyy-MM");
+            Date validateDate = sdfMonth.parse(endDate.substring(0, 7));
+            Calendar cdMonth = Calendar.getInstance();
+            cdMonth.setTime(validateDate);
+            cdMonth.add(Calendar.MONTH, 1);
+            Date date_end = cdMonth.getTime();
             Calendar cd = Calendar.getInstance();
-            while (date.getTime() <= date_end.getTime()) {
+            while (date.getTime() < date_end.getTime()) {
                 list.add(sdf.format(date));
                 cd.setTime(date);
                 //增加一天 放入集合
                 cd.add(Calendar.DATE, 1);
                 date = cd.getTime();
             }
-            //去掉符号[]
-            String strList = StringUtils.strip(list.toString(), "[]");
-
-            System.out.println(list);
-
-            System.out.println(strList);
-
             return list;
         }catch (Exception e){
             e.printStackTrace();
         }
         return list;
     }
-
 
     public static Long str2TimeStamp(String time,SimpleDateFormat format) {
         Date date = null;

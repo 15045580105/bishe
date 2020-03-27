@@ -24,7 +24,7 @@ public class StatisticsConstant {
     /**
      * 数据来源
      */
-    public static final String[] DataSourceList = new String[]{"webcha", "competeProduct", "bridgePage", "manualEdit", "octopus","mainCrawler"};
+    public static final String[] DataSourceList = new String[]{"webcha", "competeProduct", "bridgePage", "manualEdit", "octopus","mainCrawler","allSource"};
 
     /**
      * 微信
@@ -55,6 +55,11 @@ public class StatisticsConstant {
      * 主爬
      */
     public static final String mainCrawler = "mainCrawler";
+
+    /**
+     * 所有来源之和
+     */
+    public static final String allSource = "allSource";
 
     /**
      * 参数不能为空状态码

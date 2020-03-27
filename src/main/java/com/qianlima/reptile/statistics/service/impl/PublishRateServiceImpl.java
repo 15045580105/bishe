@@ -7,6 +7,7 @@ import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.repository.TraceStatisticRepository;
 import com.qianlima.reptile.statistics.service.BaseService;
 import com.qianlima.reptile.statistics.service.PublishRateService;
+import com.qianlima.reptile.statistics.utils.DateUtils;
 import com.qianlima.reptile.statistics.utils.MathUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,70 @@ public class PublishRateServiceImpl extends BaseService implements PublishRateSe
     private TraceStatisticRepository traceStatisticRepository;
 
     @Override
+    public Response queryMonthPublishRate(String queryMonth) {
+        Response response = validateTime(queryMonth);
+        if (response.getResult() != 0){
+            return response;
+        }
+        // 统计发布量
+        List<TraceStatistic> publishList = traceStatisticRepository.queryInTime(queryMonth + DateUtils.monthStart, queryMonth + DateUtils.monthEnd);
+        Map<String, List<TraceStatistic>> publishMap = groupPublishList(publishList, queryMonth + DateUtils.monthStart, queryMonth + DateUtils.monthEnd);
+        Set<String> publishSet = publishMap.keySet();
+        // 构建各个来源map
+        Map<String, List<PublishRateDto>> sourceMap = buildSourceMap();
+        for (String month : publishSet) {
+            // 发布量 每月统计
+            int competeProductPublish = 0;
+            int bridgePagePublish = 0;
+            int manualEditPublish = 0;
+            int octopusPublish = 0;
+            int mainCrawlerPublish = 0;
+            int webchaPublish = 0;
+            int allPublish = 0;
+            // 采集量 每月统计
+            int competeProductCollect = 0;
+            int bridgePageCollect = 0;
+            int manualEditCollect = 0;
+            int octopusCollect = 0;
+            int mainCrawlerCollect = 0;
+            int webchaCollect = 0;
+            int allCollect = 0;
+            List<TraceStatistic> traceStatistics = publishMap.get(month);
+            for (TraceStatistic t : traceStatistics) {
+                //如果是发布数据
+                if (t.getType() == StatisticsConstant.PUBLISH) {
+                    competeProductPublish += t.getCompeteProductsCount();
+                    bridgePagePublish += t.getBridgePageCount();
+                    manualEditPublish += t.getArtificialEditCount();
+                    octopusPublish += t.getOctopusCount();
+                    mainCrawlerPublish += t.getMainCrawlerCount();
+                    allPublish += t.getTotalCount();
+                } else {
+                    // 如果是采集数据
+                    competeProductCollect += t.getCompeteProductsCount();
+                    bridgePageCollect += t.getBridgePageCount();
+                    manualEditCollect += t.getArtificialEditCount();
+                    octopusCollect += t.getOctopusCount();
+                    mainCrawlerCollect += t.getMainCrawlerCount();
+                    allCollect += t.getTotalCount();
+                }
+            }
+            sourceMap.get(StatisticsConstant.competeProduct).add(new PublishRateDto(month, competeProductPublish, competeProductCollect, MathUtil.divi(competeProductPublish, competeProductCollect)));
+            sourceMap.get(StatisticsConstant.bridgePage).add(new PublishRateDto(month, bridgePagePublish, bridgePageCollect, MathUtil.divi(bridgePagePublish, bridgePageCollect)));
+            sourceMap.get(StatisticsConstant.manualEdit).add(new PublishRateDto(month, manualEditPublish, manualEditCollect, MathUtil.divi(manualEditPublish, manualEditCollect)));
+            sourceMap.get(StatisticsConstant.octopus).add(new PublishRateDto(month, octopusPublish, octopusCollect, MathUtil.divi(octopusPublish, octopusCollect)));
+            sourceMap.get(StatisticsConstant.mainCrawler).add(new PublishRateDto(month, mainCrawlerPublish, mainCrawlerCollect, MathUtil.divi(mainCrawlerPublish, mainCrawlerCollect)));
+            sourceMap.get(StatisticsConstant.webcha).add(new PublishRateDto(month, webchaPublish, webchaCollect, MathUtil.divi(webchaPublish, webchaCollect)));
+            sourceMap.get(StatisticsConstant.allSource).add(new PublishRateDto(month, allPublish, allCollect, MathUtil.divi(allPublish, allCollect)));
+        }
+
+        return Response.success(sourceMap);
+    }
+
+    @Override
     public Response queryPublishRate(String startDate, String endDate) {
         // 统计发布量
-        List<TraceStatistic> publishList = traceStatisticRepository.queryInTime(startDate, endDate);
+        List<TraceStatistic> publishList = traceStatisticRepository.queryInTime(startDate + DateUtils.monthStart, startDate + DateUtils.monthEnd);
         Map<String, List<TraceStatistic>> publishMap = groupPublishList(publishList, startDate, endDate);
         Set<String> publishSet = publishMap.keySet();
         // 构建各个来源map
@@ -82,7 +144,7 @@ public class PublishRateServiceImpl extends BaseService implements PublishRateSe
         Map<String, List<TraceStatistic>> treeMap = getTreeMap();
         Map<String, List<TraceStatistic>> publishMap = fillMonth(treeMap, startDate, endDate);
         for (TraceStatistic t : publishList) {
-            String queryDate = subMonth(t.getQueryDate());
+            String queryDate = t.getQueryDate();
             if (publishMap.containsKey(queryDate)) {
                 publishMap.get(queryDate).add(t);
             } else {
@@ -103,8 +165,8 @@ public class PublishRateServiceImpl extends BaseService implements PublishRateSe
      * @param endTime
      */
     private Map<String, List<TraceStatistic>> fillMonth(Map<String, List<TraceStatistic>> map, String startTime, String endTime) {
-        //取查询月份之间的所有月份
-        List<String> listMonth = getMonths(startTime, endTime);
+        //取查询月份之间的所有天数
+        List<String> listMonth = DateUtils.getDates(startTime, endTime);
         // 如果月份数量不同，则需要进行补充
         if (map.keySet().size() != listMonth.size()) {
             for (String month : listMonth) {

@@ -69,22 +69,22 @@ public class CollectPublishTrendServiceImpl implements CollectPublishTrendServic
             //当前年趋势
             List<TrendDTO> curtrendDTOS = trendRepository.queryByDate(start.toString());
             //当前年采集量
-            double curCatchCount = 0.0D;
+            long curCatchCount = 0;
             //当前年发布量
-            double curPublishCount = 0.0D;
+            long curPublishCount = 0;
             for (TrendDTO trendDTO :curtrendDTOS) {
-                curCatchCount += StringUtils.isBlank(trendDTO.getCatchCount()) ? 0.0D : Double.parseDouble(trendDTO.getCatchCount());
-                curPublishCount += StringUtils.isBlank(trendDTO.getPublishCount()) ? 0.0D : Double.parseDouble(trendDTO.getPublishCount());
+                curCatchCount += StringUtils.isBlank(trendDTO.getCatchCount()) ? 0 : Long.parseLong(trendDTO.getCatchCount());
+                curPublishCount += StringUtils.isBlank(trendDTO.getPublishCount()) ? 0 : Long.parseLong(trendDTO.getPublishCount());
             }
             //当前年的前一年趋势
             List<TrendDTO> pretrendDTOS = trendRepository.queryByDate(start.plusYears(-1).toString());
             //当前年的前一年采集量
-            double preCatchCount = 0.0D;
+            long preCatchCount = 0;
             //当前年的前一年发布量
-            double prePublishCount = 0.0D;
+            long prePublishCount = 0;
             for (TrendDTO trendDTO :pretrendDTOS) {
-                preCatchCount += StringUtils.isBlank(trendDTO.getCatchCount()) ? 0.0D : Double.parseDouble(trendDTO.getCatchCount());
-                prePublishCount += StringUtils.isBlank(trendDTO.getPublishCount()) ? 0.0D : Double.parseDouble(trendDTO.getPublishCount());
+                preCatchCount += StringUtils.isBlank(trendDTO.getCatchCount()) ? 0 : Long.parseLong(trendDTO.getCatchCount());
+                prePublishCount += StringUtils.isBlank(trendDTO.getPublishCount()) ? 0 : Long.parseLong(trendDTO.getPublishCount());
             }
             //采集量同比
             String catchProportion = CalculateUtil(new BigDecimal(curCatchCount), new BigDecimal(preCatchCount));

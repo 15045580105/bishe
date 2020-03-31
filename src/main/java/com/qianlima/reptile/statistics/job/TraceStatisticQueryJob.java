@@ -51,6 +51,7 @@ public class TraceStatisticQueryJob extends IJobHandler {
     }
 
     public void TraceStatisticQuery(Long startTime,Long endTime) {
+        traceStatisticService.LoadDatas();
         traceStatisticService.saveStatistic(startTime, endTime);
 
     }

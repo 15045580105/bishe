@@ -25,4 +25,6 @@ public interface TraceStatisticService {
      */
     void runData(Long startTime,Long endTime);
 
+    void LoadDatas();
+
 }

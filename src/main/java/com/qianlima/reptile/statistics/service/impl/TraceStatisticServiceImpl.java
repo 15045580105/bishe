@@ -67,10 +67,18 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         }
         if (startTime.equals(endTime)) {
             Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountByTime(startTime);
-            TraceStatistic biddingStatistic = traceStatisticRepository.queryByTime(startTime, 1).get(0);
-            biddingStatistic.setTotalCount(map.get("采集量"));
-            TraceStatistic phpStatistic = traceStatisticRepository.queryByTime(startTime, 0).get(0);
-            phpStatistic.setTotalCount(map.get("发布量"));
+            List<TraceStatistic> traceStatistics = traceStatisticRepository.queryByTime(startTime, 1);
+            TraceStatistic biddingStatistic = null;
+            if (traceStatistics != null && traceStatistics.size() > 0){
+                biddingStatistic = traceStatistics.get(0);
+                biddingStatistic.setTotalCount(map.get("采集量"));
+            }
+            List<TraceStatistic> collectTS = traceStatisticRepository.queryByTime(startTime, 0);
+            TraceStatistic phpStatistic = null;
+            if (collectTS != null && collectTS.size() > 0 ){
+                phpStatistic = collectTS.get(0);
+                phpStatistic.setTotalCount(map.get("发布量"));
+            }
             TraceStatisticResponse traceStatisticResponse = new TraceStatisticResponse();
             traceStatisticResponse.setCollectCount(biddingStatistic);
             traceStatisticResponse.setReleaseCount(phpStatistic);

@@ -31,7 +31,11 @@ public class PotInformationRepository {
     private MongoTemplate mongoTemplate;
 
     public void save(PotInformation potInformation) {
-
+        Query query = Query.query(Criteria.where("pot").is(potInformation.getPot()));
+        Update update = Update.update("title", "MongoTemplate").set("queryDate", potInformation.getQueryDate()).set("templateNumber", potInformation.getTemplateNumber())
+                .set("state", potInformation.getState()).set("collectNumber", potInformation.getCollectNumber()).set("releaseNumber", potInformation.getReleaseNumber())
+                .set("createTime", potInformation.getCreateTime()).set("updateTime", potInformation.getUpdateTime()).set("repeatPot", potInformation.getRepeatPot());
+        mongoTemplate.upsert(query, update, PotInformation.class);
     }
 
     /**

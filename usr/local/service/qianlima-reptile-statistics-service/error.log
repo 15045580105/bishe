@@ -1,0 +1,56 @@
+[qianlima-reptile-statistics-service] [2020-04-01 16:59:23.009+0800] [com.xxl.job.core.thread.ExecutorRegistryThread] [Thread-32] [ERROR] sleep interrupted 
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at java.lang.Thread.sleep(Thread.java:340)
+	at java.util.concurrent.TimeUnit.sleep(TimeUnit.java:386)
+	at com.xxl.job.core.thread.ExecutorRegistryThread$1.run(ExecutorRegistryThread.java:75)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 16:59:23.059+0800] [com.xxl.job.core.thread.TriggerCallbackThread] [Thread-33] [ERROR] null 
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at com.xxl.job.core.thread.TriggerCallbackThread$1.run(TriggerCallbackThread.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 17:13:00.272+0800] [com.xxl.job.core.thread.ExecutorRegistryThread] [Thread-32] [ERROR] sleep interrupted 
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at java.lang.Thread.sleep(Thread.java:340)
+	at java.util.concurrent.TimeUnit.sleep(TimeUnit.java:386)
+	at com.xxl.job.core.thread.ExecutorRegistryThread$1.run(ExecutorRegistryThread.java:75)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 17:13:00.303+0800] [com.xxl.job.core.thread.TriggerCallbackThread] [Thread-33] [ERROR] null 
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at com.xxl.job.core.thread.TriggerCallbackThread$1.run(TriggerCallbackThread.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 17:31:41.952+0800] [com.xxl.job.core.thread.ExecutorRegistryThread] [Thread-31] [ERROR] sleep interrupted 
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at java.lang.Thread.sleep(Thread.java:340)
+	at java.util.concurrent.TimeUnit.sleep(TimeUnit.java:386)
+	at com.xxl.job.core.thread.ExecutorRegistryThread$1.run(ExecutorRegistryThread.java:75)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 17:31:41.976+0800] [com.xxl.job.core.thread.TriggerCallbackThread] [Thread-32] [ERROR] null 
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at com.xxl.job.core.thread.TriggerCallbackThread$1.run(TriggerCallbackThread.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 17:44:02.714+0800] [com.xxl.job.core.thread.ExecutorRegistryThread] [Thread-31] [ERROR] sleep interrupted 
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at java.lang.Thread.sleep(Thread.java:340)
+	at java.util.concurrent.TimeUnit.sleep(TimeUnit.java:386)
+	at com.xxl.job.core.thread.ExecutorRegistryThread$1.run(ExecutorRegistryThread.java:75)
+	at java.lang.Thread.run(Thread.java:748)
+[qianlima-reptile-statistics-service] [2020-04-01 17:44:03.943+0800] [com.xxl.job.core.thread.TriggerCallbackThread] [Thread-32] [ERROR] null 
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at com.xxl.job.core.thread.TriggerCallbackThread$1.run(TriggerCallbackThread.java:55)
+	at java.lang.Thread.run(Thread.java:748)

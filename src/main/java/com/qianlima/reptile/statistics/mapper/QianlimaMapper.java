@@ -99,7 +99,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
                     "and  updatetime> #{startTime} and updatetime &lt; #{endTime}"+
                     "</script>"
     })
-    Integer selectPhpcmsCountsByIds(@Param("ids") List<Integer> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
+    Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
     /**
      * @return a
@@ -121,5 +121,5 @@ public interface QianlimaMapper extends BaseMapper<Map> {
                     "and  intime> #{startTime} and intime &lt; #{endTime}"+
                     "</script>"
     })
-    Integer selectBiddingRawByIds(@Param("ids") List<Integer> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
+    Integer selectBiddingRawByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 }

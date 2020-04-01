@@ -79,4 +79,47 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime} and catid = 101 and status = 99")
     long selectReleaseProject(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
+    /**
+     * @return a
+     * @description 一个pot下近他一个月发布量
+     * @author gyx
+     * @date 2020-04-01 15:1
+     * @parameter * @param null
+     * @since
+     */
+    @Select({
+            "<script>" +
+                    "select " +
+                    "COUNT(1) " +
+                    "from  phpcms_content " +
+                    "where status = 99 and tmplt in " +
+                    "<foreach collection='ids' item='id' open='(' separator=',' close=')'>"+
+                    "#{id}" +
+                    "</foreach>"+
+                    "and  updatetime> #{startTime} and updatetime &lt; #{endTime}"+
+                    "</script>"
+    })
+    Integer selectPhpcmsCountsByIds(@Param("ids") List<Integer> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
+
+    /**
+     * @return a
+     * @description 一个pot下近他一个月采集量
+     * @author gyx
+     * @date 2020-04-01 15:1
+     * @parameter * @param null
+     * @since
+     */
+    @Select({
+            "<script>" +
+                    "select " +
+                    "COUNT(1) " +
+                    "from  bidding_raw " +
+                    "where ae_template in " +
+                    "<foreach collection='ids' item='id' open='(' separator=',' close=')'>"+
+                    "#{id}" +
+                    "</foreach>"+
+                    "and  intime> #{startTime} and intime &lt; #{endTime}"+
+                    "</script>"
+    })
+    Integer selectBiddingRawByIds(@Param("ids") List<Integer> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 }

@@ -1,6 +1,7 @@
 package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.qianlima.reptile.statistics.entity.PotDo;
 import com.qianlima.reptile.statistics.entity.TempltDo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -24,11 +25,26 @@ public interface RawdataMapper {
     @Select("select domain from rawdatas.ae_pot")
     List<String> selectAllPot();
     /**
+     * 查询全部pot
+     * @return
+     */
+    @Select("select domain as potName,intime as initTime,uptime as updateTime from rawdatas.ae_pot")
+    List<PotDo> selectPot();
+
+
+    /**
      *查询id ，state，和potname
      * @return
      */
     @Select("select id,state,potName from rawdatas.crawlconfig")
     List<TempltDo> selectTemplt();
+
+    /**
+     *查询id ，state，和potname
+     * @return
+     */
+    @Select("select id as ids,state,potName from rawdatas.crawlconfig")
+    List<TempltDo> selectTempt();
     /**
      *查询启用模版数
      * @return

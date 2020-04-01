@@ -32,7 +32,7 @@ public class PotInformationRepository {
 
     public void save(PotInformation potInformation) {
         Query query = Query.query(Criteria.where("pot").is(potInformation.getPot()));
-        Update update = Update.update("title", "MongoTemplate").set("queryDate", potInformation.getQueryDate()).set("templateNumber", potInformation.getTemplateNumber())
+        Update update = Update.update("queryDate", potInformation.getQueryDate()).set("templateNumber", potInformation.getTemplateNumber())
                 .set("state", potInformation.getState()).set("collectNumber", potInformation.getCollectNumber()).set("releaseNumber", potInformation.getReleaseNumber())
                 .set("createTime", potInformation.getCreateTime()).set("updateTime", potInformation.getUpdateTime()).set("repeatPot", potInformation.getRepeatPot());
         mongoTemplate.upsert(query, update, PotInformation.class);
@@ -70,8 +70,7 @@ public class PotInformationRepository {
 
 
     public List<PotInformation> queryByIp(String ip) {
-        Criteria criteria = new Criteria();
-        criteria.where("repeatPot").is(ip);
+        Criteria criteria = Criteria.where("repeatPot").is(ip);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);

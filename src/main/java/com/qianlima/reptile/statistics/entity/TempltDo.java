@@ -10,4 +10,8 @@ public class TempltDo {
     private String state;
 
     private String potName;
+
+    private String ids;
+
+
 }

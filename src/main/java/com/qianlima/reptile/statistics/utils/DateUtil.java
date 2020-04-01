@@ -84,6 +84,16 @@ public class DateUtil {
         return "";
     }
 
+    public static String date4TimeStamp(String date_str) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return String.valueOf(sdf.parse(date_str).getTime() / 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static String getfromatString(String datestr) {
         String dstr = "";
         if (datestr != null && !"".equals(datestr)) {

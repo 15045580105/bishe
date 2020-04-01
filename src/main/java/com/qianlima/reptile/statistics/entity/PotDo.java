@@ -6,4 +6,8 @@ import lombok.Data;
 public class PotDo {
 
     private String potName;
+
+    private String initTime;
+
+    private String updateTime;
 }

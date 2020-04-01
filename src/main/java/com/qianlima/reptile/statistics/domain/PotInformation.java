@@ -54,9 +54,9 @@ public class PotInformation {
      */
     private String updateTime;
     /**
-     *完全重复pot数
+     *ip
      */
-    private long repeatPot;
+    private String repeatPot;
 
 
 

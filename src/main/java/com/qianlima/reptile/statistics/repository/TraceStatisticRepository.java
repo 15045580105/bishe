@@ -75,10 +75,15 @@ public class TraceStatisticRepository {
         fieldsObject.put("id", false);
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
         query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
-        PhpcmsContentStatistics phpcmsContentStatistics =  mongoTemplate.findOne(query, PhpcmsContentStatistics.class);
+        PhpcmsContentStatistics pc =  mongoTemplate.findOne(query, PhpcmsContentStatistics.class);
         HashMap<String, Integer> result = new HashMap<>();
-        result.put("发布量", phpcmsContentStatistics.getPublishCount());
-        result.put("采集量", phpcmsContentStatistics.getCatchCount());
+        if (pc != null){
+            result.put("发布量", pc.getPublishCount());
+            result.put("采集量", pc.getCatchCount());
+        } else {
+            result.put("发布量", 0);
+            result.put("采集量", 0);
+        }
         return result;
     }
 

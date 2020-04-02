@@ -17,6 +17,12 @@ import java.util.List;
  */
 @Data
 public class PotInformationDto {
+
+    /**
+     * 当页的数据index，为了前端能渲染 treeTable
+     */
+    private Integer index;
+
     /**
      * 查询时间  格式 2020-02-06
      */
@@ -56,6 +62,6 @@ public class PotInformationDto {
     /**
      *完全重复pot
      */
-    private List<PotInformation> children;
+    private List<PotInformationDto> children;
 
 }

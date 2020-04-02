@@ -129,6 +129,7 @@ public class PotInformationServiceImpl implements PotInformationService {
         long total = potInformationRepository.query();
         List<PotInformation> list = potInformationRepository.queryByPage(potName, page, count);
         List<Map<String, String>> list1 = new ArrayList<>();
+        int index = 0;
         for (int i = 0; i < list.size(); i++) {
             PotInformationDto potInformationDto = new PotInformationDto();
             Map<String, String> map1 = new HashMap<>();
@@ -143,16 +144,37 @@ public class PotInformationServiceImpl implements PotInformationService {
             potInformationDto.setUpdateTime(list.get(i).getUpdateTime());
             if (listRepeat.size() != 0 && StringUtils.isNotBlank(list.get(i).getRepeatPot())) {
                 potInformationDto.setRepeatPotCount(listRepeat.size() + "");
-                potInformationDto.setChildren(listRepeat);
+                potInformationDto.setChildren(convertToDto(index,listRepeat));
+                index += listRepeat.size();
             } else {
                 potInformationDto.setRepeatPotCount( 0 + "");
             }
+            potInformationDto.setIndex(++index);
             String json = JSON.toJSONString(potInformationDto);
             map1.put("data", json);
             map1.put("total", total + "");
             list1.add(map1);
         }
         return list1;
+    }
+
+    private List<PotInformationDto> convertToDto(Integer index,List<PotInformation> potInformations){
+        Integer addIndex = index;
+        List<PotInformationDto> pfDtoList = new ArrayList<>();
+        for (PotInformation pf : potInformations){
+            PotInformationDto potInformationDto = new PotInformationDto();
+            potInformationDto.setQueryDate(pf.getQueryDate());
+            potInformationDto.setPot(pf.getPot());
+            potInformationDto.setTemplateNumber(pf.getTemplateNumber());
+            potInformationDto.setState(pf.getState());
+            potInformationDto.setCollectNumber(pf.getCollectNumber());
+            potInformationDto.setReleaseNumber(pf.getReleaseNumber());
+            potInformationDto.setCreateTime(pf.getCreateTime());
+            potInformationDto.setUpdateTime(pf.getUpdateTime());
+            potInformationDto.setIndex(++addIndex);
+            pfDtoList.add(potInformationDto);
+        }
+        return pfDtoList;
     }
 
     @Override

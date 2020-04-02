@@ -137,13 +137,13 @@ public class PotInformationServiceImpl implements PotInformationService {
             List<PotInformation> listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot());
             String json = JSON.toJSONString(list.get(i));
             map1.put("data", json);
-            if (listRepeat.size() != 0) {
+            if (listRepeat.size() != 0 && StringUtils.isNotBlank(list.get(i).getRepeatPot())) {
                 map1.put("repeatPotCount", listRepeat.size() + "");
+                map1.put("children", JSON.toJSONString(listRepeat));
             } else {
                 map1.put("repeatPotCount", 0 + "");
             }
             map1.put("total", total + "");
-            map1.put("children", JSON.toJSONString(listRepeat));
             list1.add(map1);
         }
         return list1;

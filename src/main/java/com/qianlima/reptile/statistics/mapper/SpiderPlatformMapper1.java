@@ -20,7 +20,7 @@ public interface SpiderPlatformMapper1 {
     @Select("select id from website_account_keywords where websiteAccountId > 1100")
     List<Integer> selectId();
 
-    @Select("select keywords,taskListUrls from website_account_keywords where id = #{id}")
+    @Select("select taskListUrls from website_account_keywords where id = #{id}")
     KeyWordTask selectKeyWordsTaskById(@Param("id") Integer id);
 
     @Select("select keywords from website_account_keywords where id = #{keywordId}")

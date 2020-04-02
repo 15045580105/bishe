@@ -37,7 +37,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
      * @param endTime
      * @return
      */
-    @Select("select count(1) from bidding_raw where intime >= #{startTime} and intime <= #{endTime}")
+    @Select("select count(1) from rawdatas.bidding_raw where intime >= #{startTime} and intime <= #{endTime}")
     long selectCollectCount(@Param("startTime") String startTime,@Param("endTime") String endTime);
     /**
      *查询采集34
@@ -45,7 +45,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
      * @param endTime
      * @return
      */
-    @Select("select count(1) from bidding_raw where intime >= #{startTime} and intime <= #{endTime} and status = 34")
+    @Select("select count(1) from rawdatas.bidding_raw where intime >= #{startTime} and intime <= #{endTime} and status = 34")
     long selectCollect34(@Param("startTime") String startTime,@Param("endTime") String endTime);
     /**
      *查询采集50
@@ -53,7 +53,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
      * @param endTime
      * @return
      */
-    @Select("select count(1) from bidding_raw where intime >= #{startTime} and intime <= #{endTime} and status = 50")
+    @Select("select count(1) from rawdatas.bidding_raw where intime >= #{startTime} and intime <= #{endTime} and status = 50")
     long selectCollect50(@Param("startTime") String startTime,@Param("endTime") String endTime);
     /**
      *查询发布总量

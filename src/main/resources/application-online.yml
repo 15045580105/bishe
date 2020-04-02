@@ -13,8 +13,8 @@ spring:
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://10.80.184.200:3309/qianlima?characterEncoding=UTF-8
         modmonitor:
-          username: statistics
-          password: KF7lhEE3AIwM
+          username: root
+          password: uRGtSxZUdUy8GnMB
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://121.40.46.25:3309/modmonitor?useUnicode=true&characterEncoding=utf8
         octopus:

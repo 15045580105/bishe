@@ -14,12 +14,12 @@ public class StatisticsConstant {
     /**
      * 发布状态
      */
-    public static final Integer PUBLISH = 1;
+    public static final Integer PUBLISH = 0;
 
     /**
      * 采集状态11
      */
-    public static final Integer COLLECTION = 0;
+    public static final Integer COLLECTION = 1;
 
     /**
      * 数据来源

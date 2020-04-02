@@ -173,7 +173,10 @@ public class TemplateAndPotStatisticalImpl extends BaseService implements Templa
             // 通过endOfTheMonth字段取出每个月最后一天的数据，endtime需要特殊处理
             List<TmpltAndPotStatistics> list = potAndTmpltRepository.queryByTimeAndMonth((startTime + DateUtils.monthStart), (queryEndDate + DateUtils.monthEnd));
             // 单独查询 endtime 最后一天的数据
-            list.add(potAndTmpltRepository.queryByTime((endTime + DateUtils.monthStart), (endTime + DateUtils.monthEnd)));
+            TmpltAndPotStatistics tmpltAndPotStatistics = potAndTmpltRepository.queryByTime((endTime + DateUtils.monthStart), (endTime + DateUtils.monthEnd));
+            if (tmpltAndPotStatistics != null){
+                list.add(tmpltAndPotStatistics);
+            }
             for (TmpltAndPotStatistics tp : list) {
                 map.put(formatDateToMonth(tp.getQueryDate()), tp);
             }

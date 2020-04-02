@@ -67,10 +67,18 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         }
         if (startTime.equals(endTime)) {
             Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountByTime(startTime);
-            TraceStatistic biddingStatistic = traceStatisticRepository.queryByTime(startTime, 1).get(0);
-            biddingStatistic.setTotalCount(map.get("采集量"));
-            TraceStatistic phpStatistic = traceStatisticRepository.queryByTime(startTime, 0).get(0);
-            phpStatistic.setTotalCount(map.get("发布量"));
+            List<TraceStatistic> traceStatistics = traceStatisticRepository.queryByTime(startTime, 1);
+            TraceStatistic biddingStatistic = null;
+            if (traceStatistics != null && traceStatistics.size() > 0){
+                biddingStatistic = traceStatistics.get(0);
+                biddingStatistic.setTotalCount(map.get("采集量"));
+            }
+            List<TraceStatistic> collectTS = traceStatisticRepository.queryByTime(startTime, 0);
+            TraceStatistic phpStatistic = null;
+            if (collectTS != null && collectTS.size() > 0 ){
+                phpStatistic = collectTS.get(0);
+                phpStatistic.setTotalCount(map.get("发布量"));
+            }
             TraceStatisticResponse traceStatisticResponse = new TraceStatisticResponse();
             traceStatisticResponse.setCollectCount(biddingStatistic);
             traceStatisticResponse.setReleaseCount(phpStatistic);
@@ -104,12 +112,31 @@ public class TraceStatisticServiceImpl implements TraceStatisticService {
         LoadDatas();
         Long currentStartTime = startTime;
         Long currentEndTime = currentStartTime + 86399L;
+        LoadDatas();
         while (currentEndTime <= endTime) {
-            saveStatistic(currentStartTime,currentEndTime);
+            run(currentStartTime,currentEndTime);
             currentStartTime += 86400;
             currentEndTime += 86400;
         }
     }
+
+    public void run(Long startTime, Long endTime) {
+        System.err.println(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF));
+
+        Map<String, Integer> map = traceStatisticRepository.queryEachTotalCountInTime(DateUtils.getFormatDateStrBitAdd(startTime, DateUtils.FUZSDF)
+                , DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
+        System.err.println("map select complete");
+        TraceStatistic biddingCount = getDailyBiddingCount(startTime, endTime);
+        biddingCount.setTotalCount(map.get("采集量"));
+        TraceStatistic phpCount = getDailyPhpCount(startTime, endTime);
+        phpCount.setTotalCount(map.get("发布量"));
+        System.err.println("采集量" + biddingCount.toString());
+        System.err.println("发布量" + phpCount.toString());
+
+        traceStatisticRepository.save(biddingCount);
+        traceStatisticRepository.save(phpCount);
+    }
+
 
     /**
      * @Title LoadDatas

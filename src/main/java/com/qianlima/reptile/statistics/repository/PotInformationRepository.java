@@ -69,8 +69,9 @@ public class PotInformationRepository {
     }
 
 
-    public List<PotInformation> queryByIp(String ip) {
+    public List<PotInformation> queryByIp(String ip,String potName) {
         Criteria criteria = Criteria.where("repeatPot").is(ip);
+        criteria.and("pot").ne(potName);
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);

@@ -133,7 +133,7 @@ public class PotInformationServiceImpl implements PotInformationService {
         for (int i = 0; i < list.size(); i++) {
             PotInformationDto potInformationDto = new PotInformationDto();
             Map<String, String> map1 = new HashMap<>();
-            List<PotInformation> listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot());
+
             potInformationDto.setQueryDate(list.get(i).getQueryDate());
             potInformationDto.setPot(list.get(i).getPot());
             potInformationDto.setTemplateNumber(list.get(i).getTemplateNumber());
@@ -142,7 +142,11 @@ public class PotInformationServiceImpl implements PotInformationService {
             potInformationDto.setReleaseNumber(list.get(i).getReleaseNumber());
             potInformationDto.setCreateTime(list.get(i).getCreateTime());
             potInformationDto.setUpdateTime(list.get(i).getUpdateTime());
-            if (listRepeat.size() != 0 && StringUtils.isNotBlank(list.get(i).getRepeatPot())) {
+            List<PotInformation> listRepeat = null;
+            if (StringUtils.isNotBlank(list.get(i).getRepeatPot())){
+                listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot(),list.get(i).getPot());
+            }
+            if (listRepeat != null && listRepeat.size() > 0) {
                 potInformationDto.setRepeatPotCount(listRepeat.size() + "");
                 potInformationDto.setChildren(convertToDto(index,listRepeat));
                 index += listRepeat.size();

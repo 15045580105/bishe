@@ -58,7 +58,7 @@ public class PotDetailsServiceImpl implements PotDetailsService {
             if (StringUtils.isBlank(potInformation.getRepeatPot())) {
                 return null;
             }
-            List<PotInformation> potInformations = potInformationRepository.queryByIp(potInformation.getRepeatPot());
+            List<PotInformation> potInformations = potInformationRepository.queryByIp(potInformation.getRepeatPot(),potName);
             for (PotInformation information : potInformations) {
                 associatedPot.add(information.getRepeatPot());
             }

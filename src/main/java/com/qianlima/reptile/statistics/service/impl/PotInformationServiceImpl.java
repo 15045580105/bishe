@@ -10,10 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.qianlima.reptile.statistics.constant.TempStatus;
 import com.qianlima.reptile.statistics.domain.PotInformation;
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
-import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
-import com.qianlima.reptile.statistics.entity.PhpcmsContentDo;
-import com.qianlima.reptile.statistics.entity.PotDo;
-import com.qianlima.reptile.statistics.entity.TempltDo;
+import com.qianlima.reptile.statistics.entity.*;
 import com.qianlima.reptile.statistics.job.InitPublishCountStatisticsJob;
 import com.qianlima.reptile.statistics.mapper.ModmonitorMapper;
 import com.qianlima.reptile.statistics.mapper.QianlimaMapper;
@@ -133,16 +130,25 @@ public class PotInformationServiceImpl implements PotInformationService {
         List<PotInformation> list = potInformationRepository.queryByPage(potName, page, count);
         List<Map<String, String>> list1 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
+            PotInformationDto potInformationDto = new PotInformationDto();
             Map<String, String> map1 = new HashMap<>();
             List<PotInformation> listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot());
-            String json = JSON.toJSONString(list.get(i));
-            map1.put("data", json);
+            potInformationDto.setQueryDate(list.get(i).getQueryDate());
+            potInformationDto.setPot(list.get(i).getPot());
+            potInformationDto.setTemplateNumber(list.get(i).getTemplateNumber());
+            potInformationDto.setState(list.get(i).getState());
+            potInformationDto.setCollectNumber(list.get(i).getCollectNumber());
+            potInformationDto.setReleaseNumber(list.get(i).getReleaseNumber());
+            potInformationDto.setCreateTime(list.get(i).getCreateTime());
+            potInformationDto.setUpdateTime(list.get(i).getUpdateTime());
             if (listRepeat.size() != 0 && StringUtils.isNotBlank(list.get(i).getRepeatPot())) {
-                map1.put("repeatPotCount", listRepeat.size() + "");
-                map1.put("children", JSON.toJSONString(listRepeat));
+                potInformationDto.setRepeatPotCount(listRepeat.size() + "");
+                potInformationDto.setChildren(listRepeat);
             } else {
-                map1.put("repeatPotCount", 0 + "");
+                potInformationDto.setRepeatPotCount( 0 + "");
             }
+            String json = JSON.toJSONString(potInformationDto);
+            map1.put("data", json);
             map1.put("total", total + "");
             list1.add(map1);
         }

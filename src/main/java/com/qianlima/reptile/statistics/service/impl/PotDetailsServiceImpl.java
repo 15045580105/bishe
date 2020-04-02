@@ -36,17 +36,17 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         PotDetailResponse potDetailResponse = new PotDetailResponse();
         PotDetail potDetail = getPotDetail(potName, states);
         potDetailResponse.setPotDetail(potDetail);
-        potDetailResponse.setPotNote(getPotNote(potDetail.getId()));
-        potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getName()));
-        potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getName()));
-        potDetailResponse.setAssociatedPots(getAssociatedPot(potDetail.getName()));
-
+        potDetailResponse.setPotNotes(getPotNote(potDetail.getId()));
+        potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getDomain()));
+        potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getDomain()));
+        potDetailResponse.setAssociatedPots(getAssociatedPot(potDetail.getDomain()));
+//        System.err.println(potDetailResponse.getPotNote().toString());
         return Response.success(potDetailResponse);
     }
 
 
     private PotDetail getPotDetail(String potName, String states) {
-        PotDetail potDetail = rawdatasMapper.selectPotDetailById(potName);
+        PotDetail potDetail = rawdatasMapper.selectPotDetailByPotName(potName);
         potDetail.setStates(states);
         return potDetail;
     }
@@ -60,15 +60,18 @@ public class PotDetailsServiceImpl implements PotDetailsService {
             }
             List<PotInformation> potInformations = potInformationRepository.queryByIp(potInformation.getRepeatPot(),potName);
             for (PotInformation information : potInformations) {
-                associatedPot.add(information.getRepeatPot());
+                associatedPot.add(information.getPot());
             }
         }
         return associatedPot;
     }
 
-    private PotNote getPotNote(Integer potId) {
-        PotNote potNote = rawdatasMapper.selectPotNoteByPotId(potId);
-        return potNote;
+    private List<PotNote> getPotNote(Integer potId) {
+        List<PotNote> potNotes = rawdatasMapper.selectPotNoteByPotId(potId);
+        if (potNotes == null || potNotes.size() == 0) {
+            return null;
+        }
+        return potNotes;
     }
 
     private List<TemplateInfo> getTemplateInfos(String potName) {

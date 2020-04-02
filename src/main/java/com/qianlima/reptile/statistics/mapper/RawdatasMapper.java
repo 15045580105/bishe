@@ -34,11 +34,11 @@ public interface RawdatasMapper extends BaseMapper<Map> {
     @Select("select ae_template from rawdatas.bidding_raw where intime between #{startTime} and #{endTime}")
     List<String> selectTemplateIdInTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
-    @Select("SELECT ap.id,ap.name as name,ap.domain,pa.name as area, ap.creater from rawdatas.ae_pot ap LEFT JOIN qianlima.phpcms_area pa on ap.area = pa.areaid where ap.domain = #{domain}")
-    PotDetail selectPotDetailById(String domain);
+    @Select("SELECT ap.id,ap.name as name,ap.domain,pa.name as area, ap.creater ,ap.intime from rawdatas.ae_pot ap LEFT JOIN qianlima.phpcms_area pa on ap.area = pa.areaid where ap.domain = #{domain}")
+    PotDetail selectPotDetailByPotName(String domain);
 
     @Select("select * from rawdatas.ccbeizhu where cid = #{id}")
-    PotNote selectPotNoteByPotId(Integer id);
+    List<PotNote> selectPotNoteByPotId(Integer id);
 
     @Select("SELECT id, potName, isxm, cat, state , createtime, updateTime, collect_strategy FROM rawdatas.crawlconfig WHERE potName = #{potName}")
     List<TemplateInfo> selectTemplateInfosByName(String potName);

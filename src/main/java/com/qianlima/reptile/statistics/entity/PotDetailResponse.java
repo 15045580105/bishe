@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 public class PotDetailResponse {
     private PotDetail potDetail;
-    private PotNote potNote;
+    private List<PotNote> potNotes;
     private Map<String, ReleaseAndCollectCount> releaseAndCollectCountMap;
     private List<TemplateInfo> templateInfos;
     private List<String> associatedPots;

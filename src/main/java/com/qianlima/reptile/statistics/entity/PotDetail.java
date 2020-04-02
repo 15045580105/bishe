@@ -26,11 +26,14 @@ public class PotDetail {
      * 地区
      */
     private String area;
-
     /**
      * 创建者
      */
     private String creater;
+    /**
+     * 创建时间
+     */
+    private Long inTime;
     /**
      * 状态
      */

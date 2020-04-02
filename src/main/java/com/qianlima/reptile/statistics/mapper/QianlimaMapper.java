@@ -117,7 +117,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
             "<script>" +
                     "select " +
                     "COUNT(1) " +
-                    "from  bidding_raw " +
+                    "from rawdatas.bidding_raw " +
                     "where ae_template in " +
                     "<foreach collection='ids' item='id' open='(' separator=',' close=')'>"+
                     "#{id}" +
@@ -127,6 +127,6 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     })
     Integer selectBiddingRawByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
-    @Select("select count(1) as count,ae_template as tmplt from bidding_raw where intime >= #{startTime} and intime <= #{endTime} group by ae_template")
+    @Select("select count(1) as count,ae_template as tmplt from rawdatas.bidding_raw where intime >= #{startTime} and intime <= #{endTime} group by ae_template")
     List<PhpcmsContentDo> selectBiddingRaw(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

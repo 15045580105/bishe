@@ -78,6 +78,15 @@ public class PotInformationRepository {
         query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
         return mongoTemplate.find(query, PotInformation.class);
     }
+    public PotInformation queryByName(String potName) {
+        Criteria criteria = Criteria.where("pot").is(potName);
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        fieldsObject.put("id", false);
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
+        return mongoTemplate.findOne(query, PotInformation.class);
+    }
 
 
 }

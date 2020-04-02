@@ -52,6 +52,8 @@ public class DataShowController {
     private ReleaseHistoricalService releaseHistoricalService;
     @Autowired
     private PotInformationService potInformationService;
+    @Autowired
+    private PotDetailsService potDetailsService;
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -328,5 +330,10 @@ public class DataShowController {
     public Response in() {
         potInformationService.selectPotInformation();
         return Response.success("");
+    }
+
+    @PostMapping(path = "/pot/details")
+    public Response details(Integer id,String states) {
+        return potDetailsService.getPotDetails(id, states);
     }
 }

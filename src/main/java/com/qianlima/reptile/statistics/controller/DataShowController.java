@@ -333,7 +333,7 @@ public class DataShowController {
     }
 
     @PostMapping(path = "/pot/details")
-    public Response details(Integer id,String states) {
-        return potDetailsService.getPotDetails(id, states);
+    public Response details(String potName,String states) {
+        return potDetailsService.getPotDetails(potName, states);
     }
 }

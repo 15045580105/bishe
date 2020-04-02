@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.service;
 
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ public interface PotInformationService {
 
     void selectPotInformation();
 
-    Map<String,Map<String, String>> selectBypage(String potName, long page, int count);
+    List<Map<String, String>> selectBypage(String potName, long page, int count);
 
     TmpltAndPotStatistics PotStatistics(String startTime, String endTime);
 

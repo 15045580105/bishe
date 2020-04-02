@@ -11,6 +11,7 @@ import com.qianlima.reptile.statistics.constant.TempStatus;
 import com.qianlima.reptile.statistics.domain.PotInformation;
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import com.qianlima.reptile.statistics.entity.PhpcmsContentDo;
 import com.qianlima.reptile.statistics.entity.PotDo;
 import com.qianlima.reptile.statistics.entity.TempltDo;
 import com.qianlima.reptile.statistics.job.InitPublishCountStatisticsJob;
@@ -58,49 +59,62 @@ public class PotInformationServiceImpl implements PotInformationService {
         String reportStartTime = DateUtils.getLastDay(today);
         String monthEarly = DateUtils.monthEarly(reportStartTime);
 
-            //查询所有模板
-            List<TempltDo> templtList = rawdataMapper.selectTempt();
-            Map<String, String> mapTmplt = convertToMap(templtList);
-            // 查询昨日故障模板
-            List<FaultTmpltDo> list = modmonitorMapper.selectFailTemplt(reportStartTime + DateUtils.dateStartStr, reportStartTime + DateUtils.dateEndStr);
-            Map<String, String> abnormalTempMap = convertMap(list);
-            // 查询所有pot
-            List<PotDo> potList = rawdataMapper.selectPot();
-            Map<String, String> mapInTime = convertMapIntime(potList);
-            Map<String, String> mapUpTime = convertMapUptime(potList);
-            HashMap<String, List<String>> potTempMap = new HashMap<>(100000);
-            for (PotDo potDo : potList) {
-                potTempMap.put(potDo.getPotName(), new ArrayList<>());
+        //查询所有模板
+        List<TempltDo> templtList = rawdataMapper.selectTempt();
+        Map<String, String> mapTmplt = convertToMap(templtList);
+        // 查询昨日故障模板
+        List<FaultTmpltDo> list = modmonitorMapper.selectFailTemplt(reportStartTime + DateUtils.dateStartStr, reportStartTime + DateUtils.dateEndStr);
+        Map<String, String> abnormalTempMap = convertMap(list);
+        // 查询所有pot
+        List<PotDo> potList = rawdataMapper.selectPot();
+        Map<String, String> mapInTime = convertMapIntime(potList);
+        Map<String, String> mapUpTime = convertMapUptime(potList);
+        HashMap<String, List<String>> potTempMap = new HashMap<>(100000);
+        List<PhpcmsContentDo> list1 = qianlimaMapper.selectPhpcmsCounts(DateUtil.date4TimeStamp(monthEarly), DateUtil.date4TimeStamp(reportStartTime));
+        List<PhpcmsContentDo> list2 = qianlimaMapper.selectBiddingRaw(DateUtil.date4TimeStamp(monthEarly), DateUtil.date4TimeStamp(reportStartTime));
+        Map<String, String> mapCollect30 = convertToCollect30(list2);
+        Map<String, String> mapReleas30 = convertToCollect30(list1);
+        for (PotDo potDo : potList) {
+            potTempMap.put(potDo.getPotName(), new ArrayList<>());
+        }
+        // 将pot 与模板的关联关系保存到 potTempMap 中
+        for (TempltDo t : templtList) {
+            if (potTempMap.containsKey(t.getPotName())) {
+                potTempMap.get(t.getPotName()).add(t.getIds());
             }
-            // 将pot 与模板的关联关系保存到 potTempMap 中
-            for (TempltDo t : templtList) {
-                if (potTempMap.containsKey(t.getPotName())) {
-                    potTempMap.get(t.getPotName()).add(t.getIds());
-                }
-            }
-            //循环pot获取每个pot信息存储
-            for (String potName : potTempMap.keySet()) {
-                List<String> tempList = new ArrayList<>();
-                long collect30 = 0;
-                long releas30 = 0;
-                String state = "";
-                String ip = "";
-                try {
+        }
+        //循环pot获取每个pot信息存储
+        for (String potName : potTempMap.keySet()) {
+            int s = 1;
+            List<String> tempList = new ArrayList<>();
+            long collect30 = 0;
+            long releas30 = 0;
+            String state = "";
+            String ip = "";
+            try {
                 tempList = potTempMap.get(potName);
-                collect30 = tempList.size() == 0 ? 0 : qianlimaMapper.selectBiddingRawByIds(tempList, Long.parseLong(DateUtil.date4TimeStamp(monthEarly)), Long.parseLong(DateUtil.date4TimeStamp(reportStartTime)));
-                releas30 = tempList.size() == 0 ? 0 : qianlimaMapper.selectPhpcmsCountsByIds(tempList, Long.parseLong(DateUtil.date4TimeStamp(monthEarly)), Long.parseLong(DateUtil.date4TimeStamp(reportStartTime)));
+                for (int i = 0; i <tempList.size() ; i++) {
+                    if(StringUtils.isNotBlank(mapCollect30.get(tempList.get(i)))){
+                        collect30 = collect30 + Long.parseLong(mapCollect30.get(tempList.get(i)));
+                    }
+                    if(StringUtils.isNotBlank(mapReleas30.get(tempList.get(i)))){
+                        releas30 = releas30 + Long.parseLong(mapReleas30.get(tempList.get(i)));
+                    }
+                }
                 state = judgeSxtate(tempList, abnormalTempMap, mapTmplt);
                 InetAddress ia2 = InetAddress.getByName(potName);
                 if (StringUtils.isNotBlank(ia2.getHostAddress())) {
                     ip = ia2.getHostAddress();
                 }
                 save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
-                logger.info(" 插入pot为 {} 的数据", potName);
-                } catch (UnknownHostException e) {
-                    save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
-                }
+                logger.info(" 插入pot为 {} 的第 {} 数据", potName,s);
+                s++;
+            } catch (UnknownHostException e) {
+                save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
+                logger.info(" 插入pot为 {} 的第 {} 数据", potName,s);
+                s++;
             }
-
+        }
 
 
     }
@@ -114,26 +128,25 @@ public class PotInformationServiceImpl implements PotInformationService {
      * @since
      */
     @Override
-    public Map<String, Map<String, String>> selectBypage(String potName, long page, int count) {
+    public List<Map<String, String>> selectBypage(String potName, long page, int count) {
         long total = potInformationRepository.query();
         List<PotInformation> list = potInformationRepository.queryByPage(potName, page, count);
-        Map<String, Map<String, String>> mapMap = new HashMap<>();
-        Map<String, String> map = new HashMap<>();
-        map.put("total", total + "");
-        mapMap.put("total", map);
+        List<Map<String, String>> list1 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map1 = new HashMap<>();
             List<PotInformation> listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot());
             String json = JSON.toJSONString(list.get(i));
             map1.put("data", json);
-            if(StringUtils.isNotBlank(list.get(i).getRepeatPot())){
-                map1.put("repeatPot", listRepeat.size() + "");
-            }else {
-                map1.put("repeatPot", 0 + "");
+            if (listRepeat.size() != 0) {
+                map1.put("repeatPotCount", listRepeat.size() + "");
+            } else {
+                map1.put("repeatPotCount", 0 + "");
             }
-            mapMap.put("data" + (i + ""), map1);
+            map1.put("total", total + "");
+            map1.put("children", JSON.toJSONString(listRepeat));
+            list1.add(map1);
         }
-        return mapMap;
+        return list1;
     }
 
     @Override
@@ -144,6 +157,15 @@ public class PotInformationServiceImpl implements PotInformationService {
     public Map<String, String> convertToMap(List<TempltDo> templtDos) {
         return templtDos.stream().collect(Collectors.toMap(TempltDo::getIds, TempltDo::getState));
     }
+
+    public Map<String, String> convertToCollect30(List<PhpcmsContentDo> list) {
+        return list.stream().collect(Collectors.toMap(PhpcmsContentDo::getTmplt, PhpcmsContentDo::getCount));
+    }
+
+    public Map<String, String> convertToReleas30(List<PhpcmsContentDo> list) {
+        return list.stream().collect(Collectors.toMap(PhpcmsContentDo::getTmplt, PhpcmsContentDo::getCount));
+    }
+
 
     public Map<String, String> convertMap(List<FaultTmpltDo> templtDos) {
         return templtDos.stream().collect(Collectors.toMap(FaultTmpltDo::getTmplt, FaultTmpltDo::getTmplt));

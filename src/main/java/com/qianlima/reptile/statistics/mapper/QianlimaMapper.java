@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qianlima.reptile.statistics.entity.PhpcmsContentDo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -101,6 +102,9 @@ public interface QianlimaMapper extends BaseMapper<Map> {
     })
     Integer selectPhpcmsCountsByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
+
+    @Select("select count(1) as count ,tmplt as tmplt from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime}  and status = 99 group by tmplt")
+    List<PhpcmsContentDo> selectPhpcmsCounts(@Param("startTime") String startTime, @Param("endTime") String endTime);
     /**
      * @return a
      * @description 一个pot下近他一个月采集量
@@ -122,4 +126,7 @@ public interface QianlimaMapper extends BaseMapper<Map> {
                     "</script>"
     })
     Integer selectBiddingRawByIds(@Param("ids") List<String> ids, @Param("startTime") Long startTime, @Param("endTime") Long endTime);
+
+    @Select("select count(1) as count,ae_template as tmplt from bidding_raw where intime >= #{startTime} and intime <= #{endTime} group by ae_template")
+    List<PhpcmsContentDo> selectBiddingRaw(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

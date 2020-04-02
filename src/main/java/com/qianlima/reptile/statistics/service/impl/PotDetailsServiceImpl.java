@@ -32,11 +32,11 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     private PotInformationRepository potInformationRepository;
 
     @Override
-    public Response getPotDetails(Integer potId, String states) {
+    public Response getPotDetails(String potName, String states) {
         PotDetailResponse potDetailResponse = new PotDetailResponse();
-        PotDetail potDetail = getPotDetail(potId, states);
+        PotDetail potDetail = getPotDetail(potName, states);
         potDetailResponse.setPotDetail(potDetail);
-        potDetailResponse.setPotNote(getPotNote(potId));
+        potDetailResponse.setPotNote(getPotNote(potDetail.getId()));
         potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getName()));
         potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getName()));
         potDetailResponse.setAssociatedPots(getAssociatedPot(potDetail.getName()));
@@ -45,8 +45,8 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     }
 
 
-    private PotDetail getPotDetail(Integer potId, String states) {
-        PotDetail potDetail = rawdatasMapper.selectPotDetailById(potId);
+    private PotDetail getPotDetail(String potName, String states) {
+        PotDetail potDetail = rawdatasMapper.selectPotDetailById(potName);
         potDetail.setStates(states);
         return potDetail;
     }

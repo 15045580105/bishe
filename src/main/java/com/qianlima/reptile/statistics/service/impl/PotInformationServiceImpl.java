@@ -222,7 +222,7 @@ public class PotInformationServiceImpl implements PotInformationService {
     private String judgeSxtate(List<String> tempList, Map<String, String> abnormalTempMap, Map<String, String> mapTmplt) {
         if (tempList.size() == 0) {
             // POT新建状态
-            return "potNew";
+            return "新建";
         } else {
             boolean enable = false;
             int deleteNum = 0;
@@ -237,11 +237,11 @@ public class PotInformationServiceImpl implements PotInformationService {
             }
             // 有一个模板是 启用，则这个pot就是启用
             if (enable) {
-                return "potEnable";
+                return "启用";
             } else {
                 // pot所有模板都是删除状态，则pot是废弃状态
                 if (deleteNum == tempList.size()) {
-                    return "potAbandoned";
+                    return "废弃";
                 }
             }
         }
@@ -254,7 +254,7 @@ public class PotInformationServiceImpl implements PotInformationService {
         }
         // 如果pot下的每一个模板都是异常状态，则pot是异常状态
         if (abnormalNum == tempList.size()) {
-            return "potAbnormal";
+            return "异常";
         }
         return "";
     }

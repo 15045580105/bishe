@@ -54,6 +54,8 @@ public class DataShowController {
     private PotInformationService potInformationService;
     @Autowired
     private PotDetailsService potDetailsService;
+    @Autowired
+    private TemplateInformation templateInformation;
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -326,14 +328,24 @@ public class DataShowController {
         return Response.success(tmpltAndPotStatistics);
     }
 
-    @PostMapping(path = "/pot/in")
-    public Response in() {
-        potInformationService.selectPotInformation();
-        return Response.success("");
-    }
 
     @PostMapping(path = "/pot/details")
     public Response details(String potName,String states) {
         return potDetailsService.getPotDetails(potName, states);
+    }
+
+
+    /**
+     * @return a
+     * @description 模版信息
+     * @author gyx
+     * @date 2020-04-01 16:45
+     * @parameter * @param null
+     * @since
+     */
+    @PostMapping(path = "/tmplt/information")
+    public Response tmpltInformation(String id) {
+        Map<String, List> map = templateInformation.templateInformation(id);
+        return Response.success(map);
     }
 }

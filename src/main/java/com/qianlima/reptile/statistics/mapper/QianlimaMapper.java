@@ -129,4 +129,26 @@ public interface QianlimaMapper extends BaseMapper<Map> {
 
     @Select("select count(1) as count,ae_template as tmplt from rawdatas.bidding_raw where intime >= #{startTime} and intime <= #{endTime} group by ae_template")
     List<PhpcmsContentDo> selectBiddingRaw(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    /**
+     * @return a
+     * @description 单模版时间内采集量
+     * @author gyx
+     * @date 2020-04-02 21:5
+     * @parameter * @param null
+     * @since
+     */
+    @Select("select count(1) from rawdatas.bidding_raw where intime >= #{startTime} and intime <= #{endTime} and ae_template = #{id}")
+    Integer selectBiddingById(@Param("startTime") long startTime, @Param("endTime") long endTime,@Param("id") String id);
+
+    /**
+     * @return a
+     * @description 单模版时间内发布量
+     * @author gyx
+     * @date 2020-04-02 21:4
+     * @parameter * @param null
+     * @since
+     */
+    @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime}  and status = 99 and tmplt = #{id}")
+    Integer selectPhpcmsById(@Param("startTime") long startTime, @Param("endTime") long endTime,@Param("id") String id);
 }

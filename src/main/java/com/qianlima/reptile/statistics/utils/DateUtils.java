@@ -392,33 +392,25 @@ public class DateUtils {
      * @parameter * @param null
      * @since
      */
-    public static List<String> getDates(String startDate, String endDate) {
-        List<String> list = new ArrayList<String>();
+     public static List<String> getDates(String start, String end) {
+        List<String> result = new ArrayList<String>();
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            //保存日期的集合 
-            Date date_start = sdf.parse(startDate);
-            Date date = date_start;
-            //用Calendar 进行日期比较判断
-            SimpleDateFormat sdfMonth = new SimpleDateFormat("yyyy-MM");
-            Date validateDate = sdfMonth.parse(endDate.substring(0, 7));
-            Calendar cdMonth = Calendar.getInstance();
-            cdMonth.setTime(validateDate);
-            cdMonth.add(Calendar.MONTH, 1);
-            Date date_end = cdMonth.getTime();
-            Calendar cd = Calendar.getInstance();
-            while (date.getTime() < date_end.getTime()) {
-                list.add(sdf.format(date));
-                cd.setTime(date);
-                //增加一天 放入集合
-                cd.add(Calendar.DATE, 1);
-                date = cd.getTime();
+            Date start_date = sdf.parse(start);
+            Date end_date = sdf.parse(end);
+            Calendar tempStart = Calendar.getInstance();
+            tempStart.setTime(start_date);
+            Calendar tempEnd = Calendar.getInstance();
+            tempEnd.setTime(end_date);
+            while (tempStart.before(tempEnd)||tempStart.equals(tempEnd)) {
+                result.add(sdf.format(tempStart.getTime()));
+                tempStart.add(Calendar.DAY_OF_YEAR, 1);
             }
-            return list;
-        } catch (Exception e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-        return list;
+        Collections.reverse(result);
+        return result;
     }
 
     public static Long str2TimeStamp(String time, SimpleDateFormat format) {
@@ -450,4 +442,20 @@ public class DateUtils {
         return "";
     }
 
+    public static String monthHelfEarly(String data) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String maxDateStr = data;
+        String minDateStr = "";
+        Calendar calc = Calendar.getInstance();
+        try {
+            calc.setTime(sdf.parse(maxDateStr));
+            calc.add(calc.DATE, -15);
+            Date minDate = calc.getTime();
+            minDateStr = sdf.format(minDate);
+            return (minDateStr);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        return "";
+    }
 }

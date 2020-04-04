@@ -262,6 +262,24 @@ public class DateUtils {
         return 0;
     }
 
+    public static int compareDateByDay(String DATE1, String DATE2) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dt1 = df.parse(DATE1);
+            Date dt2 = df.parse(DATE2);
+            if (dt1.getTime() > dt2.getTime()) {
+                return 1;
+            } else if (dt1.getTime() < dt2.getTime()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
+
 
     /**
      * 将字符串时间格式转换成Date时间格式，参数String类型
@@ -442,14 +460,14 @@ public class DateUtils {
         return "";
     }
 
-    public static String monthHelfEarly(String data) {
+    public static String monthHelfLate(String data) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String maxDateStr = data;
         String minDateStr = "";
         Calendar calc = Calendar.getInstance();
         try {
             calc.setTime(sdf.parse(maxDateStr));
-            calc.add(calc.DATE, -15);
+            calc.add(calc.DATE, +15);
             Date minDate = calc.getTime();
             minDateStr = sdf.format(minDate);
             return (minDateStr);

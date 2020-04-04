@@ -11,6 +11,6 @@ import java.util.Map;
  */
 public interface TemplateInformation {
 
-    Map<String, List> templateInformation(String templt);
+    Map<String, List> templateInformation(String templt,String startTime);
 
 }

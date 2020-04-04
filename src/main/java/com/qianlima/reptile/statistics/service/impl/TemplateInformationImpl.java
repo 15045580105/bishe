@@ -32,21 +32,26 @@ public class TemplateInformationImpl implements TemplateInformation {
     @Autowired
     private RawdataMapper rawdataMapper;
 
-    public Map<String, List> templateInformation(String templt) {
+    @Override
+    public Map<String, List> templateInformation(String templt,String startTime) {
         String today = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         String reportStartTime = DateUtils.getLastDay(today);
-        String start = DateUtils.monthHelfEarly(reportStartTime);
-        List<String> list = DateUtils.getDates(start, reportStartTime);
+        String end = DateUtils.monthHelfLate(startTime);
+        List<String> list = new ArrayList<>();
+        if(DateUtils.compareDateByDay(end,reportStartTime) == 1){
+            list = DateUtils.getDates(startTime, reportStartTime);
+        }
+        list = DateUtils.getDates(startTime, end);
         Map<String, List> map = new HashMap<>();
         List<Map<String, String>> listData = new ArrayList<>();
         List<CrawlconfigDo> listCrawlconfig = new ArrayList<>();
         List<Map<String, String>> listCollectClass = new ArrayList<>();
         for (int i = 1; i < list.size(); i++) {
             Map<String, String> map2 = new TreeMap<>();
-            String startTime = DateUtil.date3TimeStamp((list.get(i) + DateUtils.dateStartStr));
+            String startTime1 = DateUtil.date3TimeStamp((list.get(i) + DateUtils.dateStartStr));
             String endTime = DateUtil.date3TimeStamp((list.get(i) + DateUtils.dateEndStr));
-            String collect = qianlimaMapper.selectBiddingById(Long.parseLong(startTime), Long.parseLong(endTime), templt).toString();
-            String release = qianlimaMapper.selectPhpcmsById(Long.parseLong(startTime), Long.parseLong(endTime), templt).toString();
+            String collect = qianlimaMapper.selectBiddingById(Long.parseLong(startTime1), Long.parseLong(endTime), templt).toString();
+            String release = qianlimaMapper.selectPhpcmsById(Long.parseLong(startTime1), Long.parseLong(endTime), templt).toString();
             map2.put("time", list.get(i));
             map2.put("collect", collect);
             map2.put("release", release);

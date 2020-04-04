@@ -344,8 +344,8 @@ public class DataShowController {
      * @since
      */
     @PostMapping(path = "/tmplt/information")
-    public Response tmpltInformation(String id) {
-        Map<String, List> map = templateInformation.templateInformation(id);
+    public Response tmpltInformation(String id,String startTime) {
+        Map<String, List> map = templateInformation.templateInformation(id,startTime);
         return Response.success(map);
     }
 }

@@ -32,15 +32,14 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     private PotInformationRepository potInformationRepository;
 
     @Override
-    public Response getPotDetails(String potName, String states) {
+    public Response getPotDetails(String potName, String states,String startTime) {
         PotDetailResponse potDetailResponse = new PotDetailResponse();
         PotDetail potDetail = getPotDetail(potName, states);
         potDetailResponse.setPotDetail(potDetail);
         potDetailResponse.setPotNotes(getPotNote(potDetail.getId()));
-        potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getDomain()));
+        potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getDomain(),startTime));
         potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getDomain()));
         potDetailResponse.setAssociatedPots(getAssociatedPot(potDetail.getDomain()));
-//        System.err.println(potDetailResponse.getPotNote().toString());
         return Response.success(potDetailResponse);
     }
 
@@ -79,20 +78,23 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         return list;
     }
 
-    private Map<String,ReleaseAndCollectCount> getTemplateCountInfo(String potName) {
+    private Map<String,ReleaseAndCollectCount> getTemplateCountInfo(String potName,String time) {
         List<String> ids = rawdatasMapper.selectTemplateIdByName(potName);
         Map<String, ReleaseAndCollectCount> map = new HashMap<>();
-        Long startTime = DateUtils.getYesterTodayStartTime();
-        Long endTime = DateUtils.getYesterTodayEndTime();
+        Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
+        Long endTime = startTime + 86399L;
         if (ids != null && ids.size() != 0) {
             for (int i = 0; i < 15; i++) {
+                if (endTime > (System.currentTimeMillis() / 1000)) {
+                    break;
+                }
                 ReleaseAndCollectCount releaseAndCollectCount = new ReleaseAndCollectCount();
                 releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));
                 releaseAndCollectCount.setReleaseCount(qianlimaMapper.selectPhpcmsCountsByIds(ids, startTime, endTime));
                 releaseAndCollectCount.setDate(DateUtils.getFormatDateStrBitAdd(endTime,DateUtils.FUZSDF));
                 map.put(releaseAndCollectCount.getDate(), releaseAndCollectCount);
-                startTime -= 86400;
-                endTime -= 86400;
+                startTime += 86400;
+                endTime += 86400;
             }
 //            for (Map.Entry<String, ReleaseAndCollectCount> stringReleaseAndCollectCountEntry : map.entrySet()) {
 //                System.out.println(stringReleaseAndCollectCountEntry.getKey());

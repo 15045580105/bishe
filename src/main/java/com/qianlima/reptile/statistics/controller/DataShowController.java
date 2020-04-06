@@ -330,10 +330,9 @@ public class DataShowController {
 
 
     @PostMapping(path = "/pot/details")
-    public Response details(String potName,String states) {
-        return potDetailsService.getPotDetails(potName, states);
+    public Response details(String potName,String states,String startTime) {
+        return potDetailsService.getPotDetails(potName, states,startTime);
     }
-
 
     /**
      * @return a

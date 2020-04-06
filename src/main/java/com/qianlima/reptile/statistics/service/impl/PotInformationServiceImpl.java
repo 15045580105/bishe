@@ -166,7 +166,7 @@ public class PotInformationServiceImpl implements PotInformationService {
         Integer addIndex = index;
         List<PotInformationDto> pfDtoList = new ArrayList<>();
         for (PotInformation pf : potInformations){
-            PotInformationDto potInformationDto = new PotInformationDto();
+            PotInformationDto potInformationDto = new PotInformationDto(1);
             potInformationDto.setQueryDate(pf.getQueryDate());
             potInformationDto.setPot(pf.getPot());
             potInformationDto.setTemplateNumber(pf.getTemplateNumber());

@@ -18,6 +18,14 @@ import java.util.List;
 @Data
 public class PotInformationDto {
 
+
+    public PotInformationDto() {
+    }
+
+    public PotInformationDto(int colorStly) {
+        this.colorStly = colorStly;
+    }
+
     /**
      * 当页的数据index，为了前端能渲染 treeTable
      */
@@ -64,4 +72,6 @@ public class PotInformationDto {
      */
     private List<PotInformationDto> children;
 
+    // 要展示的颜色，默认0，如果是子级则是1
+    private int colorStly = 0;
 }

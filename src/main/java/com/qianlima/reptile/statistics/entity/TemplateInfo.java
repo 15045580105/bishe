@@ -32,7 +32,7 @@ public class TemplateInfo {
      */
     private String cat;
     /**
-     * 状态 -2=未配置；-1=删除；0=待审; 1=正常;
+     * 状态 -2=未配置；-1=删除；0=待审; 1=正常 2=异常;
      */
     private Integer state;
     /**

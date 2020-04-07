@@ -476,4 +476,36 @@ public class DateUtils {
         }
         return "";
     }
+    /**
+     * @Title getTodayStartTime
+     * @Description 获取今天开始时间
+     * @Author liuchanglin
+     * @Date 2020/4/7 5:30 下午
+     * @Param []
+     * @return java.lang.String
+     **/
+    public static String getTodayStartTime() {
+        LocalDate nowDate = LocalDate.now();
+        //设置零点
+        LocalDateTime beginTime = LocalDateTime.of(nowDate,LocalTime.MIN);
+
+        return beginTime.format(LTDTF);
+    }
+
+    /**
+     * @Title getTodayEndTime
+     * @Description 获取今天结束时间
+     * @Author liuchanglin
+     * @Date 2020/4/7 5:33 下午
+     * @Param []
+     * @return java.lang.String
+     **/
+    public static String getTodayEndTime() {
+        //获取当前日期
+        LocalDate nowDate = LocalDate.now();
+        LocalDateTime endTime = LocalDateTime.of(nowDate,LocalTime.MAX);
+        return LTDTF.format(endTime);
+
+    }
+
 }

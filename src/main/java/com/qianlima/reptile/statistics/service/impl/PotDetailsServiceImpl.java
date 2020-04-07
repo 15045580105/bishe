@@ -2,6 +2,7 @@ package com.qianlima.reptile.statistics.service.impl;
 
 import com.qianlima.reptile.statistics.domain.PotInformation;
 import com.qianlima.reptile.statistics.entity.*;
+import com.qianlima.reptile.statistics.mapper.ModmonitorMapper;
 import com.qianlima.reptile.statistics.mapper.QianlimaMapper;
 import com.qianlima.reptile.statistics.mapper.RawdatasMapper;
 import com.qianlima.reptile.statistics.repository.PotInformationRepository;
@@ -30,6 +31,8 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     private QianlimaMapper qianlimaMapper;
     @Autowired
     private PotInformationRepository potInformationRepository;
+    @Autowired
+    private ModmonitorMapper modmonitorMapper;
 
     @Override
     public Response getPotDetails(String potName, String states,String startTime) {
@@ -75,6 +78,7 @@ public class PotDetailsServiceImpl implements PotDetailsService {
 
     private List<TemplateInfo> getTemplateInfos(String potName) {
         List<TemplateInfo> list = rawdatasMapper.selectTemplateInfosByName(potName);
+        handleTemplateInfo(list);
         return list;
     }
 
@@ -96,12 +100,21 @@ public class PotDetailsServiceImpl implements PotDetailsService {
                 startTime += 86400;
                 endTime += 86400;
             }
-//            for (Map.Entry<String, ReleaseAndCollectCount> stringReleaseAndCollectCountEntry : map.entrySet()) {
-//                System.out.println(stringReleaseAndCollectCountEntry.getKey());
-//                System.out.println(stringReleaseAndCollectCountEntry.getValue().toString());
-//            }
-
         }
         return map;
+    }
+
+    private void handleTemplateInfo(List<TemplateInfo> list) {
+        String startTime = DateUtils.getTodayStartTime();
+        String endTime = DateUtils.getTodayEndTime();
+        for (TemplateInfo templateInfo : list) {
+            List<FaultTmpltDo> list1 = modmonitorMapper.selectFailTempltByTmplt(String.valueOf(templateInfo.getId()), startTime, endTime);
+            if (list1 == null || list1.size() == 0) {
+                continue;
+            } else {
+                //标记为异常模版
+                templateInfo.setState(2);
+            }
+        }
     }
 }

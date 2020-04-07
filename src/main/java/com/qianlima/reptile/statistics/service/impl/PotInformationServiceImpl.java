@@ -125,15 +125,14 @@ public class PotInformationServiceImpl implements PotInformationService {
      * @since
      */
     @Override
-    public List<Map<String, String>> selectBypage(String potName, long page, int count) {
+    public List<Map<String, String>> selectBypage(String sortField,String sequence,String potName, long page, int count) {
         long total = potInformationRepository.query();
-        List<PotInformation> list = potInformationRepository.queryByPage(potName, page, count);
+        List<PotInformation> list = potInformationRepository.queryByPage(sortField,sequence,potName, page, count);
         List<Map<String, String>> list1 = new ArrayList<>();
         int index = 0;
         for (int i = 0; i < list.size(); i++) {
             PotInformationDto potInformationDto = new PotInformationDto();
             Map<String, String> map1 = new HashMap<>();
-
             potInformationDto.setQueryDate(list.get(i).getQueryDate());
             potInformationDto.setPot(list.get(i).getPot());
             potInformationDto.setTemplateNumber(list.get(i).getTemplateNumber());

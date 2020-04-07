@@ -309,8 +309,8 @@ public class DataShowController {
      * @since
      */
     @PostMapping(path = "/pot/information")
-    public Response potInformation(String potName, long page, int count) {
-        List<Map<String, String>> list = potInformationService.selectBypage(potName, page, count);
+    public Response potInformation(String sortField,String sequence,String potName, long page, int count) {
+        List<Map<String, String>> list = potInformationService.selectBypage(sortField,sequence,potName, page, count);
         return Response.success(list);
     }
 

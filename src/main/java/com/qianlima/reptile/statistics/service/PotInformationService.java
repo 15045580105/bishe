@@ -15,7 +15,7 @@ public interface PotInformationService {
 
     void selectPotInformation();
 
-    List<Map<String, String>> selectBypage(String potName, long page, int count);
+    List<Map<String, String>> selectBypage(String sortField,String sequence,String potName, long page, int count);
 
     TmpltAndPotStatistics PotStatistics(String startTime, String endTime);
 

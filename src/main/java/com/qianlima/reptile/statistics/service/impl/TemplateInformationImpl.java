@@ -8,7 +8,9 @@ package com.qianlima.reptile.statistics.service.impl;
 
 import com.qianlima.reptile.statistics.entity.ConfigedItLogDo;
 import com.qianlima.reptile.statistics.entity.CrawlconfigDo;
+import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
 import com.qianlima.reptile.statistics.entity.NoteDo;
+import com.qianlima.reptile.statistics.mapper.ModmonitorMapper;
 import com.qianlima.reptile.statistics.mapper.QianlimaMapper;
 import com.qianlima.reptile.statistics.mapper.RawdataMapper;
 import com.qianlima.reptile.statistics.service.TemplateInformation;
@@ -31,6 +33,8 @@ public class TemplateInformationImpl implements TemplateInformation {
     private QianlimaMapper qianlimaMapper;
     @Autowired
     private RawdataMapper rawdataMapper;
+    @Autowired
+    private ModmonitorMapper modmonitorMapper;
 
     @Override
     public Map<String, List> templateInformation(String templt,String startTime) {
@@ -58,6 +62,10 @@ public class TemplateInformationImpl implements TemplateInformation {
             listData.add(map2);
         }
         CrawlconfigDo crawlconfigDo = rawdataMapper.selectCrawConfigByid(templt);
+        List<FaultTmpltDo> list1 = modmonitorMapper.selectFailTempltByTmplt(templt,today + DateUtils.dateStartStr, today + DateUtils.dateEndStr);
+        if(list1.size() != 0){
+            crawlconfigDo.setState("2");
+        }
         String pageNumStr = "";
         try {
             Pattern pattern = Pattern.compile("PARA_CLASS(.*)\\n");

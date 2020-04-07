@@ -44,7 +44,7 @@ public class PotInformationRepository {
      * @param
      * @return
      */
-    public List<PotInformation> queryByPage(String potName, long page, int count) {
+    public List<PotInformation> queryByPage(String sortField,String sequence,String potName, long page, int count) {
         Criteria criteria = new Criteria();
         if (StringUtils.isNotBlank(potName)) {
             criteria = Criteria.where("pot").is(potName);
@@ -54,7 +54,11 @@ public class PotInformationRepository {
         fieldsObject.put("id", false);
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
         query.skip(page * count).limit(count);
-        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
+        if(sequence.equals("desc")){
+            query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, sortField)}));
+        }else{
+            query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.ASC, sortField)}));
+        }
         return mongoTemplate.find(query, PotInformation.class);
     }
 

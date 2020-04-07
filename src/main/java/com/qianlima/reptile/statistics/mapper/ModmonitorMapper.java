@@ -2,9 +2,7 @@ package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
-import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -184,7 +182,16 @@ public interface ModmonitorMapper {
      * @param endTime
      * @return
      */
-    @Select("select DISTINCT(tmplt) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime}")
+    @Select("select DISTINCT(tmplt) from fail_tmplt  where type = 1 and valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime}")
     List<FaultTmpltDo> selectFailTemplt(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    /**
+     * 查询故障模板
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Select("select DISTINCT(tmplt) from fail_tmplt  where type = 1 and valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime} and tmplt = #{tmplt}")
+    FaultTmpltDo selectFailTempltByTmplt(@Param("tmplt") String tmplt,@Param("startTime") String startTime, @Param("endTime") String endTime);
 
 }

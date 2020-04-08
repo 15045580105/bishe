@@ -87,20 +87,20 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         Map<String, ReleaseAndCollectCount> map = new HashMap<>();
         Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
         Long endTime = startTime + 86399L;
-        if (ids != null && ids.size() != 0) {
             for (int i = 0; i < 15; i++) {
                 if (endTime > (System.currentTimeMillis() / 1000)) {
                     break;
                 }
                 ReleaseAndCollectCount releaseAndCollectCount = new ReleaseAndCollectCount();
-                releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));
-                releaseAndCollectCount.setReleaseCount(qianlimaMapper.selectPhpcmsCountsByIds(ids, startTime, endTime));
-                releaseAndCollectCount.setDate(DateUtils.getFormatDateStrBitAdd(endTime,DateUtils.FUZSDF));
-                map.put(releaseAndCollectCount.getDate(), releaseAndCollectCount);
+                if (ids != null && ids.size() != 0) {
+                    releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));
+                    releaseAndCollectCount.setReleaseCount(qianlimaMapper.selectPhpcmsCountsByIds(ids, startTime, endTime));
+                    releaseAndCollectCount.setDate(DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
+                }
+                map.put(DateUtils.getFormatDateStrBitAdd(startTime,DateUtils.FUZSDF), releaseAndCollectCount);
                 startTime += 86400;
                 endTime += 86400;
             }
-        }
         return map;
     }
 

@@ -12,6 +12,6 @@ import lombok.Data;
 @Data
 public class ReleaseAndCollectCount {
     private String date;
-    private Integer releaseCount;
-    private Integer collectCount;
+    private Integer releaseCount = 0;
+    private Integer collectCount = 0;
 }

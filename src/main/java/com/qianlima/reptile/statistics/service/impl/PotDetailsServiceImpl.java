@@ -12,10 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author liuchanglin
@@ -94,7 +91,7 @@ public class PotDetailsServiceImpl implements PotDetailsService {
 
     private Map<String,ReleaseAndCollectCount> getTemplateCountInfo(String potName,String time) {
         List<String> ids = modmonitorMapper.selectTemplateIdByName(potName);
-        Map<String, ReleaseAndCollectCount> map = new HashMap<>();
+        Map<String, ReleaseAndCollectCount> map = getTreeMap();
         Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
         Long endTime = startTime + 86399L;
             for (int i = 0; i < 15; i++) {
@@ -110,6 +107,19 @@ public class PotDetailsServiceImpl implements PotDetailsService {
             }
         return map;
     }
+    private Map<String, ReleaseAndCollectCount> getTreeMap() {
+        Map<String, ReleaseAndCollectCount> map = new TreeMap<String, ReleaseAndCollectCount>(
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String firstDate, String secondDate) {
+                        // 降序排序
+                        Integer compare = Integer.parseInt(firstDate.replaceAll("-", "")) - Integer.parseInt(secondDate.replaceAll("-", ""));
+                        return compare;
+                    }
+                });
+        return map;
+    }
+
 
     private void handleTemplateInfo(List<TemplateInfo> list) {
         String startTime = DateUtils.getTodayStartTime();

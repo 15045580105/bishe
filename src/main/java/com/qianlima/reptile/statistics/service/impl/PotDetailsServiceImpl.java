@@ -47,7 +47,7 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         potDetailResponse.setPotDetail(potDetail);
         potDetailResponse.setPotNotes(getPotNote(potDetail.getId()));
         potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getDomain(),startTime));
-        potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getDomain(),page,size));
+        potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getDomain(),page*size,size));
         potDetailResponse.setAssociatedPots(getAssociatedPot(potDetail.getDomain()));
         potDetailResponse.setTemplateInfosTotal(modmonitorMapper.selectTemplateInfosCountByName(potName));
         return Response.success(potDetailResponse);

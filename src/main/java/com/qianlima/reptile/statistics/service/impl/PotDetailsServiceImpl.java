@@ -36,6 +36,12 @@ public class PotDetailsServiceImpl implements PotDetailsService {
 
     @Override
     public Response getPotDetails(String potName, String states,String startTime,Integer page,Integer size) {
+        if (page == null) {
+            page = 0;
+        }
+        if (size == null) {
+            size = 10;
+        }
         PotDetailResponse potDetailResponse = new PotDetailResponse();
         PotDetail potDetail = getPotDetail(potName, states);
         potDetailResponse.setPotDetail(potDetail);

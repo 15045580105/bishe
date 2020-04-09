@@ -467,7 +467,7 @@ public class DateUtils {
         Calendar calc = Calendar.getInstance();
         try {
             calc.setTime(sdf.parse(maxDateStr));
-            calc.add(calc.DATE, -15);
+            calc.add(calc.DATE, -7);
             Date minDate = calc.getTime();
             minDateStr = sdf.format(minDate);
             return (minDateStr);

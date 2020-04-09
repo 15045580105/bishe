@@ -336,6 +336,9 @@ public class PotInformationServiceImpl implements PotInformationService {
      */
     private void save(String queryDate, String potName, long templtNum, String state, long collect30, long releas30, String inTime, String upTime) {
         PotInformation potInformation = potInformationRepository.queryByName(potName);
+        if (potInformation == null){
+            potInformation = new PotInformation();
+        }
         potInformation.setQueryDate(queryDate);
         potInformation.setPot(potName);
         potInformation.setTemplateNumber(templtNum);

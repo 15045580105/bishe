@@ -2,6 +2,9 @@ package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
+import com.qianlima.reptile.statistics.entity.PotDetail;
+import com.qianlima.reptile.statistics.entity.PotNote;
+import com.qianlima.reptile.statistics.entity.TemplateInfo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -193,5 +196,18 @@ public interface ModmonitorMapper {
      */
     @Select("select DISTINCT(tmplt) from fail_tmplt  where type = 1 and valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime} and tmplt = #{tmplt}")
     List<FaultTmpltDo> selectFailTempltByTmplt(@Param("tmplt") String tmplt,@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+
+    @Select("SELECT ap.id,ap.name as name,ap.domain,pa.name as area, ap.creater ,ap.intime from rawdatas.ae_pot ap LEFT JOIN rawdatas.phpcms_area pa on ap.area = pa.areaid where ap.domain = #{domain}")
+    PotDetail selectPotDetailByPotName(String domain);
+
+    @Select("select * from rawdatas.ccbeizhu where cid = #{id}")
+    List<PotNote> selectPotNoteByPotId(Integer id);
+
+    @Select("SELECT id, potName, isxm, cat, state , createtime, updateTime, collect_strategy FROM rawdatas.crawlconfig WHERE potName = #{potName}")
+    List<TemplateInfo> selectTemplateInfosByName(String potName);
+
+    @Select("SELECT id FROM rawdatas.crawlconfig WHERE potName = #{potName}")
+    List<String> selectTemplateIdByName(String potName);
 
 }

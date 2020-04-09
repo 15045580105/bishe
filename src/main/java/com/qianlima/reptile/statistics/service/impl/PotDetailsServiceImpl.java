@@ -48,7 +48,10 @@ public class PotDetailsServiceImpl implements PotDetailsService {
 
 
     private PotDetail getPotDetail(String potName, String states) {
-        PotDetail potDetail = rawdatasMapper.selectPotDetailByPotName(potName);
+        PotDetail potDetail = modmonitorMapper.selectPotDetailByPotName(potName);
+        if (potDetail == null){
+            return new PotDetail();
+        }
         potDetail.setStates(states);
         return potDetail;
     }
@@ -69,7 +72,7 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     }
 
     private List<PotNote> getPotNote(Integer potId) {
-        List<PotNote> potNotes = rawdatasMapper.selectPotNoteByPotId(potId);
+        List<PotNote> potNotes = modmonitorMapper.selectPotNoteByPotId(potId);
         if (potNotes == null || potNotes.size() == 0) {
             return null;
         }
@@ -77,13 +80,13 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     }
 
     private List<TemplateInfo> getTemplateInfos(String potName) {
-        List<TemplateInfo> list = rawdatasMapper.selectTemplateInfosByName(potName);
+        List<TemplateInfo> list = modmonitorMapper.selectTemplateInfosByName(potName);
         handleTemplateInfo(list);
         return list;
     }
 
     private Map<String,ReleaseAndCollectCount> getTemplateCountInfo(String potName,String time) {
-        List<String> ids = rawdatasMapper.selectTemplateIdByName(potName);
+        List<String> ids = modmonitorMapper.selectTemplateIdByName(potName);
         Map<String, ReleaseAndCollectCount> map = new HashMap<>();
         Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
         Long endTime = startTime + 86399L;

@@ -35,14 +35,15 @@ public class PotDetailsServiceImpl implements PotDetailsService {
     private ModmonitorMapper modmonitorMapper;
 
     @Override
-    public Response getPotDetails(String potName, String states,String startTime) {
+    public Response getPotDetails(String potName, String states,String startTime,Integer page,Integer size) {
         PotDetailResponse potDetailResponse = new PotDetailResponse();
         PotDetail potDetail = getPotDetail(potName, states);
         potDetailResponse.setPotDetail(potDetail);
         potDetailResponse.setPotNotes(getPotNote(potDetail.getId()));
         potDetailResponse.setReleaseAndCollectCountMap(getTemplateCountInfo(potDetail.getDomain(),startTime));
-        potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getDomain()));
+        potDetailResponse.setTemplateInfos(getTemplateInfos(potDetail.getDomain(),page,size));
         potDetailResponse.setAssociatedPots(getAssociatedPot(potDetail.getDomain()));
+        potDetailResponse.setTemplateInfosTotal(modmonitorMapper.selectTemplateInfosCountByName(potName));
         return Response.success(potDetailResponse);
     }
 
@@ -79,8 +80,8 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         return potNotes;
     }
 
-    private List<TemplateInfo> getTemplateInfos(String potName) {
-        List<TemplateInfo> list = modmonitorMapper.selectTemplateInfosByName(potName);
+    private List<TemplateInfo> getTemplateInfos(String potName,Integer page,Integer size) {
+        List<TemplateInfo> list = modmonitorMapper.selectTemplateInfosByName(potName,page,size);
         handleTemplateInfo(list);
         return list;
     }
@@ -91,9 +92,6 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
         Long endTime = startTime + 86399L;
             for (int i = 0; i < 15; i++) {
-                if (endTime > (System.currentTimeMillis() / 1000)) {
-                    break;
-                }
                 ReleaseAndCollectCount releaseAndCollectCount = new ReleaseAndCollectCount();
                 if (ids != null && ids.size() != 0) {
                     releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));
@@ -101,8 +99,8 @@ public class PotDetailsServiceImpl implements PotDetailsService {
                     releaseAndCollectCount.setDate(DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
                 }
                 map.put(DateUtils.getFormatDateStrBitAdd(startTime,DateUtils.FUZSDF), releaseAndCollectCount);
-                startTime += 86400;
-                endTime += 86400;
+                startTime -= 86400;
+                endTime -= 86400;
             }
         return map;
     }

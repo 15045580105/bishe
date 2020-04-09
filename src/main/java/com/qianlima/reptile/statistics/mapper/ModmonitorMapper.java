@@ -204,10 +204,14 @@ public interface ModmonitorMapper {
     @Select("select * from rawdatas.ccbeizhu where cid = #{id}")
     List<PotNote> selectPotNoteByPotId(Integer id);
 
-    @Select("SELECT id, potName, isxm, cat, state , createtime, updateTime, collect_strategy FROM rawdatas.crawlconfig WHERE potName = #{potName}")
-    List<TemplateInfo> selectTemplateInfosByName(String potName);
+    @Select("SELECT id, potName, isxm, cat, state , createtime, updateTime, collect_strategy FROM rawdatas.crawlconfig WHERE potName = #{potName} limit #{page},#{size}")
+    List<TemplateInfo> selectTemplateInfosByName(@Param("potName") String potName, @Param("page") Integer page, @Param("size") Integer size);
 
     @Select("SELECT id FROM rawdatas.crawlconfig WHERE potName = #{potName}")
     List<String> selectTemplateIdByName(String potName);
+
+
+    @Select("SELECT count(1) FROM rawdatas.crawlconfig WHERE potName = #{potName}")
+    Integer selectTemplateInfosCountByName(String potName);
 
 }

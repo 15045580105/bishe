@@ -12,7 +12,7 @@
     <artifactId>qianlima-reptile-statistics-service</artifactId>
     <packaging>jar</packaging>
 
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>qianlima-reptile-statistics-service</name>
     <description>Demo project for Spring Boot</description>
 

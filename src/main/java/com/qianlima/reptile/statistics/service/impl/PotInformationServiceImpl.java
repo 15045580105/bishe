@@ -96,7 +96,6 @@ public class PotInformationServiceImpl implements PotInformationService {
             long collect30 = 0;
             long releas30 = 0;
             String state = "";
-            String ip = "";
             try {
                 tempList = potTempMap.get(potName);
                 for (int i = 0; i < tempList.size(); i++) {
@@ -117,11 +116,11 @@ public class PotInformationServiceImpl implements PotInformationService {
 //                if (StringUtils.isNotBlank(ia2.getHostAddress()) && StringUtils.isNotBlank(potName)) {
 //                    ip = ia2.getHostAddress();
 //                }
-                save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
+                save(reportStartTime, potName, tempList.size(), state, collect30, releas30, mapInTime.get(potName), mapUpTime.get(potName));
                 logger.info(" 插入pot为 {} 的第 {} 数据", potName, s);
                 s++;
             } catch (Exception e) {
-                save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
+                save(reportStartTime, potName, tempList.size(), state, collect30, releas30, mapInTime.get(potName), mapUpTime.get(potName));
                 logger.info(" 插入pot为 {} 的第 {} 数据", potName, s);
                 s++;
             }
@@ -335,8 +334,8 @@ public class PotInformationServiceImpl implements PotInformationService {
      * @parameter * @param null
      * @since
      */
-    private void save(String queryDate, String potName, long templtNum, String state, long collect30, long releas30, String ip, String inTime, String upTime) {
-        PotInformation potInformation = new PotInformation();
+    private void save(String queryDate, String potName, long templtNum, String state, long collect30, long releas30, String inTime, String upTime) {
+        PotInformation potInformation = potInformationRepository.queryByName(potName);
         potInformation.setQueryDate(queryDate);
         potInformation.setPot(potName);
         potInformation.setTemplateNumber(templtNum);
@@ -345,7 +344,6 @@ public class PotInformationServiceImpl implements PotInformationService {
         potInformation.setReleaseNumber(releas30);
         potInformation.setCreateTime(inTime);
         potInformation.setUpdateTime(upTime);
-        potInformation.setRepeatPot(ip);
         potInformationRepository.save(potInformation);
     }
 

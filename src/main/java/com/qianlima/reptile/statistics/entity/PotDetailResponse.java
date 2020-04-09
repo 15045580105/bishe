@@ -17,5 +17,6 @@ public class PotDetailResponse {
     private List<PotNote> potNotes;
     private Map<String, ReleaseAndCollectCount> releaseAndCollectCountMap;
     private List<TemplateInfo> templateInfos;
+    private Integer templateInfosTotal;
     private List<String> associatedPots;
 }

@@ -94,7 +94,7 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         Map<String, ReleaseAndCollectCount> map = getTreeMap();
         Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
         Long endTime = startTime + 86399L;
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i < 7; i++) {
                 ReleaseAndCollectCount releaseAndCollectCount = new ReleaseAndCollectCount();
                 if (ids != null && ids.size() != 0) {
                     releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));

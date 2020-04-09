@@ -39,18 +39,15 @@ public class TemplateInformationImpl implements TemplateInformation {
     @Override
     public Map<String, List> templateInformation(String templt,String startTime) {
         String today = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
-        String reportStartTime = DateUtils.getLastDay(today);
-        String end = DateUtils.monthHelfLate(startTime);
+        String end = startTime;
+        String reportStartTime = DateUtils.monthHelfEarly(startTime);
         List<String> list = new ArrayList<>();
-        if(DateUtils.compareDateByDay(end,reportStartTime) == 1){
-            list = DateUtils.getDates(startTime, reportStartTime);
-        }
-        list = DateUtils.getDates(startTime, end);
+        list = DateUtils.getDates(reportStartTime, end);
         Map<String, List> map = new HashMap<>();
         List<Map<String, String>> listData = new ArrayList<>();
         List<CrawlconfigDo> listCrawlconfig = new ArrayList<>();
         List<Map<String, String>> listCollectClass = new ArrayList<>();
-        for (int i = 1; i < list.size(); i++) {
+        for (int i = 0; i < list.size()-1; i++) {
             Map<String, String> map2 = new TreeMap<>();
             String startTime1 = DateUtil.date3TimeStamp((list.get(i) + DateUtils.dateStartStr));
             String endTime = DateUtil.date3TimeStamp((list.get(i) + DateUtils.dateEndStr));

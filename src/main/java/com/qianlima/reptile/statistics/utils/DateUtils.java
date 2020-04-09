@@ -460,6 +460,23 @@ public class DateUtils {
         return "";
     }
 
+    public static String monthHelfEarly(String data) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String maxDateStr = data;
+        String minDateStr = "";
+        Calendar calc = Calendar.getInstance();
+        try {
+            calc.setTime(sdf.parse(maxDateStr));
+            calc.add(calc.DATE, -15);
+            Date minDate = calc.getTime();
+            minDateStr = sdf.format(minDate);
+            return (minDateStr);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        return "";
+    }
+
     public static String monthHelfLate(String data) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String maxDateStr = data;

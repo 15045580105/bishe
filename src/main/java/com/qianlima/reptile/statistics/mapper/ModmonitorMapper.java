@@ -172,9 +172,8 @@ public interface ModmonitorMapper {
      * @param endTime
      * @return
      */
-    @Select("select count(1) from fail_tmplt  where valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
+    @Select("select count(1) from fail_tmplt  where type = 1 and valid_state <> 200 and update_time >=#{startTime} and update_time <#{endTime}")
     long selectFailTempltCount(@Param("startTime") String startTime, @Param("endTime") String endTime);
-
 
     /**
      * 查询故障模板 ，去重

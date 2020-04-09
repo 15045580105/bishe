@@ -1,6 +1,6 @@
 package com.qianlima.reptile.statistics.job;
 /**
- * @Author : gyx
+ * @Author : mahao
  * @Description :
  * @Date : Created in 16:48 2020-04-01
  * @Modified By :
@@ -16,29 +16,29 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @author gyx
- * @date 2020-04-01 16:48
+ * @author mahao
+ * @date 2020-04-09 16:48
  */
-@JobHander(value = "potInformationJobHandler")
+@JobHander(value = "savePotIdJob")
 @Component
-public class PotInformationJob {
+public class SavePotIdJob {
 
-    private static final Logger logger = LoggerFactory.getLogger(PotInformationJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(SavePotIdJob.class);
 
     @Resource
     private PotInformationService potInformationService;
 
 
     public ReturnT<String> execute() {
-        logger.info("potInformationJobHandler excute.");
+        logger.info("SavePotIdJob excute.");
         try {
             long start = System.currentTimeMillis();
-            potInformationService.savePotInformation();
+            potInformationService.savePotIp();
             logger.info("handle use time in ={}", System.currentTimeMillis() - start);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error(e.getStackTrace().toString());
+            logger.error("SavePotIdJob has error={}",e);
             return ReturnT.FAIL;
         }
     }

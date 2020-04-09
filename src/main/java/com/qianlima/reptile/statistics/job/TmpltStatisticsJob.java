@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 @Component
 @JobHander(value = "tmpltStatisticsJobHandler")
 public class TmpltStatisticsJob extends IJobHandler {
-    private static final Logger logger = LoggerFactory.getLogger(InitPublishCountStatisticsJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(TmpltStatisticsJob.class);
 
     @Resource
     private StatisticalService statisticalService;

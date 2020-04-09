@@ -29,6 +29,10 @@ import org.springframework.stereotype.Service;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +55,7 @@ public class PotInformationServiceImpl implements PotInformationService {
     private PotAndTmpltRepository potAndTmpltRepository;
 
     @Override
-    public void selectPotInformation() {
+    public void savePotInformation() {
         String today = DateUtil.getDateTime(DateUtil.getDatePattern(), new Date());
         String reportStartTime = DateUtils.getLastDay(today);
         String monthEarly = DateUtils.monthEarly(reportStartTime);
@@ -67,12 +71,16 @@ public class PotInformationServiceImpl implements PotInformationService {
         Map<String, String> mapInTime = convertMapIntime(potList);
         Map<String, String> mapUpTime = convertMapUptime(potList);
         HashMap<String, List<String>> potTempMap = new HashMap<>(100000);
+        // 12秒
         List<PhpcmsContentDo> list1 = qianlimaMapper.selectPhpcmsCounts(DateUtil.date4TimeStamp(monthEarly), DateUtil.date4TimeStamp(reportStartTime));
+        //60秒
         List<PhpcmsContentDo> list2 = qianlimaMapper.selectBiddingRaw(DateUtil.date4TimeStamp(monthEarly), DateUtil.date4TimeStamp(reportStartTime));
         Map<String, String> mapCollect30 = convertToCollect30(list2);
         Map<String, String> mapReleas30 = convertToCollect30(list1);
         for (PotDo potDo : potList) {
-            potTempMap.put(potDo.getPotName(), new ArrayList<>());
+            if (StringUtils.isNotBlank(potDo.getPotName())) {
+                potTempMap.put(potDo.getPotName(), new ArrayList<>());
+            }
         }
         // 将pot 与模板的关联关系保存到 potTempMap 中
         for (TempltDo t : templtList) {
@@ -80,40 +88,100 @@ public class PotInformationServiceImpl implements PotInformationService {
                 potTempMap.get(t.getPotName()).add(t.getIds());
             }
         }
+        int s = 1;
         //循环pot获取每个pot信息存储
         for (String potName : potTempMap.keySet()) {
-            int s = 1;
-            List<String> tempList = new ArrayList<>();
+
+            List<String> tempList = null;
             long collect30 = 0;
             long releas30 = 0;
             String state = "";
             String ip = "";
             try {
                 tempList = potTempMap.get(potName);
-                for (int i = 0; i <tempList.size() ; i++) {
-                    if(StringUtils.isNotBlank(mapCollect30.get(tempList.get(i)))){
-                        collect30 = collect30 + Long.parseLong(mapCollect30.get(tempList.get(i)));
-                    }
-                    if(StringUtils.isNotBlank(mapReleas30.get(tempList.get(i)))){
-                        releas30 = releas30 + Long.parseLong(mapReleas30.get(tempList.get(i)));
+                for (int i = 0; i < tempList.size(); i++) {
+                    try {
+                        if (StringUtils.isNotBlank(mapCollect30.get(tempList.get(i)))) {
+                            collect30 = collect30 + Long.parseLong(mapCollect30.get(tempList.get(i)));
+                        }
+                        if (StringUtils.isNotBlank(mapReleas30.get(tempList.get(i)))) {
+                            releas30 = releas30 + Long.parseLong(mapReleas30.get(tempList.get(i)));
+                        }
+                    } catch (Exception e) {
+                        logger.error("math collect30 OR releas30 has error e={}", e);
+                        e.printStackTrace();
                     }
                 }
                 state = judgeSxtate(tempList, abnormalTempMap, mapTmplt);
-                InetAddress ia2 = InetAddress.getByName(potName);
-                if (StringUtils.isNotBlank(ia2.getHostAddress())) {
-                    ip = ia2.getHostAddress();
-                }
+//                InetAddress ia2 = InetAddress.getByName(potName);
+//                if (StringUtils.isNotBlank(ia2.getHostAddress()) && StringUtils.isNotBlank(potName)) {
+//                    ip = ia2.getHostAddress();
+//                }
                 save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
-                logger.info(" 插入pot为 {} 的第 {} 数据", potName,s);
+                logger.info(" 插入pot为 {} 的第 {} 数据", potName, s);
                 s++;
-            } catch (UnknownHostException e) {
+            } catch (Exception e) {
                 save(reportStartTime, potName, tempList.size(), state, collect30, releas30, ip, mapInTime.get(potName), mapUpTime.get(potName));
-                logger.info(" 插入pot为 {} 的第 {} 数据", potName,s);
+                logger.info(" 插入pot为 {} 的第 {} 数据", potName, s);
                 s++;
             }
         }
+    }
 
+    public static ExecutorService newFixedThreadPool(int nThreads) {
+        return new ThreadPoolExecutor(nThreads, nThreads,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>());
+    }
 
+    @Override
+    public void savePotIp() {
+        List<PotInformation> potInformations = potInformationRepository.queryAll();
+        if (potInformations!=null && potInformations.size() > 0){
+            int potSize = potInformations.size();
+            int size =  ( potSize/ 4) + 1;
+            ExecutorService executorService = newFixedThreadPool(4);
+            for (int i = 0; i < 4; i++) {
+                int endSize = size * (i + 1) > potSize ? potSize : size * (i + 1);
+                executorService.execute( new handPotIp(potInformations.subList(i * size, endSize),potInformationRepository));
+            }
+        } else {
+            logger.info("potInformations IS NULL");
+        }
+    }
+
+    private class handPotIp implements Runnable {
+        private List<PotInformation> potInformations;
+        private PotInformationRepository potInformationRepository;
+
+        public handPotIp(List<PotInformation> potInformations, PotInformationRepository potInformationRepository) {
+            this.potInformations = potInformations;
+            this.potInformationRepository = potInformationRepository;
+        }
+
+        @Override
+        public void run() {
+            for (PotInformation pot : potInformations) {
+                try {
+                    System.out.println("处理线程为："+Thread.currentThread().getName());
+                    String potName = pot.getPot();
+                    String ip = "";
+                    InetAddress ia2 = null;
+                    try {
+                        ia2 = InetAddress.getByName(potName);
+                    } catch (UnknownHostException e) {
+                        logger.info("InetAddress not exist potName = {},threadName={}{}",potName,Thread.currentThread().getName());
+                    }
+                    if (ia2 != null && StringUtils.isNotBlank(ia2.getHostAddress()) && StringUtils.isNotBlank(potName)) {
+                        ip = ia2.getHostAddress();
+                    }
+                    pot.setRepeatPot(ip);
+                    potInformationRepository.save(pot);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
@@ -125,9 +193,9 @@ public class PotInformationServiceImpl implements PotInformationService {
      * @since
      */
     @Override
-    public List<Map<String, String>> selectBypage(String sortField,String sequence,String potName, long page, int count) {
+    public List<Map<String, String>> selectBypage(String sortField, String sequence, String potName, long page, int count) {
         long total = potInformationRepository.query();
-        List<PotInformation> list = potInformationRepository.queryByPage(sortField,sequence,potName, page, count);
+        List<PotInformation> list = potInformationRepository.queryByPage(sortField, sequence, potName, page, count);
         List<Map<String, String>> list1 = new ArrayList<>();
         int index = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -142,15 +210,15 @@ public class PotInformationServiceImpl implements PotInformationService {
             potInformationDto.setCreateTime(list.get(i).getCreateTime());
             potInformationDto.setUpdateTime(list.get(i).getUpdateTime());
             List<PotInformation> listRepeat = null;
-            if (StringUtils.isNotBlank(list.get(i).getRepeatPot())){
-                listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot(),list.get(i).getPot());
+            if (StringUtils.isNotBlank(list.get(i).getRepeatPot())) {
+                listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot(), list.get(i).getPot());
             }
             if (listRepeat != null && listRepeat.size() > 0) {
                 potInformationDto.setRepeatPotCount(listRepeat.size() + "");
-                potInformationDto.setChildren(convertToDto(index,listRepeat));
+                potInformationDto.setChildren(convertToDto(index, listRepeat));
                 index += listRepeat.size();
             } else {
-                potInformationDto.setRepeatPotCount( 0 + "");
+                potInformationDto.setRepeatPotCount(0 + "");
             }
             potInformationDto.setIndex(++index);
             String json = JSON.toJSONString(potInformationDto);
@@ -161,10 +229,10 @@ public class PotInformationServiceImpl implements PotInformationService {
         return list1;
     }
 
-    private List<PotInformationDto> convertToDto(Integer index,List<PotInformation> potInformations){
+    private List<PotInformationDto> convertToDto(Integer index, List<PotInformation> potInformations) {
         Integer addIndex = index;
         List<PotInformationDto> pfDtoList = new ArrayList<>();
-        for (PotInformation pf : potInformations){
+        for (PotInformation pf : potInformations) {
             PotInformationDto potInformationDto = new PotInformationDto(1);
             potInformationDto.setQueryDate(pf.getQueryDate());
             potInformationDto.setPot(pf.getPot());

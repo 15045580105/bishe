@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 @Component
 @JobHander(value = "PotAndTmpltStatisticsjobHandler")
 public class PotAndTmpltStatisticsjob extends IJobHandler {
-    private static final Logger logger = LoggerFactory.getLogger(InitPublishCountStatisticsJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(PotAndTmpltStatisticsjob.class);
 
     @Resource
     private TemplateAndPotStatistical templateAndPotStatistical;

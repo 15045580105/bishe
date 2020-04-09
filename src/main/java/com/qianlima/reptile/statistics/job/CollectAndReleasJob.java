@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 @JobHander(value = "collectAndReleasJobHandler")
 public class CollectAndReleasJob extends IJobHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitPublishCountStatisticsJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(CollectAndReleasJob.class);
 
     @Resource
     private CollectAndReleaseService collectAndReleaseService;

@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 @Component
 @JobHander(value = "OctopusQueryJobHandler")
 public class OctopusQueryJob extends IJobHandler {
-    private static final Logger logger = LoggerFactory.getLogger(InitPublishCountStatisticsJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(OctopusQueryJob.class);
 
     @Resource
     private OctopusMonitorServiceImpl octopusMonitorService;

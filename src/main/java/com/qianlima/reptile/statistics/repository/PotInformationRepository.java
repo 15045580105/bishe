@@ -73,6 +73,10 @@ public class PotInformationRepository {
     }
 
 
+    public List<PotInformation> queryAll() {
+        return mongoTemplate.findAll(PotInformation.class);
+    }
+
     public List<PotInformation> queryByIp(String ip,String potName) {
         Criteria criteria = Criteria.where("repeatPot").is(ip);
         criteria.and("pot").ne(potName);

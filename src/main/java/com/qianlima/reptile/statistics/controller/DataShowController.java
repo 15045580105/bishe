@@ -347,4 +347,26 @@ public class DataShowController {
         Map<String, List> map = templateInformation.templateInformation(id,startTime);
         return Response.success(map);
     }
+
+    /**
+     *  POT 初始化接口
+     * @param id
+     * @return
+     */
+    @GetMapping(path = "/pot/init")
+    public Response initPot(String id) {
+        potInformationService.savePotInformation();
+        return Response.success("0");
+    }
+
+    /**
+     *  POT ip 跑数据接口
+     * @param id
+     * @return
+     */
+    @GetMapping(path = "/pot/sava/ip")
+    public Response saveIp(String id) {
+        potInformationService.savePotIp();
+        return Response.success("0");
+    }
 }

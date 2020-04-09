@@ -25,7 +25,7 @@ import java.util.List;
 @Component
 @JobHander(value = "TraceStatisticQueryJobHandler")
 public class TraceStatisticQueryJob extends IJobHandler {
-    private static final Logger logger = LoggerFactory.getLogger(InitPublishCountStatisticsJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(TraceStatisticQueryJob.class);
 
     @Autowired
     private TraceStatisticService traceStatisticService;

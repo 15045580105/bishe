@@ -13,10 +13,11 @@ import java.util.Map;
  */
 public interface PotInformationService {
 
-    void selectPotInformation();
+    void savePotInformation();
 
     List<Map<String, String>> selectBypage(String sortField,String sequence,String potName, long page, int count);
 
     TmpltAndPotStatistics PotStatistics(String startTime, String endTime);
 
+    void savePotIp();
 }

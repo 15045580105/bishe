@@ -432,6 +432,9 @@ public class DateUtils {
     }
 
     public static Long str2TimeStamp(String time, SimpleDateFormat format) {
+        if (time == null) {
+            return null;
+        }
         Date date = null;
         try {
             date = format.parse(time);

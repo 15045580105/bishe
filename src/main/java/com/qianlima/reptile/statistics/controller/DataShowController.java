@@ -3,6 +3,7 @@ package com.qianlima.reptile.statistics.controller;
 
 import com.qianlima.reptile.statistics.domain.TmpltAndPotStatistics;
 import com.qianlima.reptile.statistics.entity.KeyWordDataDetailReq;
+import com.qianlima.reptile.statistics.entity.PotManageTmplReq;
 import com.qianlima.reptile.statistics.entity.Response;
 import com.qianlima.reptile.statistics.entity.SecondKeyWordReq;
 import com.qianlima.reptile.statistics.service.*;
@@ -56,6 +57,8 @@ public class DataShowController {
     private PotDetailsService potDetailsService;
     @Autowired
     private TemplateInformation templateInformation;
+    @Autowired
+    private PotManageService potManageService;
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -368,5 +371,15 @@ public class DataShowController {
     public Response saveIp(String id) {
         potInformationService.savePotIp();
         return Response.success("0");
+    }
+
+    /**
+     * pot管理模版表
+     * @param potManageTmplReq
+     * @return
+     */
+    @GetMapping(path = "/pot/manage/tmpl")
+    public Response getManageTmplInfos(PotManageTmplReq potManageTmplReq) {
+        return potManageService.getPotMangeTmplInfos(potManageTmplReq);
     }
 }

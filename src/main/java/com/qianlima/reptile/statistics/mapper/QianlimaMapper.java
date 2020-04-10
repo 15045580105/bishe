@@ -151,4 +151,6 @@ public interface QianlimaMapper extends BaseMapper<Map> {
      */
     @Select("select count(1) from phpcms_content where updatetime >= #{startTime} and updatetime <= #{endTime}  and status = 99 and tmplt = #{id}")
     Integer selectPhpcmsById(@Param("startTime") long startTime, @Param("endTime") long endTime,@Param("id") String id);
+
+
 }

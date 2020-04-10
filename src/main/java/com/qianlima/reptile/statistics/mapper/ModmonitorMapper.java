@@ -1,10 +1,7 @@
 package com.qianlima.reptile.statistics.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.qianlima.reptile.statistics.entity.FaultTmpltDo;
-import com.qianlima.reptile.statistics.entity.PotDetail;
-import com.qianlima.reptile.statistics.entity.PotNote;
-import com.qianlima.reptile.statistics.entity.TemplateInfo;
+import com.qianlima.reptile.statistics.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -214,4 +211,75 @@ public interface ModmonitorMapper {
     @Select("SELECT count(1) FROM rawdatas.crawlconfig WHERE potName = #{potName}")
     Integer selectTemplateInfosCountByName(String potName);
 
-}
+    @Select(
+            "<script>" +
+            "SELECT " +
+            "template.id, " +
+            "template.potName, " +
+            "potnote.content, " +
+            "template.isxm, " +
+            "template.cat, " +
+            "template.state, " +
+            "template.createtime, " +
+            "template.updateTime, " +
+            "template.collect_strategy " +
+            "from rawdatas.crawlconfig template " +
+            "LEFT JOIN rawdatas.ccbeizhu potnote " +
+            "ON template.id = potnote.cid " +
+            "<where >" +
+            "<if test = 'id != null'>" +
+            "and template.id = #{id} " +
+            "</if>"+
+            "<if test = 'state != null'>" +
+            "and template.state = #{state} " +
+            "</if>"+
+            "<if test = 'cat != null'>" +
+            "and template.cat = #{cat} " +
+            "</if>"+
+            "<if test = 'startTime != null and endTime != null'>" +
+            "and updatetime between #{startTime} and #{endTime} " +
+            "</if>" +
+            " </where>" +
+            "<if test = 'sortField != null and sortMode != null' >" +
+            "order by ${sortField} ${sortMode}" +
+            "</if>" +
+            "limit #{page},#{size} " +
+            " </script>")
+    List<PotManageTmpInfo> selectTemplateInfosByMultConditions(@Param("id")Integer id, @Param("state")Integer state,
+                                                               @Param("cat")String cat, @Param("startTime")Long startTime,
+                                                               @Param("endTime")Long endTime,@Param("sortField")String sortField,
+                                                               @Param("sortMode")String sortMode, @Param("page")Integer page, @Param("size")Integer size);
+
+    @Select(
+            "<script>" +
+                    "SELECT " +
+                    "count(1)" +
+                    "from rawdatas.crawlconfig template " +
+                    "<where >" +
+                    "<if test = 'id != null'>" +
+                    "and template.id = #{id} " +
+                    "</if>" +
+                    "<if test = 'state != null'>" +
+                    "and template.state = #{state} " +
+                    "</if>" +
+                    "<if test = 'cat != null'>" +
+                    "and template.cat = #{cat} " +
+                    "</if>" +
+                    "<if test = 'startTime != null and endTime != null'>" +
+                    "and updatetime between #{startTime} and #{endTime} " +
+                    "</if>" +
+                    " </where>" +
+                    " </script>")
+    Integer selectTotalCountByMultConditions(@Param("id") Integer id, @Param("state") Integer state,
+                                             @Param("cat") String cat, @Param("startTime") Long startTime,
+                                             @Param("endTime") Long endTime);
+
+    @Select("select count(1) from rawdatas.configeditlog where cid = #{id} and attinfo='xiuding:修改'")
+    Integer selectModifyTimesCountById(Integer id);
+
+    @Select("select count(1) from rawdatas.sourcebeizhu where cid = #{id}")
+    Integer selectCollectStrategyChangeTimesById(Integer id);
+
+
+
+    }

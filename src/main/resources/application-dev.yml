@@ -34,7 +34,7 @@ spring:
           url: jdbc:mysql://172.18.30.34:3306/spiderplatform?useUnicode=true&characterEncoding=utf8
   data:
     mongodb:
-      uri: mongodb://172.18.30.34:27017/qlmdb
+      uri: mongodb://172.18.30.34:27018/qlmdb
 xxl:
   job:
     admin:

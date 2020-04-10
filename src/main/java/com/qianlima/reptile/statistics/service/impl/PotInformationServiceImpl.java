@@ -210,7 +210,13 @@ public class PotInformationServiceImpl implements PotInformationService {
             potInformationDto.setUpdateTime(list.get(i).getUpdateTime());
             List<PotInformation> listRepeat = null;
             if (StringUtils.isNotBlank(list.get(i).getRepeatPot())) {
-                listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot(), list.get(i).getPot());
+                listRepeat = potInformationRepository.queryByIp(list.get(i).getRepeatPot());
+                // 排除当前pot
+                for (PotInformation pot : listRepeat){
+                    if (StringUtils.equals(pot.getPot(),potName)){
+                        listRepeat.remove(pot);
+                    }
+                }
             }
             if (listRepeat != null && listRepeat.size() > 0) {
                 potInformationDto.setRepeatPotCount(listRepeat.size() + "");

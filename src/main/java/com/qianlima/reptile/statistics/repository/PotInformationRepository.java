@@ -77,14 +77,14 @@ public class PotInformationRepository {
         return mongoTemplate.findAll(PotInformation.class);
     }
 
-    public List<PotInformation> queryByIp(String ip,String potName) {
+    public List<PotInformation> queryByIp(String ip) {
         Criteria criteria = Criteria.where("repeatPot").is(ip);
-        criteria.and("pot").ne(potName);
+//        criteria.and("pot").ne(potName);  导致查询缓慢
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
-        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "pot")}));
         return mongoTemplate.find(query, PotInformation.class);
     }
     public PotInformation queryByName(String potName) {
@@ -93,7 +93,7 @@ public class PotInformationRepository {
         BasicDBObject fieldsObject = new BasicDBObject();
         fieldsObject.put("id", false);
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
-        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "queryDate")}));
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "pot")}));
         return mongoTemplate.findOne(query, PotInformation.class);
     }
 

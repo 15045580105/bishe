@@ -48,7 +48,7 @@ public interface RawdataMapper {
      *查询启用模版数
      * @return
      */
-    @Select("select count(1) from rawdatas.crawlconfig where state = 1")
+    @Select("select count(1) from rawdatas.crawlconfig where state = -2 and collect_strategy is not null")
     long selectEnableTemplt();
     /**
      *查询待启用模版数
@@ -60,8 +60,16 @@ public interface RawdataMapper {
      *查询未分类模版数
      * @return
      */
-    @Select("select count(1) from rawdatas.crawlconfig where collect_strategy is null")
+    @Select("select count(1) from rawdatas.crawlconfig where collect_strategy is null and state = -2")
     long selectUnclassifiedTemplt();
+
+
+    /**
+     *查询未分类模版数
+     * @return
+     */
+    @Select("select count(1) from rawdatas.crawlconfig where state = -1")
+    long selectDeleteTemplt();
 
     /**
      * @return a

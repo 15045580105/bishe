@@ -135,11 +135,13 @@ public class TemplateAndPotStatisticalImpl extends BaseService implements Templa
         long unclassifiedTemplt = rawdataMapper.selectUnclassifiedTemplt();
         // 故障模板量
         long failTemplt = modmonitorMapper.selectFailTempltCount(reportStartTime + DateUtils.dateStartStr, reportStartTime + DateUtils.dateEndStr);
+        // 删除模版量
+        long deleteTemplt = rawdataMapper.selectDeleteTemplt();
         tmpltAndPotStatistics.setTemplateUsing(enableTemplt);
         tmpltAndPotStatistics.setTemplatToEnable(toEnableTemplt);
         tmpltAndPotStatistics.setTemplateAbnormal(failTemplt);
         tmpltAndPotStatistics.setTemplateunClassified(unclassifiedTemplt);
-        tmpltAndPotStatistics.setTemplateDelete(templtTotal - enableTemplt - toEnableTemplt);
+        tmpltAndPotStatistics.setTemplateDelete(deleteTemplt);
         tmpltAndPotStatistics.setPotTotal(potTotal);
         tmpltAndPotStatistics.setTemplateTotal(templtTotal);
         tmpltAndPotStatistics.setPotAbandoned(potAbandoned);

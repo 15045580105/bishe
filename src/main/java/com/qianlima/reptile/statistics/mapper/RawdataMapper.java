@@ -65,7 +65,7 @@ public interface RawdataMapper {
 
 
     /**
-     *查询未分类模版数
+     *查询删除模版数
      * @return
      */
     @Select("select count(1) from rawdatas.crawlconfig where state = -1")

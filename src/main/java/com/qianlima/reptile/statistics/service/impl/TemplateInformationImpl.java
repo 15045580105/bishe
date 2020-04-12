@@ -16,7 +16,6 @@ import com.qianlima.reptile.statistics.mapper.RawdataMapper;
 import com.qianlima.reptile.statistics.service.TemplateInformation;
 import com.qianlima.reptile.statistics.utils.DateUtil;
 import com.qianlima.reptile.statistics.utils.DateUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,11 +59,14 @@ public class TemplateInformationImpl implements TemplateInformation {
             listData.add(map2);
         }
         CrawlconfigDo crawlconfigDo = rawdataMapper.selectCrawConfigByid(templt);
-        CrawlconfigDo crawlconfigDo1 = judgeState(crawlconfigDo,templt,today);
+        List<FaultTmpltDo> list1 = modmonitorMapper.selectFailTempltByTmplt(templt,today + DateUtils.dateStartStr, today + DateUtils.dateEndStr);
+        if(list1.size() != 0){
+            crawlconfigDo.setState("2");
+        }
         String pageNumStr = "";
         try {
             Pattern pattern = Pattern.compile("PARA_CLASS(.*)\\n");
-            Matcher m = pattern.matcher(crawlconfigDo1.getConfigData());
+            Matcher m = pattern.matcher(crawlconfigDo.getConfigData());
             while (m.find()) {
                 String s = m.group();
                 System.out.println("s:" + s);
@@ -73,12 +75,12 @@ public class TemplateInformationImpl implements TemplateInformation {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        crawlconfigDo1.setConfigData(pageNumStr);
-        listCrawlconfig.add(crawlconfigDo1);
+        crawlconfigDo.setConfigData(pageNumStr);
+        listCrawlconfig.add(crawlconfigDo);
         Map<String, String> map1 = new HashMap<>();
-        map1.put("user", crawlconfigDo1.getUser());
-        map1.put("updateTime", crawlconfigDo1.getUpdateTime());
-        map1.put("strategy", crawlconfigDo1.getCollectStrategy());
+        map1.put("user", crawlconfigDo.getUser());
+        map1.put("updateTime", crawlconfigDo.getUpdateTime());
+        map1.put("strategy", crawlconfigDo.getCollectStrategy());
         listCollectClass.add(map1);
         List<ConfigedItLogDo> listConfigedItLog = rawdataMapper.selectConfigeditLog(templt);
         List<NoteDo> listNote = rawdataMapper.selectNote(templt);
@@ -88,26 +90,5 @@ public class TemplateInformationImpl implements TemplateInformation {
         map.put("note", listNote);
         map.put("collectClass", listCollectClass);
         return map;
-    }
-
-    public CrawlconfigDo judgeState(CrawlconfigDo crawlconfigDo,String templt,String today){
-        List<FaultTmpltDo> list1 = modmonitorMapper.selectFailTempltByTmplt(templt,today + DateUtils.dateStartStr, today + DateUtils.dateEndStr);
-        if(crawlconfigDo.getState().equals("-1")){
-            crawlconfigDo.setState("5");
-            return crawlconfigDo;
-        }else if(crawlconfigDo.getState().equals("-1") && StringUtils.isBlank(crawlconfigDo.getCollectStrategy())){
-            crawlconfigDo.setState("2");
-            return crawlconfigDo;
-        }else if(crawlconfigDo.getState().equals("-0")){
-            crawlconfigDo.setState("3");
-            return crawlconfigDo;
-        }else if(list1.size() != 0){
-            crawlconfigDo.setState("4");
-            return crawlconfigDo;
-        }else if(crawlconfigDo.getState().equals("-1") && StringUtils.isNotBlank(crawlconfigDo.getCollectStrategy())){
-            crawlconfigDo.setState("1");
-            return crawlconfigDo;
-        }
-        return crawlconfigDo;
     }
 }

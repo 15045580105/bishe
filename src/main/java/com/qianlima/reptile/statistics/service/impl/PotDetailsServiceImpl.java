@@ -100,17 +100,17 @@ public class PotDetailsServiceImpl implements PotDetailsService {
         Map<String, ReleaseAndCollectCount> map = getTreeMap();
         Long startTime = DateUtils.str2TimeStamp(time, DateUtils.FUZSDF);
         Long endTime = startTime + 86399L;
-            for (int i = 0; i < 7; i++) {
-                ReleaseAndCollectCount releaseAndCollectCount = new ReleaseAndCollectCount();
-                if (ids != null && ids.size() != 0) {
-                    releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));
-                    releaseAndCollectCount.setReleaseCount(qianlimaMapper.selectPhpcmsCountsByIds(ids, startTime, endTime));
-                    releaseAndCollectCount.setDate(DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
-                }
-                map.put(DateUtils.getFormatDateStrBitAdd(startTime,DateUtils.FUZSDF), releaseAndCollectCount);
-                startTime -= 86400;
-                endTime -= 86400;
+        for (int i = 0; i < 7; i++) {
+            ReleaseAndCollectCount releaseAndCollectCount = new ReleaseAndCollectCount();
+            if (ids != null && ids.size() != 0) {
+                releaseAndCollectCount.setCollectCount(qianlimaMapper.selectBiddingRawByIds(ids, startTime, endTime));
+                releaseAndCollectCount.setReleaseCount(qianlimaMapper.selectPhpcmsCountsByIds(ids, startTime, endTime));
+                releaseAndCollectCount.setDate(DateUtils.getFormatDateStrBitAdd(endTime, DateUtils.FUZSDF));
             }
+            map.put(DateUtils.getFormatDateStrBitAdd(startTime,DateUtils.FUZSDF), releaseAndCollectCount);
+            startTime -= 86400;
+            endTime -= 86400;
+        }
         return map;
     }
     private Map<String, ReleaseAndCollectCount> getTreeMap() {

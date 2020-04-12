@@ -59,6 +59,9 @@ public class DataShowController {
     private TemplateInformation templateInformation;
     @Autowired
     private PotManageService potManageService;
+    @Autowired
+    private TemplateStatistical templateStatistical;
+
 
     @RequestMapping("/datadisplay")
     @ResponseBody
@@ -348,6 +351,20 @@ public class DataShowController {
     @PostMapping(path = "/tmplt/information")
     public Response tmpltInformation(String id,String startTime) {
         Map<String, List> map = templateInformation.templateInformation(id,startTime);
+        return Response.success(map);
+    }
+
+    /**
+     * @return a
+     * @description 模版统计
+     * @author gyx
+     * @date 2020-04-12 01:3
+     * @parameter * @param null
+     * @since
+     */
+    @PostMapping(path = "/tmplt/statistical")
+    public Response tmpltStatistical(String startTime,String endtime) {
+        Map<String,Object> map = templateStatistical.templateStatistical(startTime,endtime);
         return Response.success(map);
     }
 

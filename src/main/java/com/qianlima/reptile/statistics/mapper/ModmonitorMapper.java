@@ -236,6 +236,9 @@ public interface ModmonitorMapper {
             "<if test = 'cat != null'>" +
             "and template.cat = #{cat} " +
             "</if>"+
+            "<if test = 'startTime != null and endTime != null'>" +
+            "and updatetime between #{startTime} and #{endTime} " +
+            "</if>" +
             " </where>" +
             "<if test = 'sortField != null and sortMode != null' >" +
             "order by ${sortField} ${sortMode}" +
@@ -243,7 +246,8 @@ public interface ModmonitorMapper {
             "limit #{page},#{size} " +
             " </script>")
     List<PotManageTmpInfo> selectTemplateInfosByMultConditions(@Param("id")Integer id, @Param("state")Integer state,
-                                                               @Param("cat")String cat, @Param("sortField")String sortField,
+                                                               @Param("cat")String cat, @Param("startTime")Long startTime,
+                                                               @Param("endTime")Long endTime,@Param("sortField")String sortField,
                                                                @Param("sortMode")String sortMode, @Param("page")Integer page, @Param("size")Integer size);
 
     @Select(
@@ -261,10 +265,14 @@ public interface ModmonitorMapper {
                     "<if test = 'cat != null'>" +
                     "and template.cat = #{cat} " +
                     "</if>" +
+                    "<if test = 'startTime != null and endTime != null'>" +
+                    "and updatetime between #{startTime} and #{endTime} " +
+                    "</if>" +
                     " </where>" +
                     " </script>")
     Integer selectTotalCountByMultConditions(@Param("id") Integer id, @Param("state") Integer state,
-                                             @Param("cat") String cat);
+                                             @Param("cat") String cat, @Param("startTime") Long startTime,
+                                             @Param("endTime") Long endTime);
 
     @Select("select count(1) from rawdatas.configeditlog where cid = #{id} and attinfo='xiuding:修改'")
     Integer selectModifyTimesCountById(Integer id);

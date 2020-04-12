@@ -18,6 +18,9 @@ public class PotManageTmplReq {
      */
     private String cat;
 
+    private String startTime;
+    private String endTime;
+
     private Integer page;
     private Integer size;
 

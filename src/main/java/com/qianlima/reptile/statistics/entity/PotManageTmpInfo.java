@@ -21,7 +21,7 @@ public class PotManageTmpInfo {
     /**
      * 备注
      */
-    private String content;
+    private String potNote;
     /**
      * 修正次数
      */

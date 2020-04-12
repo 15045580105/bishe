@@ -44,6 +44,9 @@ public class TemplateStatisticalImpl implements TemplateStatistical {
         map.put("unclassified",unclassified);
         map.put("delete",delete);
         map.put("fial",failAll.size()+"");
+        long total = (Integer.parseInt(startUsingNotReady)+(startUsingNormal.size()-fial.size()))+Integer.parseInt(notEnabled)+
+                Integer.parseInt(unclassified)+Integer.parseInt(delete)+failAll.size();
+        map.put("tatal",total+"");
         List<String> list =  DateUtils.getDates(startTime, endTime);
         Collections.reverse(list);
         Map<String,Object> mapFail = new TreeMap<>();

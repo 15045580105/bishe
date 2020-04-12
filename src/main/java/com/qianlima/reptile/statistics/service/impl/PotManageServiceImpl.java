@@ -40,8 +40,6 @@ public class PotManageServiceImpl implements PotManageService {
                         potManageTmplReq.getId(),
                         potManageTmplReq.getState(),
                         potManageTmplReq.getCat(),
-                        DateUtils.str2TimeStamp(potManageTmplReq.getStartTime(),DateUtils.FUZSDF),
-                        DateUtils.str2TimeStamp(potManageTmplReq.getEndTime(),DateUtils.FUZSDF),
                         potManageTmplReq.getSortField(),
                         potManageTmplReq.getSortMode(),
                         potManageTmplReq.getPage() * potManageTmplReq.getSize(),
@@ -50,9 +48,7 @@ public class PotManageServiceImpl implements PotManageService {
         Integer total = modmonitorMapper.selectTotalCountByMultConditions(
                 potManageTmplReq.getId(),
                 potManageTmplReq.getState(),
-                potManageTmplReq.getCat(),
-                DateUtils.str2TimeStamp(potManageTmplReq.getStartTime(), DateUtils.FUZSDF),
-                DateUtils.str2TimeStamp(potManageTmplReq.getEndTime(), DateUtils.FUZSDF));
+                potManageTmplReq.getCat());
 
         for (PotManageTmpInfo potManageTmpInfo : potManageTmpInfos) {
             potManageTmpInfo.setMonthReleaseCount(

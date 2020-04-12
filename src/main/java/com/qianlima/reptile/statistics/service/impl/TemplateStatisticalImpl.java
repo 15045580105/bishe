@@ -14,10 +14,7 @@ import com.qianlima.reptile.statistics.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author gyx
@@ -48,12 +45,13 @@ public class TemplateStatisticalImpl implements TemplateStatistical {
         map.put("delete",delete);
         map.put("fial",failAll.size()+"");
         List<String> list =  DateUtils.getDates(startTime, endTime);
+        Collections.reverse(list);
         Map<String,Object> mapFail = new TreeMap<>();
         for (int i = 0; i <list.size()-2 ; i++) {
             Map<String,String> map1 = new HashMap<>();
             List<FaultTmpltDo> selectFailTemplt  = modmonitorMapper.selectFailTemplt((list.get(i) + DateUtils.dateStartStr),(list.get(i) + DateUtils.dateEndStr));
             List<FaultTmpltDo> selectFailTemplt1  = modmonitorMapper.selectFailTemplt((list.get(i+1) + DateUtils.dateStartStr),(list.get(i+1) + DateUtils.dateEndStr));
-            long qiYong = rawdataMapper.selectEnableTempltByTime((list.get(i+1) + DateUtils.dateStartStr),(list.get(i+1) + DateUtils.dateEndStr));
+            long qiYong = Long.parseLong(map.get("startUsing"));
             selectFailTemplt.retainAll(selectFailTemplt1);
             map1.put("count",(selectFailTemplt1.size()-selectFailTemplt.size())+"");
             double s = (selectFailTemplt1.size()-selectFailTemplt.size())/qiYong;

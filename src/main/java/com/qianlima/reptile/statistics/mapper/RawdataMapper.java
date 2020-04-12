@@ -108,25 +108,25 @@ public interface RawdataMapper {
      *查询启用模版数状态为
      * @return
      */
-    @Select("select count(1) from rawdatas.crawlconfig where state = -2 and collect_strategy is not null and create_time  > #{startTime} and create_time <= #{endTime}")
+    @Select("select count(1) from rawdatas.crawlconfig where state = -2 and collect_strategy is not null and createtime  > #{startTime} and createtime <= #{endTime}")
     long selectEnableTempltByTime(@Param("startTime") String startTime, @Param("endTime") String endTime);
     /**
      *查询启用模版id
      * @return
      */
-    @Select("select id from rawdatas.crawlconfig where state = 1 and create_time  > #{startTime} and create_time <= #{endTime}")
+    @Select("select id from rawdatas.crawlconfig where state = 1 and createtime  > #{startTime} and createtime <= #{endTime}")
     List<String> selectEnableTempltTime(@Param("startTime") String startTime, @Param("endTime") String endTime);
     /**
      *查询待启用模版数
      * @return
      */
-    @Select("select count(1) from rawdatas.crawlconfig where state = 0 and create_time  > #{startTime} and create_time <= #{endTime}")
+    @Select("select count(1) from rawdatas.crawlconfig where state = 0 and createtime  > #{startTime} and createtime <= #{endTime}")
     long selectToEnableTempltByTime(@Param("startTime") String startTime, @Param("endTime") String endTime);
     /**
      *查询未分类模版数
      * @return
      */
-    @Select("select count(1) from rawdatas.crawlconfig where collect_strategy is null and state = -2 and create_time  > #{startTime} and create_time <= #{endTime}")
+    @Select("select count(1) from rawdatas.crawlconfig where collect_strategy is null and state = -2 and createtime  > #{startTime} and createtime <= #{endTime}")
     long selectUnclassifiedTempltByTime(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
 
@@ -134,7 +134,7 @@ public interface RawdataMapper {
      *查询删除模版数
      * @return
      */
-    @Select("select count(1) from rawdatas.crawlconfig where state = -1 and create_time  > #{startTime} and create_time <= #{endTime}")
+    @Select("select count(1) from rawdatas.crawlconfig where state = -1 and createtime  > #{startTime} and createtime <= #{endTime}")
     long selectDeleteTempltByTime(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
 }

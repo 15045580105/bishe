@@ -185,6 +185,14 @@ public interface ModmonitorMapper {
     List<FaultTmpltDo> selectFailTemplt(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
     /**
+     * 查询故障模板 ，去重只查id
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Select("select DISTINCT(tmplt) from fail_tmplt  where type = 1 and valid_state <> 200 and update_time >=#{startTime} and update_time <=#{endTime}")
+    List<String> selectFailTempltId(@Param("startTime") String startTime, @Param("endTime") String endTime);
+    /**
      * 查询故障模板
      * @param startTime
      * @param endTime

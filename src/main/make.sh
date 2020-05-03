@@ -27,14 +27,14 @@ then
     exit 201;
 fi
 
-mv qianlima-reptile-statistics-service/output/*.tar.gz ${OUTPUT_DIR}/
-rm qianlima-reptile-statistics-service pom.xml
+mv yongxv-bishe/output/*.tar.gz ${OUTPUT_DIR}/
+rm yongxv-bishe pom.xml
 cd ${OUTPUT_DIR}
 tar -zxvf *.tar.gz && rm -rf *.tar.gz
-cd  qianlima-reptile-statistics-service
+cd  yongxv-bishe
 mv bin ../
 cd ..
-rm -rf qianlima-reptile-statistics-service
+rm -rf yongxv-bishe
 cd bin
 echo `pwd`
 ls -al

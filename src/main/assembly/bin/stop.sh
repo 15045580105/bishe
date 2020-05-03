@@ -12,7 +12,7 @@ if [[ ! -f ${PID_FILE} ]];then
 fi
 CONF_DIR=${DEPLOY_DIR}/conf
 
-SERVER_NAME=qianlima-reptile-statistics-service
+SERVER_NAME=yongxv-bishe
 
 if [[ -z "$SERVER_NAME" ]]; then
     SERVER_NAME=`hostname`

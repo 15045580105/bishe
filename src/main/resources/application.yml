@@ -1,8 +1,8 @@
 spring:
   application:
-    name: 'qianlima-reptile-statistics-service'
+    name: 'yongxv-bishe'
   profiles:
-    active: '@env@'
+    active: online
   main:
     web-application-type: servlet
     undertow:
@@ -14,3 +14,4 @@ spring:
       # max-http-post-size: 0 # Maximum size, in bytes, of the HTTP post content.
   jackson:
     default-property-inclusion: non_null
+

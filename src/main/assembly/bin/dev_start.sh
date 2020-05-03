@@ -13,7 +13,7 @@ else
     PID=$(cat ${PID_FILE});
     PID_EXIST=$(ps aux | grep ${PID} | grep -v 'grep');
     if [[ ! -z "$PID_EXIST" ]];then
-        echo "The qianlima-reptile-statistics-service is running, no need to start again!";
+        echo "The yongxv-bishe is running, no need to start again!";
         exit 1;
     fi
 fi
@@ -46,9 +46,9 @@ else
     JAVA_MEM_OPTS=" -server -Xms512m -Xmx512m -XX:PermSize=128m -XX:SurvivorRatio=2 -XX:+UseParallelGC "
 fi
 
-echo -e "Starting the qianlima-reptile-statistics-service , Env :  $ENV , $1"
+echo -e "Starting the yongxv-bishe , Env :  $ENV , $1"
 
-nohup java -jar -Dspring.profiles.active=$1 -DmbEnv=$1 ${JAVA_OPTS} ${JAVA_MEM_OPTS} ${JAVA_DEBUG_OPTS} ${JAVA_JMX_OPTS} -DLOCAL_IP=${LOCAL_IP} ${BIN_DIR}/qianlima-reptile-statistics-service.jar > ${STDOUT_FILE} 2>&1 &
+nohup java -jar -Dspring.profiles.active=$1 -DmbEnv=$1 ${JAVA_OPTS} ${JAVA_MEM_OPTS} ${JAVA_DEBUG_OPTS} ${JAVA_JMX_OPTS} -DLOCAL_IP=${LOCAL_IP} ${BIN_DIR}/yongxv-bishe.jar > ${STDOUT_FILE} 2>&1 &
 
 echo "$!" > ${PID_FILE};
 echo "OK!"

@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.qianlima.reptile</groupId>
-    <artifactId>qianlima-reptile-statistics-service</artifactId>
+    <artifactId>yongxv-bishe</artifactId>
     <packaging>jar</packaging>
 
     <version>0.0.3-SNAPSHOT</version>
-    <name>qianlima-reptile-statistics-service</name>
+    <name>yongxv-bishe</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -105,6 +105,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>2.8.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -175,7 +180,7 @@
             </activation>
             <properties>
                 <env>dev</env>
-                <logdir>/workspace/logs/service/qianlima-reptile-statistics-service</logdir>
+                <logdir>/workspace/logs/service/yongxv-bishe</logdir>
             </properties>
         </profile>
         <profile>
@@ -185,7 +190,7 @@
             </activation>
             <properties>
                 <env>test</env>
-                <logdir>/workspace/logs/service/qianlima-reptile-statistics-service</logdir>
+                <logdir>/workspace/logs/service/yongxv-bishe</logdir>
             </properties>
         </profile>
         <profile>
@@ -195,7 +200,7 @@
             </activation>
             <properties>
                 <env>online</env>
-                <logdir>/workspace/logs/service/qianlima-reptile-statistics-service</logdir>
+                <logdir>/workspace/logs/service/yongxv-bishe</logdir>
             </properties>
         </profile>
     </profiles>

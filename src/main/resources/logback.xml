@@ -3,7 +3,7 @@
     <!--properties-->
     <property name="pattern"
               value="[@project.artifactId@] [%date{yyyy-MM-dd HH:mm:ss.SSSZ, Asia/Shanghai}] [%logger] [%thread] [%level] %msg %n"/>
-    <property name="dir" value="/workspace/logs/service/qianlima-reptile-statistics-service"/>
+    <property name="dir" value="usr\loacl/logs/service/yongxv-bishe"/>
     <property name="history" value="3"/>
 
     <!--appenders-->

@@ -1,52 +1,32 @@
 server:
-  port: 8191
+  port: 9002
+  tomcat:
+    basedir: /root/domesticOutfit/temp
 spring:
   application:
-    name: statistics
+    name: bishe
   datasource:
     dynamic:
-      primary: qianlima #设置默认的数据源或者数据源组,默认值即为master
+      primary: bishe #设置默认的数据源或者数据源组,默认值即为master
       datasource:
-        qianlima:
-          username: tjReader
-          password: azTehcdNldWk
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://10.80.184.200:3309/qianlima?characterEncoding=UTF-8
-        modmonitor:
+        bishe:
           username: root
-          password: uRGtSxZUdUy8GnMB
+          password: AAFB2ID2Hq2P
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://121.40.46.25:3309/modmonitor?useUnicode=true&characterEncoding=utf8
-        octopus:
-          username: statistics
-          password: KF7lhEE3AIwM
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://121.40.203.166:3309/spiderbridge?useUnicode=true&characterEncoding=utf8
-        spiderplatform:
-          username: statistics
-          password: KF7lhEE3AIwM
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://10.80.186.152:3309/spiderplatform?useUnicode=true&characterEncoding=gbk
-        rawdatas:
-          username: statistics
-          password: KF7lhEE3AIwM
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://10.129.72.1:3309/spiderplatform?useUnicode=true&characterEncoding=utf8
-#         114.215.123.193 - 10.129.72.1
+          url: jdbc:mysql://172.24.21.49:3306/bishe?characterEncoding=UTF-8
+      mvc:
+        static-path-pattern: /**
+      resources:
+        static-locations: file:/root/domesticOutfit/images
+
   data:
     mongodb:
-      uri: mongodb://reptile:reptile@10.26.29.40:27018,10.30.162.200:27018/reptile_statistics
-xxl:
-  job:
-    admin:
-      addresses: http://10.30.110.103:8283/admin,http://10.29.91.236:8283/admin
-    executor:
-      appname: ${spring.application.name}
-      ip:
-      port: 9990
-      logretentiondays: 1
-      logpath:
-    accessToken:
+      uri: mongodb://172.24.21.49:27017/bishe
 
 swagger:
-  enabled: false
+  enabled: true
+
+file:
+  path:
+    absolute: /root/domesticOutfit/images
+    relative: /

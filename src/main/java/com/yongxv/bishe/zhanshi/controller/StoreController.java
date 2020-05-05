@@ -57,4 +57,11 @@ public class StoreController {
     public Response goodsSelect(String id) {
         return storeService.selectGoodsById(id);
     }
+
+    @PostMapping("/goods/select/store")
+    public Response goodsSelectStore(int uid,Integer page,Integer size) {
+        return storeService.showGoodsStore(uid,page,size);
+    }
+
+
 }

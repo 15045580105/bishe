@@ -6,26 +6,28 @@ package com.yongxv.bishe.zhanshi.service.impl;
  * @Modified By :
  */
 
+import com.alibaba.fastjson.JSON;
 import com.yongxv.bishe.zhanshi.domain.Goods;
 import com.yongxv.bishe.zhanshi.entity.Associated;
 import com.yongxv.bishe.zhanshi.entity.Response;
+import com.yongxv.bishe.zhanshi.entity.Tatal;
 import com.yongxv.bishe.zhanshi.entity.User;
 import com.yongxv.bishe.zhanshi.mapper.BisheMapper;
 import com.yongxv.bishe.zhanshi.mapper.StoreMapper;
 import com.yongxv.bishe.zhanshi.repository.GoodsRepository;
 import com.yongxv.bishe.zhanshi.service.StoreService;
 import com.yongxv.bishe.zhanshi.utils.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +37,7 @@ import java.util.regex.Pattern;
  */
 @Service
 public class StoreServiceImpl implements StoreService {
-    private static final Logger log = LoggerFactory.getLogger(StoreServiceImpl.class);
+
 
     @Autowired
     private StoreMapper storeMapper;
@@ -44,10 +46,20 @@ public class StoreServiceImpl implements StoreService {
     @Autowired
     private BisheMapper bisheMapper;
 
+
+    @Value("${file.path.absolute}")
+    private String imagePath;
+
+    @Value("${file.path.relative}")
+    private String staticPath;
+
     @Override
     public Response showStoreService(String storeType,int page,int size){
         List<User> users = storeMapper.selectStore(storeType,page*size,size);
-        return Response.success(users);
+        Integer count = storeMapper.selectStoreCount(storeType);
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(users,tatal);
     }
 
     @Override
@@ -57,13 +69,33 @@ public class StoreServiceImpl implements StoreService {
         bisheMapper.addAccess(uid,uuid,user.getUserName(),user.getIntroduction(),user.getArea(),today);
         List<Goods> goodsList = goodsRepository.queryByUid(uuid+"",page,size);
         List<Associated> associatedList = bisheMapper.selectGuaZhu(uid,uuid);
+        long count = goodsRepository.queryCount(uuid+"");
         if(associatedList.size()==0){
-            return Response.success(goodsList,"未关注");
+            Tatal tatal = new Tatal();
+            tatal.setTotal(Integer.parseInt(count+""));
+            tatal.setFocus(0);
+            return Response.success(goodsList,tatal);
         }else{
-            return Response.success(goodsList,"已关注");
+            Tatal tatal = new Tatal();
+            tatal.setTotal(Integer.parseInt(count+""));
+            tatal.setFocus(1);
+            return Response.success(goodsList,tatal);
         }
 
     }
+
+
+    public Response showGoodsStore(int uid,Integer page,Integer size){
+        List<Goods> goodsList = goodsRepository.queryByUid(uid+"",page,size);
+        long count = goodsRepository.queryCount(uid+"");
+        Tatal tatal = new Tatal();
+        tatal.setTotal(Integer.parseInt(count+""));
+        return Response.success(goodsList,tatal);
+    }
+
+
+
+
 
     @Override
     public Response delete(String id){
@@ -105,9 +137,12 @@ public class StoreServiceImpl implements StoreService {
         User user = bisheMapper.selectUserByid(Integer.parseInt(uid));
         String today = DateUtil.getDateTime(DateUtil.getTimePattern(), new Date());
         Goods goods = new Goods();
-        String url = getUrl(file);
+        String url = "http://47.94.201.4:9002" + uploadImg(file);
         goods.setUid(uid);
         goods.setPicture(url);
+        if (StringUtils.isBlank(price)) {
+            return Response.error(1,"请输入价格");
+        }
         if(isNumeric(price)){
             if(Integer.parseInt(price) >= 0 && Integer.parseInt(price)<=20000){
                 goods.setPrice(Integer.parseInt(price));
@@ -137,14 +172,20 @@ public class StoreServiceImpl implements StoreService {
 
 
 
-    private String getUrl(MultipartFile file) {
+    private String uploadImg(MultipartFile file) {
+        String arrUrl = upload(file, imagePath, staticPath);
+        return arrUrl;
+    }
+
+
+    private static String upload(MultipartFile file, String absolutepath, String relativepath) {
         if (file.isEmpty()) {
             return "";
         }
         String fileName = file.getOriginalFilename();  // 文件名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         fileName = UUID.randomUUID() + suffixName; // 新文件名
-        File dest = new File("/Users/gaomac/domesticOutfit/images" + "/" + fileName);
+        File dest = new File(absolutepath + "/" + fileName);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
         }
@@ -153,7 +194,7 @@ public class StoreServiceImpl implements StoreService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileName;
+        return relativepath + fileName;
     }
 
     public boolean isNumeric(String str) {

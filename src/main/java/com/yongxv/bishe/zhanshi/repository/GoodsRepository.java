@@ -69,6 +69,15 @@ public class GoodsRepository {
         return mongoTemplate.count(query, Goods.class);
     }
 
+    public long queryCount(String uid) {
+        Criteria criteria = Criteria.where("uid").is(uid);
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        return mongoTemplate.count(query, Goods.class);
+    }
+
+
     public void update(Goods goods) {
         Query query = Query.query(Criteria.where("id").is(goods.getId()));
         Update update = Update.update("name",goods.getName()).set("introduction",goods.getIntroduction())

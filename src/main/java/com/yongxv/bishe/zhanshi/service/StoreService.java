@@ -15,6 +15,8 @@ public interface StoreService {
 
     Response showGoods(int uid,int uuid,Integer page,Integer size);
 
+    Response showGoodsStore(int uid,Integer page,Integer size);
+
     Response delete(String id);
 
     Response updateGoods(String id,String name,String introduction,long price);

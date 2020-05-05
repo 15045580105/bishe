@@ -6,6 +6,7 @@ package com.yongxv.bishe.zhanshi.service.impl;
  * @Modified By :
  */
 
+import com.alibaba.fastjson.JSON;
 import com.yongxv.bishe.zhanshi.entity.*;
 import com.yongxv.bishe.zhanshi.mapper.BisheMapper;
 import com.yongxv.bishe.zhanshi.repository.GoodsRepository;
@@ -15,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -175,7 +173,10 @@ public class UserServiceImpl implements UserService {
             User user  = bisheMapper.selectUserByid(associatedList.get(i).getUuid());
             users.add(user);
         }
-        return Response.success(users);
+        Integer count = bisheMapper.selectFocusCount(uid);
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(users,tatal);
     }
 
     @Override
@@ -186,7 +187,10 @@ public class UserServiceImpl implements UserService {
             User user  = bisheMapper.selectUserByid(associatedList.get(i).getUid());
             users.add(user);
         }
-        return Response.success(users);
+        Integer count = bisheMapper.selectFocusUserCount(uuid);
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(users,tatal);
     }
 
     @Override
@@ -199,7 +203,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response selectAcess(int uid,int page,int size){
         List<Access> accessList = bisheMapper.selectAccess(uid,page*size,size);
-        return Response.success(accessList);
+        Integer count = bisheMapper.selectAccessCount(uid);
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(accessList,tatal);
     }
 
     @Override
@@ -222,12 +229,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response selectStore(int page,int size){
         List<User> userList = bisheMapper.selectStores(page*size,size);
-        return Response.success(userList);
+        Integer count = bisheMapper.selectStore();
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(userList,tatal);
     }
+
     @Override
     public Response selectConsumers(int page,int size){
         List<User> userList = bisheMapper.selectConsumer(page*size,size);
-        return Response.success(userList);
+        Integer count = bisheMapper.selectConsumers();
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(userList,tatal);
     }
 
 
@@ -254,10 +268,16 @@ public class UserServiceImpl implements UserService {
         User user = bisheMapper.selectUserByid(id);
         if(user.getType().equals("1")){
             List<Content> contentList =  bisheMapper.message(id,page*size,size);
-            return Response.success(contentList);
+            Integer count = bisheMapper.messageCount(id);
+            Tatal tatal = new Tatal();
+            tatal.setTotal(count);
+            return Response.success(contentList,tatal);
         }else{
             List<Content> contentList =  bisheMapper.push(id,page*size,size);
-            return Response.success(contentList);
+            Integer count = bisheMapper.pushCount(id);
+            Tatal tatal = new Tatal();
+            tatal.setTotal(count);
+            return Response.success(contentList,tatal);
         }
 
     }
@@ -266,10 +286,16 @@ public class UserServiceImpl implements UserService {
         User user = bisheMapper.selectUserByid(id);
         if(user.getType().equals("1")){
             List<Content> contentList =  bisheMapper.receivedPush(id,page*size,size);
-            return Response.success(contentList);
+            Integer count = bisheMapper.receivedPushCount(id);
+            Tatal tatal = new Tatal();
+            tatal.setTotal(count);
+            return Response.success(contentList,tatal);
         }else{
             List<Content> contentList =  bisheMapper.receivedMessage(id,page*size,size);
-            return Response.success(contentList);
+            Integer count = bisheMapper.receivedMessageCount(id);
+            Tatal tatal = new Tatal();
+            tatal.setTotal(count);
+            return Response.success(contentList,tatal);
         }
     }
 

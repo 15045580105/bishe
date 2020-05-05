@@ -18,7 +18,7 @@ public class Response<T> implements Serializable {
     /**
      * Response message
      */
-    private String msg;
+    private T msg;
     /**
      * Response data
      */
@@ -31,7 +31,7 @@ public class Response<T> implements Serializable {
         return response;
     }
 
-    public static <T> Response<T> success(T data, String msg){
+    public static <T> Response<T> success(T data, T msg){
         Response<T> response = new Response<>();
         response.setResult(0);
         response.setData(data);
@@ -39,7 +39,7 @@ public class Response<T> implements Serializable {
         return response;
     }
 
-    public static <T> Response<T> error(int result, String msg){
+    public static <T> Response<T> error(int result, T msg){
         Response<T> response = new Response<>();
         response.setResult(result);
         response.setMsg(msg);
@@ -56,11 +56,11 @@ public class Response<T> implements Serializable {
         this.result = result;
     }
 
-    public String getMsg() {
+    public T getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public void setMsg(T msg) {
         this.msg = msg;
     }
 
@@ -87,7 +87,7 @@ public class Response<T> implements Serializable {
             return this;
         }
 
-        public Builder<T> msg(String msg) {
+        public Builder<T> msg(T msg) {
             this.response.setMsg(msg);
             return this;
         }

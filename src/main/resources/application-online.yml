@@ -14,10 +14,10 @@ spring:
           password: AAFB2ID2Hq2P
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://172.24.21.49:3306/bishe?characterEncoding=UTF-8
-      mvc:
-        static-path-pattern: /**
-      resources:
-        static-locations: file:/root/domesticOutfit/images
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:/root/domesticOutfit/images
 
   data:
     mongodb:

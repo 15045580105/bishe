@@ -14,10 +14,10 @@ spring:
           password: gyx521.369
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://127.0.0.1:3306/bishe?characterEncoding=UTF-8
-      mvc:
-        static-path-pattern: /**
-      resources:
-        static-locations: file:/Users/gaomac/domesticOutfit/images
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:/Users/gaomac/domesticOutfit/images
 
   data:
     mongodb:
@@ -30,7 +30,7 @@ swagger:
 
 
 
-  file:
-    path:
-      absolute: /Users/gaomac/domesticOutfit/images
-      relative: /
+file:
+  path:
+    absolute: /Users/gaomac/domesticOutfit/images
+    relative: /

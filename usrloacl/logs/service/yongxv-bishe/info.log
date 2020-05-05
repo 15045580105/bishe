@@ -2906,3 +2906,324 @@ Caused by: java.lang.IllegalStateException: Unable to create the directory [/roo
 [yongxv-bishe] [2020-05-03 13:08:31.976+0800] [com.zaxxer.hikari.HikariDataSource] [Thread-15] [INFO] bishe - Shutdown initiated... 
 [yongxv-bishe] [2020-05-03 13:08:31.979+0800] [com.zaxxer.hikari.HikariDataSource] [Thread-15] [INFO] bishe - Shutdown completed. 
 [yongxv-bishe] [2020-05-03 13:08:31.979+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [Thread-15] [INFO] dynamic-datasource all closed success,bye 
+[yongxv-bishe] [2020-05-03 14:14:50.510+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] Starting Application on gaoyongxudeMacBook-Pro.local with PID 4876 (/Users/gaomac/workspace/yongxv-bishe/target/classes started by gaomac in /Users/gaomac/workspace/yongxv-bishe) 
+[yongxv-bishe] [2020-05-03 14:14:50.512+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] The following profiles are active: dev 
+[yongxv-bishe] [2020-05-03 14:14:51.337+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Bootstrapping Spring Data repositories in DEFAULT mode. 
+[yongxv-bishe] [2020-05-03 14:14:51.352+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Finished Spring Data repository scanning in 11ms. Found 0 repository interfaces. 
+[yongxv-bishe] [2020-05-03 14:14:51.599+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$7f933fa2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:14:51.625+0800] [org.springframework.ws.soap.addressing.server.AnnotationActionEndpointMapping] [main] [INFO] Supporting [WS-Addressing August 2004, WS-Addressing 1.0] 
+[yongxv-bishe] [2020-05-03 14:14:51.656+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$dafb7aa3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:14:51.689+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:14:51.691+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$4489eb74] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:14:51.696+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:14:51.700+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:14:51.994+0800] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [main] [INFO] Tomcat initialized with port(s): 9001 (http) 
+[yongxv-bishe] [2020-05-03 14:14:52.005+0800] [org.apache.coyote.http11.Http11NioProtocol] [main] [INFO] Initializing ProtocolHandler ["http-nio-9001"] 
+[yongxv-bishe] [2020-05-03 14:14:52.011+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Starting service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:14:52.012+0800] [org.apache.catalina.core.StandardEngine] [main] [INFO] Starting Servlet engine: [Apache Tomcat/9.0.19] 
+[yongxv-bishe] [2020-05-03 14:14:52.085+0800] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [main] [INFO] Initializing Spring embedded WebApplicationContext 
+[yongxv-bishe] [2020-05-03 14:14:52.085+0800] [org.springframework.web.context.ContextLoader] [main] [INFO] Root WebApplicationContext: initialization completed in 1368 ms 
+[yongxv-bishe] [2020-05-03 14:14:52.175+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Starting... 
+[yongxv-bishe] [2020-05-03 14:14:52.179+0800] [com.zaxxer.hikari.util.DriverDataSource] [main] [WARN] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation. 
+[yongxv-bishe] [2020-05-03 14:14:52.473+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Start completed. 
+[yongxv-bishe] [2020-05-03 14:14:52.474+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource - load a datasource named [bishe] success 
+[yongxv-bishe] [2020-05-03 14:14:52.474+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource initial loaded [1] datasource,primary datasource named [bishe] 
+[yongxv-bishe] [2020-05-03 14:14:52.672+0800] [org.mongodb.driver.cluster] [main] [INFO] Cluster created with settings {hosts=[47.94.201.4:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500} 
+[yongxv-bishe] [2020-05-03 14:14:52.861+0800] [org.mongodb.driver.connection] [cluster-ClusterId{value='5eae615c449f63130cc6d18c', description='null'}-47.94.201.4:27017] [INFO] Opened connection [connectionId{localValue:1, serverValue:549}] to 47.94.201.4:27017 
+[yongxv-bishe] [2020-05-03 14:14:52.899+0800] [org.mongodb.driver.cluster] [cluster-ClusterId{value='5eae615c449f63130cc6d18c', description='null'}-47.94.201.4:27017] [INFO] Monitor thread successfully connected to server with description ServerDescription{address=47.94.201.4:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 2]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=37114010} 
+[yongxv-bishe] [2020-05-03 14:14:52.963+0800] [org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext] [main] [WARN] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'storeController': Unsatisfied dependency expressed through field 'storeService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}" 
+[yongxv-bishe] [2020-05-03 14:14:52.975+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource start closing .... 
+[yongxv-bishe] [2020-05-03 14:14:52.976+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Shutdown initiated... 
+[yongxv-bishe] [2020-05-03 14:14:52.979+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Shutdown completed. 
+[yongxv-bishe] [2020-05-03 14:14:52.979+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource all closed success,bye 
+[yongxv-bishe] [2020-05-03 14:14:52.981+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Stopping service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:14:52.990+0800] [org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener] [main] [INFO] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled. 
+[yongxv-bishe] [2020-05-03 14:14:52.998+0800] [org.springframework.boot.SpringApplication] [main] [ERROR] Application run failed 
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'storeController': Unsatisfied dependency expressed through field 'storeService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:596)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:843)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at com.yongxv.bishe.zhanshi.Application.main(Application.java:25)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:277)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1248)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1168)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	... 17 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:178)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1168)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 28 common frames omitted
+[yongxv-bishe] [2020-05-03 14:16:33.857+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] Starting Application on gaoyongxudeMacBook-Pro.local with PID 4889 (/Users/gaomac/workspace/yongxv-bishe/target/classes started by gaomac in /Users/gaomac/workspace/yongxv-bishe) 
+[yongxv-bishe] [2020-05-03 14:16:33.858+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] The following profiles are active: dev 
+[yongxv-bishe] [2020-05-03 14:16:34.517+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Bootstrapping Spring Data repositories in DEFAULT mode. 
+[yongxv-bishe] [2020-05-03 14:16:34.529+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Finished Spring Data repository scanning in 10ms. Found 0 repository interfaces. 
+[yongxv-bishe] [2020-05-03 14:16:34.764+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$7dde6b2b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:34.783+0800] [org.springframework.ws.soap.addressing.server.AnnotationActionEndpointMapping] [main] [INFO] Supporting [WS-Addressing August 2004, WS-Addressing 1.0] 
+[yongxv-bishe] [2020-05-03 14:16:34.808+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d946a62c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:34.835+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:34.837+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$42d516fd] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:34.841+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:34.844+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:35.091+0800] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [main] [INFO] Tomcat initialized with port(s): 9001 (http) 
+[yongxv-bishe] [2020-05-03 14:16:35.104+0800] [org.apache.coyote.http11.Http11NioProtocol] [main] [INFO] Initializing ProtocolHandler ["http-nio-9001"] 
+[yongxv-bishe] [2020-05-03 14:16:35.114+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Starting service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:16:35.115+0800] [org.apache.catalina.core.StandardEngine] [main] [INFO] Starting Servlet engine: [Apache Tomcat/9.0.19] 
+[yongxv-bishe] [2020-05-03 14:16:35.191+0800] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [main] [INFO] Initializing Spring embedded WebApplicationContext 
+[yongxv-bishe] [2020-05-03 14:16:35.191+0800] [org.springframework.web.context.ContextLoader] [main] [INFO] Root WebApplicationContext: initialization completed in 1172 ms 
+[yongxv-bishe] [2020-05-03 14:16:35.276+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Starting... 
+[yongxv-bishe] [2020-05-03 14:16:35.278+0800] [com.zaxxer.hikari.util.DriverDataSource] [main] [WARN] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation. 
+[yongxv-bishe] [2020-05-03 14:16:35.532+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Start completed. 
+[yongxv-bishe] [2020-05-03 14:16:35.533+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource - load a datasource named [bishe] success 
+[yongxv-bishe] [2020-05-03 14:16:35.533+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource initial loaded [1] datasource,primary datasource named [bishe] 
+[yongxv-bishe] [2020-05-03 14:16:35.661+0800] [org.mongodb.driver.cluster] [main] [INFO] Cluster created with settings {hosts=[47.94.201.4:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500} 
+[yongxv-bishe] [2020-05-03 14:16:35.844+0800] [org.mongodb.driver.connection] [cluster-ClusterId{value='5eae61c3449f6313199bcc4c', description='null'}-47.94.201.4:27017] [INFO] Opened connection [connectionId{localValue:1, serverValue:550}] to 47.94.201.4:27017 
+[yongxv-bishe] [2020-05-03 14:16:35.896+0800] [org.mongodb.driver.cluster] [cluster-ClusterId{value='5eae61c3449f6313199bcc4c', description='null'}-47.94.201.4:27017] [INFO] Monitor thread successfully connected to server with description ServerDescription{address=47.94.201.4:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 2]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=39982567} 
+[yongxv-bishe] [2020-05-03 14:16:35.912+0800] [org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext] [main] [WARN] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'storeController': Unsatisfied dependency expressed through field 'storeService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}" 
+[yongxv-bishe] [2020-05-03 14:16:35.913+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource start closing .... 
+[yongxv-bishe] [2020-05-03 14:16:35.914+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Shutdown initiated... 
+[yongxv-bishe] [2020-05-03 14:16:35.916+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Shutdown completed. 
+[yongxv-bishe] [2020-05-03 14:16:35.917+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource all closed success,bye 
+[yongxv-bishe] [2020-05-03 14:16:35.918+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Stopping service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:16:35.927+0800] [org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener] [main] [INFO] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled. 
+[yongxv-bishe] [2020-05-03 14:16:35.933+0800] [org.springframework.boot.SpringApplication] [main] [ERROR] Application run failed 
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'storeController': Unsatisfied dependency expressed through field 'storeService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:596)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:843)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at com.yongxv.bishe.zhanshi.Application.main(Application.java:25)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:277)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1248)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1168)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	... 17 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:178)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1168)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 28 common frames omitted
+[yongxv-bishe] [2020-05-03 14:16:44.541+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] Starting Application on gaoyongxudeMacBook-Pro.local with PID 4895 (/Users/gaomac/workspace/yongxv-bishe/target/classes started by gaomac in /Users/gaomac/workspace/yongxv-bishe) 
+[yongxv-bishe] [2020-05-03 14:16:44.542+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] The following profiles are active: dev 
+[yongxv-bishe] [2020-05-03 14:16:45.181+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Bootstrapping Spring Data repositories in DEFAULT mode. 
+[yongxv-bishe] [2020-05-03 14:16:45.194+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Finished Spring Data repository scanning in 10ms. Found 0 repository interfaces. 
+[yongxv-bishe] [2020-05-03 14:16:45.435+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$212e662e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:45.455+0800] [org.springframework.ws.soap.addressing.server.AnnotationActionEndpointMapping] [main] [INFO] Supporting [WS-Addressing August 2004, WS-Addressing 1.0] 
+[yongxv-bishe] [2020-05-03 14:16:45.480+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7c96a12f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:45.507+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:45.509+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$e6251200] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:45.514+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:45.517+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:16:45.774+0800] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [main] [INFO] Tomcat initialized with port(s): 9001 (http) 
+[yongxv-bishe] [2020-05-03 14:16:45.787+0800] [org.apache.coyote.http11.Http11NioProtocol] [main] [INFO] Initializing ProtocolHandler ["http-nio-9001"] 
+[yongxv-bishe] [2020-05-03 14:16:45.794+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Starting service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:16:45.795+0800] [org.apache.catalina.core.StandardEngine] [main] [INFO] Starting Servlet engine: [Apache Tomcat/9.0.19] 
+[yongxv-bishe] [2020-05-03 14:16:45.876+0800] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [main] [INFO] Initializing Spring embedded WebApplicationContext 
+[yongxv-bishe] [2020-05-03 14:16:45.877+0800] [org.springframework.web.context.ContextLoader] [main] [INFO] Root WebApplicationContext: initialization completed in 1190 ms 
+[yongxv-bishe] [2020-05-03 14:16:45.973+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Starting... 
+[yongxv-bishe] [2020-05-03 14:16:45.975+0800] [com.zaxxer.hikari.util.DriverDataSource] [main] [WARN] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation. 
+[yongxv-bishe] [2020-05-03 14:16:46.248+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Start completed. 
+[yongxv-bishe] [2020-05-03 14:16:46.248+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource - load a datasource named [bishe] success 
+[yongxv-bishe] [2020-05-03 14:16:46.248+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource initial loaded [1] datasource,primary datasource named [bishe] 
+[yongxv-bishe] [2020-05-03 14:16:46.386+0800] [org.mongodb.driver.cluster] [main] [INFO] Cluster created with settings {hosts=[47.94.201.4:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500} 
+[yongxv-bishe] [2020-05-03 14:16:46.563+0800] [org.mongodb.driver.connection] [cluster-ClusterId{value='5eae61ce449f63131f342d9d', description='null'}-47.94.201.4:27017] [INFO] Opened connection [connectionId{localValue:1, serverValue:551}] to 47.94.201.4:27017 
+[yongxv-bishe] [2020-05-03 14:16:46.601+0800] [org.mongodb.driver.cluster] [cluster-ClusterId{value='5eae61ce449f63131f342d9d', description='null'}-47.94.201.4:27017] [INFO] Monitor thread successfully connected to server with description ServerDescription{address=47.94.201.4:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 2]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=36585636} 
+[yongxv-bishe] [2020-05-03 14:16:46.624+0800] [org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext] [main] [WARN] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'storeController': Unsatisfied dependency expressed through field 'storeService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}" 
+[yongxv-bishe] [2020-05-03 14:16:46.636+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource start closing .... 
+[yongxv-bishe] [2020-05-03 14:16:46.636+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Shutdown initiated... 
+[yongxv-bishe] [2020-05-03 14:16:46.639+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Shutdown completed. 
+[yongxv-bishe] [2020-05-03 14:16:46.639+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource all closed success,bye 
+[yongxv-bishe] [2020-05-03 14:16:46.641+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Stopping service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:16:46.649+0800] [org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener] [main] [INFO] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled. 
+[yongxv-bishe] [2020-05-03 14:16:46.655+0800] [org.springframework.boot.SpringApplication] [main] [ERROR] Application run failed 
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'storeController': Unsatisfied dependency expressed through field 'storeService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:596)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:843)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at com.yongxv.bishe.zhanshi.Application.main(Application.java:25)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeServiceImpl': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:277)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1248)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1168)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	... 17 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'file.path.absolute' in value "${file.path.absolute}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:178)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1168)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 28 common frames omitted
+[yongxv-bishe] [2020-05-03 14:18:20.227+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] Starting Application on gaoyongxudeMacBook-Pro.local with PID 4916 (/Users/gaomac/workspace/yongxv-bishe/target/classes started by gaomac in /Users/gaomac/workspace/yongxv-bishe) 
+[yongxv-bishe] [2020-05-03 14:18:20.229+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] The following profiles are active: dev 
+[yongxv-bishe] [2020-05-03 14:18:20.877+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Bootstrapping Spring Data repositories in DEFAULT mode. 
+[yongxv-bishe] [2020-05-03 14:18:20.891+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Finished Spring Data repository scanning in 12ms. Found 0 repository interfaces. 
+[yongxv-bishe] [2020-05-03 14:18:21.133+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$1f1edbbf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:18:21.152+0800] [org.springframework.ws.soap.addressing.server.AnnotationActionEndpointMapping] [main] [INFO] Supporting [WS-Addressing August 2004, WS-Addressing 1.0] 
+[yongxv-bishe] [2020-05-03 14:18:21.174+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7a8716c0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:18:21.198+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:18:21.199+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$e4158791] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:18:21.203+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:18:21.206+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:18:21.441+0800] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [main] [INFO] Tomcat initialized with port(s): 9001 (http) 
+[yongxv-bishe] [2020-05-03 14:18:21.456+0800] [org.apache.coyote.http11.Http11NioProtocol] [main] [INFO] Initializing ProtocolHandler ["http-nio-9001"] 
+[yongxv-bishe] [2020-05-03 14:18:21.463+0800] [org.apache.catalina.core.StandardService] [main] [INFO] Starting service [Tomcat] 
+[yongxv-bishe] [2020-05-03 14:18:21.464+0800] [org.apache.catalina.core.StandardEngine] [main] [INFO] Starting Servlet engine: [Apache Tomcat/9.0.19] 
+[yongxv-bishe] [2020-05-03 14:18:21.546+0800] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [main] [INFO] Initializing Spring embedded WebApplicationContext 
+[yongxv-bishe] [2020-05-03 14:18:21.547+0800] [org.springframework.web.context.ContextLoader] [main] [INFO] Root WebApplicationContext: initialization completed in 1164 ms 
+[yongxv-bishe] [2020-05-03 14:18:21.630+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Starting... 
+[yongxv-bishe] [2020-05-03 14:18:21.632+0800] [com.zaxxer.hikari.util.DriverDataSource] [main] [WARN] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation. 
+[yongxv-bishe] [2020-05-03 14:18:21.899+0800] [com.zaxxer.hikari.HikariDataSource] [main] [INFO] bishe - Start completed. 
+[yongxv-bishe] [2020-05-03 14:18:21.900+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource - load a datasource named [bishe] success 
+[yongxv-bishe] [2020-05-03 14:18:21.900+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [main] [INFO] dynamic-datasource initial loaded [1] datasource,primary datasource named [bishe] 
+[yongxv-bishe] [2020-05-03 14:18:22.022+0800] [org.mongodb.driver.cluster] [main] [INFO] Cluster created with settings {hosts=[47.94.201.4:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500} 
+[yongxv-bishe] [2020-05-03 14:18:22.212+0800] [org.mongodb.driver.connection] [cluster-ClusterId{value='5eae622e449f6313349aa78e', description='null'}-47.94.201.4:27017] [INFO] Opened connection [connectionId{localValue:1, serverValue:552}] to 47.94.201.4:27017 
+[yongxv-bishe] [2020-05-03 14:18:22.252+0800] [org.mongodb.driver.cluster] [cluster-ClusterId{value='5eae622e449f6313349aa78e', description='null'}-47.94.201.4:27017] [INFO] Monitor thread successfully connected to server with description ServerDescription{address=47.94.201.4:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 2]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=39147525} 
+[yongxv-bishe] [2020-05-03 14:18:22.611+0800] [springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping] [main] [INFO] Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)] 
+[yongxv-bishe] [2020-05-03 14:18:22.749+0800] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [main] [INFO] Initializing ExecutorService 'applicationTaskExecutor' 
+[yongxv-bishe] [2020-05-03 14:18:23.083+0800] [org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler] [main] [INFO] Initializing ExecutorService 'taskScheduler' 
+[yongxv-bishe] [2020-05-03 14:18:23.152+0800] [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] [main] [INFO] Context refreshed 
+[yongxv-bishe] [2020-05-03 14:18:23.174+0800] [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] [main] [INFO] Found 1 custom documentation plugin(s) 
+[yongxv-bishe] [2020-05-03 14:18:23.203+0800] [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] [main] [INFO] Scanning for api listing references 
+[yongxv-bishe] [2020-05-03 14:18:23.426+0800] [org.apache.coyote.http11.Http11NioProtocol] [main] [INFO] Starting ProtocolHandler ["http-nio-9001"] 
+[yongxv-bishe] [2020-05-03 14:18:23.452+0800] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [main] [INFO] Tomcat started on port(s): 9001 (http) with context path '' 
+[yongxv-bishe] [2020-05-03 14:18:23.455+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] Started Application in 3.457 seconds (JVM running for 3.95) 
+[yongxv-bishe] [2020-05-03 14:18:23.456+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] yongxv service start success！ 
+[yongxv-bishe] [2020-05-03 14:18:46.341+0800] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [http-nio-9001-exec-1] [INFO] Initializing Spring DispatcherServlet 'dispatcherServlet' 
+[yongxv-bishe] [2020-05-03 14:18:46.341+0800] [org.springframework.web.servlet.DispatcherServlet] [http-nio-9001-exec-1] [INFO] Initializing Servlet 'dispatcherServlet' 
+[yongxv-bishe] [2020-05-03 14:18:46.349+0800] [org.springframework.web.servlet.DispatcherServlet] [http-nio-9001-exec-1] [INFO] Completed initialization in 7 ms 
+[yongxv-bishe] [2020-05-03 14:18:53.788+0800] [org.mongodb.driver.connection] [http-nio-9001-exec-2] [INFO] Opened connection [connectionId{localValue:2, serverValue:553}] to 47.94.201.4:27017 
+[yongxv-bishe] [2020-05-03 14:20:44.061+0800] [org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler] [Thread-15] [INFO] Shutting down ExecutorService 'taskScheduler' 
+[yongxv-bishe] [2020-05-03 14:20:44.061+0800] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [Thread-15] [INFO] Shutting down ExecutorService 'applicationTaskExecutor' 
+[yongxv-bishe] [2020-05-03 14:20:44.064+0800] [org.mongodb.driver.connection] [Thread-15] [INFO] Closed connection [connectionId{localValue:2, serverValue:553}] to 47.94.201.4:27017 because the pool has been closed. 
+[yongxv-bishe] [2020-05-03 14:20:44.065+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [Thread-15] [INFO] dynamic-datasource start closing .... 
+[yongxv-bishe] [2020-05-03 14:20:44.065+0800] [com.zaxxer.hikari.HikariDataSource] [Thread-15] [INFO] bishe - Shutdown initiated... 
+[yongxv-bishe] [2020-05-03 14:20:44.069+0800] [com.zaxxer.hikari.HikariDataSource] [Thread-15] [INFO] bishe - Shutdown completed. 
+[yongxv-bishe] [2020-05-03 14:20:44.069+0800] [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] [Thread-15] [INFO] dynamic-datasource all closed success,bye 
+[yongxv-bishe] [2020-05-03 14:21:47.082+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] Starting Application on gaoyongxudeMacBook-Pro.local with PID 4967 (/Users/gaomac/workspace/yongxv-bishe/target/classes started by gaomac in /Users/gaomac/workspace/yongxv-bishe) 
+[yongxv-bishe] [2020-05-03 14:21:47.091+0800] [com.yongxv.bishe.zhanshi.Application] [main] [INFO] The following profiles are active: online 
+[yongxv-bishe] [2020-05-03 14:21:47.841+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Bootstrapping Spring Data repositories in DEFAULT mode. 
+[yongxv-bishe] [2020-05-03 14:21:47.857+0800] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [main] [INFO] Finished Spring Data repository scanning in 11ms. Found 0 repository interfaces. 
+[yongxv-bishe] [2020-05-03 14:21:48.093+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$bce6b8d6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:21:48.114+0800] [org.springframework.ws.soap.addressing.server.AnnotationActionEndpointMapping] [main] [INFO] Supporting [WS-Addressing August 2004, WS-Addressing 1.0] 
+[yongxv-bishe] [2020-05-03 14:21:48.139+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$184ef3d7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:21:48.169+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:21:48.170+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$81dd64a8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:21:48.175+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:21:48.178+0800] [org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] [main] [INFO] Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+[yongxv-bishe] [2020-05-03 14:21:48.325+0800] [org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext] [main] [WARN] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is java.lang.IllegalStateException: Unable to create the directory [/root/domesticOutfit/temp] to use as the base directory 
+[yongxv-bishe] [2020-05-03 14:21:48.332+0800] [org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener] [main] [INFO] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled. 
+[yongxv-bishe] [2020-05-03 14:21:48.423+0800] [org.springframework.boot.SpringApplication] [main] [ERROR] Application run failed 
+org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is java.lang.IllegalStateException: Unable to create the directory [/root/domesticOutfit/temp] to use as the base directory
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:157)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at com.yongxv.bishe.zhanshi.Application.main(Application.java:25)
+Caused by: java.lang.IllegalStateException: Unable to create the directory [/root/domesticOutfit/temp] to use as the base directory
+	at org.apache.catalina.startup.Tomcat.initBaseDir(Tomcat.java:815)
+	at org.apache.catalina.startup.Tomcat.getServer(Tomcat.java:624)
+	at org.apache.catalina.startup.Tomcat.getService(Tomcat.java:557)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:171)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:181)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:154)
+	... 6 common frames omitted

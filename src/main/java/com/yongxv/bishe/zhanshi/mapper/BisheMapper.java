@@ -41,10 +41,10 @@ public interface BisheMapper {
     List<User> selectConsumer(@Param("page")int page,@Param("size")int size);
 
     @Select("select count(1) from user where type = 1")
-    long selectConsumers();
+    Integer selectConsumers();
 
     @Select("select count(1) from user where type = 2")
-    long selectStore();
+    Integer selectStore();
 
     @Select("select count(1) from user where type = 2 and storeType = 0")
     long selectShoes();
@@ -78,17 +78,26 @@ public interface BisheMapper {
     @Select("select * from associated where uid = #{uid} limit #{page},#{size}")
     List<Associated> selectFocus(@Param("uid")int uid,@Param("page")int page,@Param("size")int size);
 
+    @Select("select count(1) from associated where uid = #{uid}")
+    Integer selectFocusCount(@Param("uid")int uid);
+
     @Select("select * from associated where uid = #{uid} and uuid = #{uuid} ")
     List<Associated> selectGuaZhu(@Param("uid")int uid,@Param("uuid")int uuid);
 
     @Select("select * from associated where uuid = #{uuid} limit #{page},#{size}")
     List<Associated> selectFocusUser(@Param("uuid")int uuid,@Param("page")int page,@Param("size")int size);
 
+    @Select("select count(1) from associated where uuid = #{uuid}")
+    Integer selectFocusUserCount(@Param("uuid")int uuid);
+
     @Select("select * from associated where uuid = #{uuid}")
     List<Associated> selectFocusUserAll(@Param("uuid")int uuid);
 
     @Select("select * from access where uid = #{uid} limit #{page},#{size}")
     List<Access> selectAccess(@Param("uid")int uid,@Param("page")int page,@Param("size")int size);
+
+    @Select("select count(1) from access where uid = #{uid}")
+    Integer selectAccessCount(@Param("uid")int uid);
 
 
     @Insert("insert into access(uid,uuid,name,introduction,area,createTime) " +
@@ -111,14 +120,26 @@ public interface BisheMapper {
     @Select("select * from content where uid = #{uid} and shopState = 0 limit #{page},#{size}")
     List<Content> push(@Param("uid")int uid, @Param("page")int page, @Param("size")int size);
 
+    @Select("select count(1) from content where uid = #{uid} and shopState = 0")
+    Integer pushCount(@Param("uid")int uid);
+
     @Select("select * from content where uid = #{uid} and customer = 0 limit #{page},#{size}")
     List<Content> message(@Param("uid")int uid, @Param("page")int page, @Param("size")int size);
+
+    @Select("select count(1) from content where uid = #{uid} and customer = 0")
+    Integer messageCount(@Param("uid")int uid);
 
     @Select("select * from content where toUser = #{toUser} and shopState = 0 limit #{page},#{size}")
     List<Content> receivedMessage(@Param("toUser")int toUser, @Param("page")int page, @Param("size")int size);
 
+    @Select("select count(1) from content where toUser = #{toUser} and shopState = 0")
+    Integer receivedMessageCount(@Param("toUser")int toUser);
+
     @Select("select * from content where uuid = #{uuid} and customer = 0 limit #{page},#{size}")
     List<Content> receivedPush(@Param("uuid")int uuid, @Param("page")int page, @Param("size")int size);
+
+    @Select("select count(1) from content where uuid = #{uuid} and customer = 0")
+    Integer receivedPushCount(@Param("uuid")int uuid);
 
     @Update("update content set shopState = 1 where id = #{id}")
     int updateShopState(@Param("id")int id);

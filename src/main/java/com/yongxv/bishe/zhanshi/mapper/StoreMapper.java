@@ -21,4 +21,8 @@ public interface StoreMapper {
 
     @Select("select * from user where type = 2 and storeType = #{storeType} limit #{page},#{size}")
     List<User> selectStore(@Param("storeType") String storeType,@Param("page")int page,@Param("size")int size);
+
+
+    @Select("select count(1) from user where type = 2 and storeType = #{storeType}")
+    Integer selectStoreCount(@Param("storeType") String storeType);
 }

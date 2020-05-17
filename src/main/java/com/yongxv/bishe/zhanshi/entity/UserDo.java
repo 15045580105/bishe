@@ -40,4 +40,6 @@ public class UserDo {
     private String clothesGoods;
 
     private String othersGoods;
+
+    private String focusCount;
 }

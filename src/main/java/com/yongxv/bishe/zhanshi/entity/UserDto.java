@@ -2,7 +2,7 @@ package com.yongxv.bishe.zhanshi.entity;
 /**
  * @Author : gyx
  * @Description :
- * @Date : Created in 15:04 2020-05-01
+ * @Date : Created in 19:23 2020-05-11
  * @Modified By :
  */
 
@@ -10,10 +10,10 @@ import lombok.Data;
 
 /**
  * @author gyx
- * @date 2020-05-01 15:04
+ * @date 2020-05-11 19:23
  */
 @Data
-public class User {
+public class UserDto {
 
     private int id;
 
@@ -34,6 +34,8 @@ public class User {
     private String createTime;
 
     private String updateTime;
+
+    private String picture;
 
     private String focusCount;
 

@@ -528,4 +528,12 @@ public class DateUtils {
 
     }
 
+
+    public static String getDayAgoOrAfterString(int num){
+        Calendar calendar1 = Calendar.getInstance();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        calendar1.add(Calendar.DATE, num);
+        return sdf1.format(calendar1.getTime());
+    }
+
 }

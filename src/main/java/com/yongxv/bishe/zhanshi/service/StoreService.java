@@ -19,10 +19,16 @@ public interface StoreService {
 
     Response delete(String id);
 
-    Response updateGoods(String id,String name,String introduction,long price);
+    Response updateGoods(String id,String name,String introduction,String price);
 
     Response addGoods(String uid, String name, String introduction, String type,String price, MultipartFile file);
 
     Response selectGoodsById(String id);
+
+    Response selectStoreNew(int page,int size);
+
+    Response selectStoreHot(int page,int size);
+
+    Response selectGoods(int page,int size);
 
 }

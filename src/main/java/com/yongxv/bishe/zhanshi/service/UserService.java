@@ -10,9 +10,11 @@ import com.yongxv.bishe.zhanshi.entity.Response;
  */
 public interface UserService {
 
-    Response login(String account, String passWord);
+    Response login(String account, String passWord,String role);
 
     Response register(String account,String passWord,String type,String storeType,String userName,String introduction,String area);
+
+    Response addAdmin(String account,String passWord,String userName,String introduction,String area);
 
     Response updateInformation(int id,String userName,String introduction,String area);
 
@@ -28,7 +30,7 @@ public interface UserService {
 
     Response selectFocusUser(int uuid,int page,int size);
 
-    Response selectNewUpdate();
+    Response selectNewUpdate(int page,int size);
 
     Response selectAcess(int uid,int page,int size);
 
@@ -49,5 +51,9 @@ public interface UserService {
     Response receivedPushOrMessage(int id,int page,int size);
 
     Response deletePushAndMessage(int id,int uid);
+
+    Response selectUserBypage(int id,int page,int size);
+
+    Response deleteAccess(int id);
 
 }

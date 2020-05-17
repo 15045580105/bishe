@@ -1,10 +1,7 @@
 package com.yongxv.bishe.zhanshi.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.yongxv.bishe.zhanshi.entity.Access;
-import com.yongxv.bishe.zhanshi.entity.Associated;
-import com.yongxv.bishe.zhanshi.entity.Content;
-import com.yongxv.bishe.zhanshi.entity.User;
+import com.yongxv.bishe.zhanshi.entity.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +28,17 @@ public interface BisheMapper {
     @Select("select * from user where id = #{id}")
     User selectUserByid(@Param("id") int id);
 
-    @Select("select * from user where type = 2 and updateTime >= #{startTime}")
-    List<User> selectStoreByUpdatetime(@Param("startTime") String startTime);
+    @Select("select * from user where id = #{id}")
+    UserDto selectUserById(@Param("id") int id);
+
+    @Select("select * from user where id != #{id} limit #{page},#{size}")
+    List<User> selectUserByPage(@Param("id")int id,@Param("page")int page,@Param("size")int size);
+
+    @Select("select * from user where type = 2 and updateTime > #{day} order by updateTime desc limit #{page},#{size}")
+    List<UserDto> selectStoreByUpdatetime(@Param("day")String day,@Param("page")int page,@Param("size")int size);
+
+    @Select("select count(1) from user where type = 2 and updateTime > #{day}")
+    Integer selectStoreByUpdatetimeCount(@Param("day")String day);
 
     @Select("select * from user where type = 2 limit #{page},#{size}")
     List<User> selectStores(@Param("page")int page,@Param("size")int size);
@@ -46,8 +52,8 @@ public interface BisheMapper {
     @Select("select count(1) from user where type = 2")
     Integer selectStore();
 
-    @Select("select count(1) from user where type = 2 and storeType = 0")
-    long selectShoes();
+    @Select("select count(1) from user where id != #{id}")
+    Integer selectUserCount(@Param("id")int id);
 
     @Select("select count(1) from user where type = 2 and storeType = 1")
     long selectClothes();
@@ -55,17 +61,21 @@ public interface BisheMapper {
     @Select("select count(1) from user where type = 2 and storeType = 2")
     long selectOthers();
 
-    @Insert("insert into user(userName,password,account,introduction,type,storeType,area,createTime) " +
-            "values(#{user.userName},#{user.password},#{user.account},#{user.introduction},#{user.type},#{user.storeType},#{user.area},#{user.createTime})")
+    @Insert("insert into user(userName,password,account,introduction,type,storeType,area,createTime,focusCount) " +
+            "values(#{user.userName},#{user.password},#{user.account},#{user.introduction},#{user.type},#{user.storeType},#{user.area},#{user.createTime},0)")
     int addUser(@Param("user")User user);
 
     @Update("update user set  userName = #{user.userName},introduction = #{user.introduction},area = #{user.area} where id = ${user.id}")
     int updateInformation(@Param("user")User user);
 
-    @Update("update user set   password = #{user.password} where id = #{user.id}")
+    @Insert("insert into user(userName,password,account,introduction,type,storeType,area,createTime,focusCount) " +
+            "values(#{user.userName},#{user.password},#{user.account},#{user.introduction},0,#{user.storeType},#{user.area},#{user.createTime},0)")
+    int addAdmin(@Param("user")User user);
+
+    @Update("update user set password = #{user.password} where id = #{user.id}")
     int updatePassword(@Param("user")User user);
 
-    @Update("update user set  updateTime = #{user.updateTime} where id = #{user.id}")
+    @Update("update user set updateTime = #{user.updateTime} where id = #{user.id}")
     int updateUpdateTime(@Param("user")User user);
 
     @Insert("insert into associated(uid,uuid,createTime) " +
@@ -96,6 +106,9 @@ public interface BisheMapper {
     @Select("select * from access where uid = #{uid} limit #{page},#{size}")
     List<Access> selectAccess(@Param("uid")int uid,@Param("page")int page,@Param("size")int size);
 
+    @Delete("delete from user where id = #{id}")
+    int deleteUser(@Param("id")int id);
+
     @Select("select count(1) from access where uid = #{uid}")
     Integer selectAccessCount(@Param("uid")int uid);
 
@@ -104,14 +117,12 @@ public interface BisheMapper {
             "values(#{uid},#{uuid},#{name},#{introduction},#{area},#{createTime})")
     int addAccess(@Param("uid")int uid,@Param("uuid")int uuid,@Param("name")String name,@Param("introduction")String introduction,@Param("area")String area,@Param("createTime")String createTime);
 
+    @Delete("delete from access where id = #{id}")
+    int deleteAccess(@Param("id")int id);
 
     @Insert("insert into content(uid,toUser,content,createTime,shopState,customer) " +
             "values(#{uid},#{toUser},#{content},#{createTime},0,0)")
     int addWarning(@Param("uid")int uid,@Param("toUser")int toUser,@Param("content")String content,@Param("createTime")String createTime);
-
-
-    @Delete("delete from user where id = #{id}")
-    int deleteUser(@Param("id")int id);
 
     @Insert("insert into content(uid,toUser,content,createTime,shopState,customer) " +
             "values(#{uid},#{toUser},#{content},#{createTime},0,0)")
@@ -135,11 +146,11 @@ public interface BisheMapper {
     @Select("select count(1) from content where toUser = #{toUser} and shopState = 0")
     Integer receivedMessageCount(@Param("toUser")int toUser);
 
-    @Select("select * from content where uuid = #{uuid} and customer = 0 limit #{page},#{size}")
-    List<Content> receivedPush(@Param("uuid")int uuid, @Param("page")int page, @Param("size")int size);
+    @Select("select * from content where toUser = #{toUser} and customer = 0 limit #{page},#{size}")
+    List<Content> receivedPush(@Param("toUser")int toUser, @Param("page")int page, @Param("size")int size);
 
-    @Select("select count(1) from content where uuid = #{uuid} and customer = 0")
-    Integer receivedPushCount(@Param("uuid")int uuid);
+    @Select("select count(1) from content where toUser = #{toUser} and customer = 0")
+    Integer receivedPushCount(@Param("toUser")int toUser);
 
     @Update("update content set shopState = 1 where id = #{id}")
     int updateShopState(@Param("id")int id);
@@ -148,4 +159,6 @@ public interface BisheMapper {
     int updateCustomer(@Param("id")int id);
 
 
+    @Update("update user set focusCount = #{focusCount} where id = #{id}")
+    int updateFocusCount(@Param("focusCount")String focusCount,@Param("id")int id);
 }

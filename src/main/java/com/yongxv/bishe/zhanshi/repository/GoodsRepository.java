@@ -51,6 +51,17 @@ public class GoodsRepository {
         return mongoTemplate.find(query, Goods.class);
     }
 
+
+    public List<Goods> queryGoods(Integer page,Integer count) {
+        Criteria criteria = new Criteria();
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        query.skip(page * count).limit(count);
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "creatTime")}));
+        return mongoTemplate.find(query, Goods.class);
+    }
+
     public Goods queryById(String id) {
         Criteria criteria = Criteria.where("id").is(id);
         Document document = criteria.getCriteriaObject();
@@ -60,6 +71,15 @@ public class GoodsRepository {
         return mongoTemplate.findOne(query, Goods.class);
     }
 
+
+    public Goods queryOneByUid(String uid) {
+        Criteria criteria = Criteria.where("uid").is(uid);
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        query.with(new Sort(new Sort.Order[]{new Sort.Order(Sort.Direction.DESC, "uid")}));
+        return mongoTemplate.findOne(query, Goods.class);
+    }
 
     public long query(String storeType) {
         Criteria criteria = new Criteria().where("storeType").is(storeType);
@@ -71,6 +91,14 @@ public class GoodsRepository {
 
     public long queryCount(String uid) {
         Criteria criteria = Criteria.where("uid").is(uid);
+        Document document = criteria.getCriteriaObject();
+        BasicDBObject fieldsObject = new BasicDBObject();
+        Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());
+        return mongoTemplate.count(query, Goods.class);
+    }
+
+    public long queryAllCount() {
+        Criteria criteria = new Criteria();
         Document document = criteria.getCriteriaObject();
         BasicDBObject fieldsObject = new BasicDBObject();
         Query query = new BasicQuery(document.toJson(), fieldsObject.toJson());

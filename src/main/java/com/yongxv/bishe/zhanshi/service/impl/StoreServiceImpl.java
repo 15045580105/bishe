@@ -8,10 +8,7 @@ package com.yongxv.bishe.zhanshi.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.yongxv.bishe.zhanshi.domain.Goods;
-import com.yongxv.bishe.zhanshi.entity.Associated;
-import com.yongxv.bishe.zhanshi.entity.Response;
-import com.yongxv.bishe.zhanshi.entity.Tatal;
-import com.yongxv.bishe.zhanshi.entity.User;
+import com.yongxv.bishe.zhanshi.entity.*;
 import com.yongxv.bishe.zhanshi.mapper.BisheMapper;
 import com.yongxv.bishe.zhanshi.mapper.StoreMapper;
 import com.yongxv.bishe.zhanshi.repository.GoodsRepository;
@@ -54,74 +51,88 @@ public class StoreServiceImpl implements StoreService {
     private String staticPath;
 
     @Override
-    public Response showStoreService(String storeType,int page,int size){
-        List<User> users = storeMapper.selectStore(storeType,page*size,size);
+    public Response showStoreService(String storeType, int page, int size) {
+        List<UserDto> users = storeMapper.selectStore(storeType, (page-1) * size, size);
+        for (int i = 0; i < users.size(); i++) {
+            Goods goods = goodsRepository.queryOneByUid(users.get(i).getId() + "");
+            if(goods == null || "".equals(goods)) {
+                users.get(i).setPicture("");
+            }else {
+                users.get(i).setPicture(goods.getPicture());
+            }
+        }
         Integer count = storeMapper.selectStoreCount(storeType);
         Tatal tatal = new Tatal();
         tatal.setTotal(count);
-        return Response.success(users,tatal);
+        return Response.success(users, tatal);
     }
 
     @Override
-    public Response showGoods(int uid,int uuid,Integer page,Integer size){
+    public Response showGoods(int uid, int uuid, Integer page, Integer size) {
         String today = DateUtil.getDateTime(DateUtil.getTimePattern(), new Date());
         User user = bisheMapper.selectUserByid(uuid);
-        bisheMapper.addAccess(uid,uuid,user.getUserName(),user.getIntroduction(),user.getArea(),today);
-        List<Goods> goodsList = goodsRepository.queryByUid(uuid+"",page,size);
-        List<Associated> associatedList = bisheMapper.selectGuaZhu(uid,uuid);
-        long count = goodsRepository.queryCount(uuid+"");
-        if(associatedList.size()==0){
+        List<Goods> goodsList = goodsRepository.queryByUid(uuid + "", (page-1), size);
+        long count = goodsRepository.queryCount(uuid + "");
+        if(uid == 0) {
             Tatal tatal = new Tatal();
-            tatal.setTotal(Integer.parseInt(count+""));
-            tatal.setFocus(0);
-            return Response.success(goodsList,tatal);
+            tatal.setTotal(Integer.parseInt(count + ""));
+            return Response.success(goodsList, tatal);
         }else{
-            Tatal tatal = new Tatal();
-            tatal.setTotal(Integer.parseInt(count+""));
-            tatal.setFocus(1);
-            return Response.success(goodsList,tatal);
+            bisheMapper.addAccess(uid, uuid, user.getUserName(), user.getIntroduction(), user.getArea(), today);
+            List<Associated> associatedList = bisheMapper.selectGuaZhu(uid, uuid);
+            if (associatedList.size() == 0) {
+                Tatal tatal = new Tatal();
+                tatal.setTotal(Integer.parseInt(count + ""));
+                tatal.setFocus(0);
+                return Response.success(goodsList, tatal);
+            } else {
+                Tatal tatal = new Tatal();
+                tatal.setTotal(Integer.parseInt(count + ""));
+                tatal.setFocus(1);
+                return Response.success(goodsList, tatal);
+            }
         }
 
     }
 
-
-    public Response showGoodsStore(int uid,Integer page,Integer size){
-        List<Goods> goodsList = goodsRepository.queryByUid(uid+"",page,size);
-        long count = goodsRepository.queryCount(uid+"");
+    @Override
+    public Response showGoodsStore(int uid, Integer page, Integer size) {
+        List<Goods> goodsList = goodsRepository.queryByUid(uid + "", (page-1), size);
+        long count = goodsRepository.queryCount(uid + "");
         Tatal tatal = new Tatal();
-        tatal.setTotal(Integer.parseInt(count+""));
-        return Response.success(goodsList,tatal);
+        tatal.setTotal(Integer.parseInt(count + ""));
+        return Response.success(goodsList, tatal);
     }
 
 
-
-
-
     @Override
-    public Response delete(String id){
+    public Response delete(String id) {
         goodsRepository.delete(id);
         return Response.success(0);
     }
 
     @Override
-    public Response updateGoods(String id,String name,String introduction,long price){
+    public Response updateGoods(String id, String name, String introduction, String price) {
         String today = DateUtil.getDateTime(DateUtil.getTimePattern(), new Date());
         Goods goods = new Goods();
         goods.setId(id);
         goods.setName(name);
         goods.setIntroduction(introduction);
         goods.setUpdateTime(today);
-        if(isNumeric(price+"")){
-            if(price >= 0 && price<=20000){
-                goods.setPrice(price);
-            }else {
-                return Response.error(1,"价格不可小于0或者大于20000");
+        if (StringUtils.isBlank(price)) {
+            return Response.error(1, "请输入价格");
+        }
+        if (isNumeric(price)) {
+            if (Integer.parseInt(price) >= 0 && Integer.parseInt(price) <= 20000) {
+                goods.setPrice(Long.parseLong(price));
+            } else {
+                return Response.error(1, "价格不可小于0或者大于20000");
             }
-        }else{
-            return Response.error(1,"价格只能是数字");
+        } else {
+            return Response.error(1, "价格只能是数字");
         }
         goodsRepository.update(goods);
-        Goods goods1  = goodsRepository.queryById(id);
+        Goods goods1 = goodsRepository.queryById(id);
         User user = new User();
         user.setId(Integer.parseInt(goods1.getUid()));
         user.setUpdateTime(today);
@@ -130,9 +141,9 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Response addGoods(String uid, String name, String introduction, String type,String price, MultipartFile file){
+    public Response addGoods(String uid, String name, String introduction, String type, String price, MultipartFile file) {
         if (file == null || "".equals(file)) {
-            return Response.error(1,"请插入图片");
+            return Response.error(1, "请插入图片");
         }
         User user = bisheMapper.selectUserByid(Integer.parseInt(uid));
         String today = DateUtil.getDateTime(DateUtil.getTimePattern(), new Date());
@@ -141,16 +152,16 @@ public class StoreServiceImpl implements StoreService {
         goods.setUid(uid);
         goods.setPicture(url);
         if (StringUtils.isBlank(price)) {
-            return Response.error(1,"请输入价格");
+            return Response.error(1, "请输入价格");
         }
-        if(isNumeric(price)){
-            if(Integer.parseInt(price) >= 0 && Integer.parseInt(price)<=20000){
+        if (isNumeric(price)) {
+            if (Integer.parseInt(price) >= 0 && Integer.parseInt(price) <= 20000) {
                 goods.setPrice(Integer.parseInt(price));
-            }else {
-                return Response.error(1,"价格不可小于0或者大于20000");
+            } else {
+                return Response.error(1, "价格不可小于0或者大于20000");
             }
-        }else{
-            return Response.error(1,"价格只能是数字");
+        } else {
+            return Response.error(1, "价格只能是数字");
         }
         goods.setIntroduction(introduction);
         goods.setType(type);
@@ -161,13 +172,53 @@ public class StoreServiceImpl implements StoreService {
         goodsRepository.save(goods);
         user.setUpdateTime(today);
         bisheMapper.updateUpdateTime(user);
-        return Response.success(0,"添加商品成功");
+        return Response.success(0, "添加商品成功");
     }
 
     @Override
-    public Response selectGoodsById(String id){
+    public Response selectGoodsById(String id) {
         Goods goods = goodsRepository.queryById(id);
         return Response.success(goods);
+    }
+
+    @Override
+    public Response selectStoreNew(int page, int size) {
+        List<UserDto> users = storeMapper.selectNewStore((page-1) * size, size);
+        for (int i = 0; i < users.size(); i++) {
+            Goods goods = goodsRepository.queryOneByUid(users.get(i).getId() + "");
+            if(goods == null || "".equals(goods)) {
+                users.get(i).setPicture("");
+            }else {
+                users.get(i).setPicture(goods.getPicture());
+            }
+        }
+        return Response.success(users);
+    }
+
+    @Override
+    public Response selectStoreHot(int page, int size) {
+        List<UserDto> users = storeMapper.selectHot((page-1) * size, size);
+        Integer count = bisheMapper.selectStore();
+        for (int i = 0; i < users.size(); i++) {
+            Goods goods = goodsRepository.queryOneByUid(users.get(i).getId() + "");
+            if(goods == null || "".equals(goods)) {
+                users.get(i).setPicture("");
+            }else {
+                users.get(i).setPicture(goods.getPicture());
+            }
+        }
+        Tatal tatal = new Tatal();
+        tatal.setTotal(count);
+        return Response.success(users,tatal);
+    }
+
+    @Override
+    public Response selectGoods(int page,int size){
+        List<Goods> goodsList = goodsRepository.queryGoods((page-1), size);
+        long count = goodsRepository.queryAllCount();
+        Tatal tatal = new Tatal();
+        tatal.setTotal(Integer.parseInt(count + ""));
+        return Response.success(goodsList, tatal);
     }
 
 

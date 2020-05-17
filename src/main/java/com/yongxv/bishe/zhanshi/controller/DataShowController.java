@@ -25,8 +25,8 @@ public class DataShowController {
      * @since
      */
     @PostMapping("/user/login")
-    public Response login(String account, String passWord) {
-        return userService.login(account,passWord);
+    public Response login(String account, String passWord,String role) {
+        return userService.login(account,passWord,role);
     }
 
     /**
@@ -115,19 +115,19 @@ public class DataShowController {
     }
 
 
-    /**
-     * @return a
-     * @description 查询关注店铺
-     * @author gyx
-     * @date 2020-05-02 18:1
-     * @parameter * @param null
-     * @since
-     */
-    @PostMapping(path = "/store/focus")
-    public Response storeFocus(int uid,int page,int size) {
-        Response response = userService.selectFocusStore(uid,page,size);
-        return response;
-    }
+//    /**
+//     * @return a
+//     * @description 查询关注店铺
+//     * @author gyx
+//     * @date 2020-05-02 18:1
+//     * @parameter * @param null
+//     * @since
+//     */
+//    @PostMapping(path = "/store/focus")
+//    public Response storeFocus(int uid,int page,int size) {
+//        Response response = userService.selectFocusStore(uid,page,size);
+//        return response;
+//    }
 
     /**
      * @return a
@@ -145,15 +145,15 @@ public class DataShowController {
 
     /**
      * @return a
-     * @description 当天更新店铺
+     * @description 最近更新店铺
      * @author gyx
      * @date 2020-05-02 18:1
      * @parameter * @param null
      * @since
      */
     @PostMapping(path = "/new/update")
-    public Response newUpdate() {
-        Response response = userService.selectNewUpdate();
+    public Response newUpdate(int page,int size) {
+        Response response = userService.selectNewUpdate(page,size);
         return response;
     }
 
@@ -171,19 +171,19 @@ public class DataShowController {
         return response;
     }
 
-    /**
-     * @return a
-     * @description 发送警告
-     * @author gyx
-     * @date 2020-05-02 18:1
-     * @parameter * @param null
-     * @since
-     */
-    @PostMapping(path = "/add/Warning")
-    public Response addWarning(int uid,int toUser) {
-        Response response = userService.addWarning(uid,toUser);
-        return response;
-    }
+//    /**
+//     * @return a
+//     * @description 发送警告
+//     * @author gyx
+//     * @date 2020-05-02 18:1
+//     * @parameter * @param null
+//     * @since
+//     */
+//    @PostMapping(path = "/add/Warning")
+//    public Response addWarning(int uid,int toUser) {
+//        Response response = userService.addWarning(uid,toUser);
+//        return response;
+//    }
 
     /**
      * @return a
@@ -201,7 +201,7 @@ public class DataShowController {
 
     /**
      * @return a
-     * @description 查询
+     * @description 查询店
      * @author gyx
      * @date 2020-05-02 18:2
      * @parameter * @param null
@@ -227,19 +227,19 @@ public class DataShowController {
         return response;
     }
 
-    /**
-     * @return a
-     * @description 留言
-     * @author gyx
-     * @date 2020-05-02 19:15
-    * @parameter * @param null
-     * @since
-     */
-    @PostMapping(path = "/content")
-    public Response content(int uid,int toUser,String content) {
-        Response response = userService.content(uid,toUser,content);
-        return response;
-    }
+//    /**
+//     * @return a
+//     * @description 留言
+//     * @author gyx
+//     * @date 2020-05-02 19:15
+//    * @parameter * @param null
+//     * @since
+//     */
+//    @PostMapping(path = "/content")
+//    public Response content(int uid,int toUser,String content) {
+//        Response response = userService.content(uid,toUser,content);
+//        return response;
+//    }
 
     /**
      * @return a
@@ -255,19 +255,19 @@ public class DataShowController {
         return response;
     }
 
-    /**
-     * @return a
-     * @description 推送或留言记录
-     * @author gyx
-     * @date 2020-05-02 22:0
-     * @parameter * @param null
-     * @since
-     */
-    @PostMapping(path = "/push/message")
-    public Response pushAndMessage(int id,int page,int size) {
-        Response response = userService.pushAndMessage(id,page,size);
-        return response;
-    }
+//    /**
+//     * @return a
+//     * @description 推送或留言记录
+//     * @author gyx
+//     * @date 2020-05-02 22:0
+//     * @parameter * @param null
+//     * @since
+//     */
+//    @PostMapping(path = "/push/message")
+//    public Response pushAndMessage(int id,int page,int size) {
+//        Response response = userService.pushAndMessage(id,page,size);
+//        return response;
+//    }
 
 
     /**
@@ -284,10 +284,62 @@ public class DataShowController {
         return response;
     }
 
+    /**
+     * @return a
+     * @description 删除消息
+     * @author gyx
+     * @date 2020-05-11 21:1
+     * @parameter * @param null
+     * @since
+     */
     @PostMapping(path = "/delete/push")
     public Response deletePush(int id,int uid) {
         Response response = userService.deletePushAndMessage(id,uid);
         return response;
     }
 
+
+    /**
+     * @description 用户列表
+     * @author gyx
+     * @date 2020-05-11 21:34
+     * @return
+     * @parameter  * @param null
+     * @since
+     */
+    @PostMapping(path = "/select/user/page")
+    public Response selectUserByPage(int id,int page,int size) {
+        Response response = userService.selectUserBypage(id,page,size);
+        return response;
+    }
+
+
+    /**
+     * @description 加管理员
+     * @author gyx
+     * @date 2020-05-12 11:56
+     * @return
+     * @parameter  * @param null
+     * @since
+     */
+    @PostMapping(path = "/add/admin")
+    public Response addAdmin(String account,String passWord,String userName,String introduction,String area) {
+        Response response = userService.addAdmin(account,passWord,userName,introduction,area);
+        return response;
+    }
+
+
+    /**
+     * @description 删除访问记录
+     * @author gyx
+     * @date 2020-05-12 11:56
+     * @return
+     * @parameter  * @param null
+     * @since
+     */
+    @PostMapping(path = "/delete/access")
+    public Response deleteAccess(int id) {
+        Response response = userService.deleteAccess(id);
+        return response;
+    }
 }
